@@ -1,0 +1,189 @@
+{
+  "1": {
+    "id": 1,
+    "name": "System Administrator",
+    "email": "admin@lyantravel.com",
+    "username": "admin",
+    "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
+    "role": "admin",
+    "phone": "+91 98400 11223",
+    "is_active": true,
+    "created_at": "2026-08-01T10:00:00Z"
+  },
+  "2": {
+    "id": 2,
+    "name": "Sarah Connor",
+    "email": "agent@lyantravel.com",
+    "username": "agent",
+    "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
+    "role": "agent",
+    "phone": "+91 98401 22334",
+    "is_active": true,
+    "created_at": "2026-08-05T11:30:00Z"
+  },
+  "3": {
+    "id": 3,
+    "name": "Kavitha Ramesh",
+    "email": "user@lyantravel.com",
+    "username": "user",
+    "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
+    "role": "customer",
+    "phone": "+91 98402 33445",
+    "is_active": true,
+    "created_at": "2026-08-10T14:15:00Z"
+  },
+  "4": {
+    "id": 4,
+    "name": "Anand Mohan",
+    "email": "anand.chennai@gmail.com",
+    "username": "anandm",
+    "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
+    "role": "customer",
+    "phone": "+91 98403 44556",
+    "is_active": true,
+    "created_at": "2026-08-12T09:20:00Z"
+  },
+  "5": {
+    "id": 5,
+    "name": "Priya Soundararajan",
+    "email": "priya.coimbatore@gmail.com",
+    "username": "priyas",
+    "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
+    "role": "customer",
+    "phone": "+91 98404 55667",
+    "is_active": true,
+    "created_at": "2026-08-15T16:45:00Z"
+  },
+  "6": {
+    "id": 6,
+    "name": "Karthik Subramanian",
+    "email": "karthik.madurai@yahoo.com",
+    "username": "karthiks",
+    "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
+    "role": "customer",
+    "phone": "+91 98405 66778",
+    "is_active": true,
+    "created_at": "2026-08-20T12:10:00Z"
+  },
+  "7": {
+    "id": 7,
+    "name": "Rajesh Kannan",
+    "email": "agent.rajesh@lyantravel.com",
+    "username": "rajesh_agent",
+    "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
+    "role": "agent",
+    "phone": "+91 98406 77889",
+    "is_active": true,
+    "created_at": "2026-08-22T08:50:00Z"
+  },
+  "8": {
+    "id": 8,
+    "name": "Deepa Jayaram",
+    "email": "deepa.salem@gmail.com",
+    "username": "deepaj",
+    "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
+    "role": "customer",
+    "phone": "+91 98407 88990",
+    "is_active": true,
+    "created_at": "2026-08-25T17:35:00Z"
+  },
+  "9": {
+    "id": 9,
+    "name": "Senthil Kumar",
+    "email": "senthil.trichy@gmail.com",
+    "username": "senthilk",
+    "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
+    "role": "customer",
+    "phone": "+91 98408 99001",
+    "is_active": true,
+    "created_at": "2026-08-28T11:00:00Z"
+  },
+  "10": {
+    "id": 10,
+    "name": "Vikramaditya V",
+    "email": "agent.vikram@lyantravel.com",
+    "username": "vikram_agent",
+    "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
+    "role": "agent",
+    "phone": "+91 98409 00112",
+    "is_active": true,
+    "created_at": "2026-09-01T10:15:00Z"
+  },
+  "11": {
+    "id": 11,
+    "name": "Lakshmi Narayanan",
+    "email": "lakshmi.nellai@gmail.com",
+    "username": "lakshmin",
+    "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
+    "role": "customer",
+    "phone": "+91 98410 11223",
+    "is_active": true,
+    "created_at": "2026-09-03T15:20:00Z"
+  },
+  "12": {
+    "id": 12,
+    "name": "Manojkumar S",
+    "email": "manoj.erode@gmail.com",
+    "username": "manojk",
+    "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
+    "role": "customer",
+    "phone": "+91 98411 22334",
+    "is_active": true,
+    "created_at": "2026-09-05T13:40:00Z"
+  },
+  "13": {
+    "id": 13,
+    "name": "Venkatesh R",
+    "email": "venkat.hosur@gmail.com",
+    "username": "venkatr",
+    "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
+    "role": "customer",
+    "phone": "+91 98412 33445",
+    "is_active": true,
+    "created_at": "2026-09-08T09:50:00Z"
+  },
+  "14": {
+    "id": 14,
+    "name": "Divya Bharathi",
+    "email": "divya.vellore@gmail.com",
+    "username": "divyab",
+    "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
+    "role": "customer",
+    "phone": "+91 98413 44556",
+    "is_active": true,
+    "created_at": "2026-09-10T14:30:00Z"
+  },
+  "15": {
+    "id": 15,
+    "name": "Jean-Pierre Dupont",
+    "email": "jp.pondy@gmail.com",
+    "username": "jppondy",
+    "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
+    "role": "customer",
+    "phone": "+91 98414 55667",
+    "is_active": true,
+    "created_at": "2026-09-12T11:25:00Z"
+  },
+  "16": {
+    "id": 16,
+    "name": "Google Traveler User",
+    "email": "test.google@travel.com",
+    "phone": "+91 98400 00000",
+    "password_hash": "sYPOubPNKeSsFXrbqChDTw==$XClVCo01sErKL2tfESU0ZN3LwEBNui7aQUBaaIGBA8k=",
+    "role": "customer",
+    "is_active": true,
+    "created_at": "2026-09-28T11:19:21Z",
+    "oauth_provider": "google",
+    "avatar": "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100"
+  },
+  "17": {
+    "id": 17,
+    "name": "Alex Traveler",
+    "email": "traveler_1790594737@test.com",
+    "phone": null,
+    "password_hash": "n7AQnEoC3oom9VZVQ1fAqA==$N8ekf8nrF4QEoX6N4sxvQemhhq92Y0hEx5PGb4aFf8Q=",
+    "role": "customer",
+    "is_active": true,
+    "created_at": "2026-09-28T11:25:37Z"
+  }
+}

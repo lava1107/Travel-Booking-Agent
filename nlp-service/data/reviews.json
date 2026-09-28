@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "package_id": 1,
+    "package_title": "Kerala Backwaters & Munnar Hills",
+    "customer_name": "Ramesh Swaminathan",
+    "origin": "Chennai",
+    "rating": 5,
+    "travel_date": "2026-08-15",
+    "comment": "Outstanding trip planned from Chennai. The Alleppey private houseboat was the highlight of our vacation. Food was delicious and authentic Kerala style."
+  },
+  {
+    "id": 2,
+    "package_id": 4,
+    "package_title": "Singapore Discovery & Sentosa",
+    "customer_name": "Priya & Karthik",
+    "origin": "Coimbatore",
+    "rating": 5,
+    "travel_date": "2026-07-22",
+    "comment": "Booking direct flight from Chennai to Singapore through Lyan Travels was seamless. Universal Studios and Gardens by the Bay tickets were all pre-booked with zero waiting!"
+  },
+  {
+    "id": 3,
+    "package_id": 7,
+    "package_title": "Sri Lanka Cultural Circuit",
+    "customer_name": "M. Alagappan",
+    "origin": "Tiruchirappalli",
+    "rating": 5,
+    "travel_date": "2026-08-28",
+    "comment": "Departing from Trichy airport was so convenient. 55 minutes flight and we were in Colombo! The driver cum guide spoke fluent Tamil and made our family feel very safe."
+  }
+]

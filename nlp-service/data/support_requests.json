@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "conversation_id": "conv-101",
+    "customer_id": 2,
+    "customer_name": "Alex Traveler",
+    "customer_email": "user@lyantravel.com",
+    "customer_phone": "+91 98765 01002",
+    "origin": "Chennai",
+    "destination": "Maldives",
+    "budget": 80000,
+    "message": "Customer requested human consultant: 'Can I add a private candlelight dinner on the beach to my Maldives booking?'",
+    "status": "In Progress",
+    "assigned_agent_id": 3,
+    "assigned_agent_name": "Sarah Connor",
+    "created_at": "2026-09-24T10:15:00Z"
+  },
+  {
+    "id": 2,
+    "conversation_id": "conv-102",
+    "customer_id": 4,
+    "customer_name": "Kavitha R.",
+    "customer_email": "kavitha.tn@example.com",
+    "customer_phone": "+91 94432 10987",
+    "origin": "Coimbatore",
+    "destination": "Dubai",
+    "budget": 100000,
+    "message": "Customer requested human consultant: 'We are traveling with elderly parents (aged 72). We need wheelchair assistance at airports and ground floor rooms.'",
+    "status": "Open",
+    "assigned_agent_id": null,
+    "assigned_agent_name": "Unassigned",
+    "created_at": "2026-09-25T08:30:00Z"
+  }
+]

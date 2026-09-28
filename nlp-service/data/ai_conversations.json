@@ -1,0 +1,1579 @@
+[
+  {
+    "conversation_id": "conv-1790595192404",
+    "customer_name": "System Administrator",
+    "customer_email": "admin@lyantravel.com",
+    "started_at": "2026-09-28T11:33:12Z",
+    "last_updated_at": "2026-09-28T11:33:22Z",
+    "intent": "book_trip",
+    "confidence": 0.95,
+    "entities": {
+      "destination": "Goa",
+      "conversation_id": "conv-1790595192404",
+      "last_packages": [
+        {
+          "id": 34,
+          "agent_id": 2,
+          "agent_name": "Sarah Connor",
+          "title": "Tiruchirappalli to Goa \u2013 Senior Citizens Heritage & Wellness",
+          "source": "Tiruchirappalli",
+          "origin": "Tiruchirappalli",
+          "destination": "Goa, India",
+          "destination_type": "Domestic",
+          "amount": 20900,
+          "starting_price": 20900,
+          "rating": 4.9,
+          "transport": "Direct Flight + Private Cab",
+          "duration_days": 5,
+          "duration": "5D / 4N",
+          "available_seats": 16,
+          "category": "Standard",
+          "description": "Special curated departure from Tiruchirappalli. Senior Citizens Heritage & Wellness tailored for memorable experiences at Goa, India. Includes VIP sightseeing passes.",
+          "image_url": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "hotel_category": "4-Star Radisson Resort with Pool",
+          "meals": "Buffet Breakfast & Sunset Dinner Cruise",
+          "inclusions": [
+            "VIP transport from Tiruchirappalli",
+            "Premium accommodation: 4-Star Radisson Resort with Pool",
+            "Buffet Breakfast & Sunset Dinner Cruise",
+            "Express skip-the-line monument & attraction tickets",
+            "Dedicated local guide & on-trip emergency cover"
+          ]
+        },
+        {
+          "id": 33,
+          "agent_id": 2,
+          "agent_name": "Sarah Connor",
+          "title": "Madurai to Goa \u2013 Weekend Fast-Track Explorer",
+          "source": "Madurai",
+          "origin": "Madurai",
+          "destination": "Goa, India",
+          "destination_type": "Domestic",
+          "amount": 18000,
+          "starting_price": 18000,
+          "rating": 4.9,
+          "transport": "Direct Flight + Private Cab",
+          "duration_days": 5,
+          "duration": "5D / 4N",
+          "available_seats": 12,
+          "category": "Economy",
+          "description": "Special curated departure from Madurai. Weekend Fast-Track Explorer tailored for memorable experiences at Goa, India. Includes VIP sightseeing passes.",
+          "image_url": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "hotel_category": "4-Star Radisson Resort with Pool",
+          "meals": "Buffet Breakfast & Sunset Dinner Cruise",
+          "inclusions": [
+            "VIP transport from Madurai",
+            "Premium accommodation: 4-Star Radisson Resort with Pool",
+            "Buffet Breakfast & Sunset Dinner Cruise",
+            "Express skip-the-line monument & attraction tickets",
+            "Dedicated local guide & on-trip emergency cover"
+          ]
+        },
+        {
+          "id": 32,
+          "agent_id": 2,
+          "agent_name": "Sarah Connor",
+          "title": "Coimbatore to Goa \u2013 Romantic Couple Honeymoon Pass",
+          "source": "Coimbatore",
+          "origin": "Coimbatore",
+          "destination": "Goa, India",
+          "destination_type": "Domestic",
+          "amount": 25600,
+          "starting_price": 25600,
+          "rating": 4.9,
+          "transport": "Direct Flight + Private Cab",
+          "duration_days": 5,
+          "duration": "5D / 4N",
+          "available_seats": 18,
+          "category": "Luxury",
+          "description": "Special curated departure from Coimbatore. Romantic Couple Honeymoon Pass tailored for memorable experiences at Goa, India. Includes VIP sightseeing passes.",
+          "image_url": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "hotel_category": "4-Star Radisson Resort with Pool",
+          "meals": "Buffet Breakfast & Sunset Dinner Cruise",
+          "inclusions": [
+            "VIP transport from Coimbatore",
+            "Premium accommodation: 4-Star Radisson Resort with Pool",
+            "Buffet Breakfast & Sunset Dinner Cruise",
+            "Express skip-the-line monument & attraction tickets",
+            "Dedicated local guide & on-trip emergency cover"
+          ]
+        },
+        {
+          "id": 31,
+          "agent_id": 2,
+          "agent_name": "Sarah Connor",
+          "title": "Chennai to Goa \u2013 Family Special Combo",
+          "source": "Chennai",
+          "origin": "Chennai",
+          "destination": "Goa, India",
+          "destination_type": "Domestic",
+          "amount": 21800,
+          "starting_price": 21800,
+          "rating": 4.9,
+          "transport": "Direct Flight + Private Cab",
+          "duration_days": 5,
+          "duration": "5D / 4N",
+          "available_seats": 15,
+          "category": "Standard",
+          "description": "Special curated departure from Chennai. Family Special Combo tailored for memorable experiences at Goa, India. Includes VIP sightseeing passes.",
+          "image_url": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "hotel_category": "4-Star Radisson Resort with Pool",
+          "meals": "Buffet Breakfast & Sunset Dinner Cruise",
+          "inclusions": [
+            "VIP transport from Chennai",
+            "Premium accommodation: 4-Star Radisson Resort with Pool",
+            "Buffet Breakfast & Sunset Dinner Cruise",
+            "Express skip-the-line monument & attraction tickets",
+            "Dedicated local guide & on-trip emergency cover"
+          ]
+        }
+      ],
+      "passengers": 2,
+      "travel_type": "honeymoon",
+      "package_id": 32,
+      "target_package_id": 32
+    },
+    "tools_called": [
+      "searchPackages",
+      "checkAvailability",
+      "calculatePrice",
+      "createBooking"
+    ],
+    "booking_created": true,
+    "human_handoff": false,
+    "status": "Booking Completed",
+    "messages": [
+      {
+        "role": "user",
+        "text": "i wanna travel from channai to goa"
+      },
+      {
+        "role": "assistant",
+        "text": "Here are the top matching packages for your journey:\n\n**1. Tiruchirappalli to Goa \u2013 Senior Citizens Heritage & Wellness**\n   - \ud83d\udccd **Route:** Tiruchirappalli \u2794 Goa, India (Domestic)\n   - \ud83c\udff7\ufe0f **Category:** Standard | \u2b50 4.9/5\n   - \ud83d\udcb0 **Price:** \u20b920,900.0 per person\n   - \ud83d\ude80 **Transport:** Direct Flight + Private Cab | \ud83c\udfe8 4-Star Radisson Resort with Pool\n\n**2. Madurai to Goa \u2013 Weekend Fast-Track Explorer**\n   - \ud83d\udccd **Route:** Madurai \u2794 Goa, India (Domestic)\n   - \ud83c\udff7\ufe0f **Category:** Economy | \u2b50 4.9/5\n   - \ud83d\udcb0 **Price:** \u20b918,000.0 per person\n   - \ud83d\ude80 **Transport:** Direct Flight + Private Cab | \ud83c\udfe8 4-Star Radisson Resort with Pool\n\n**3. Coimbatore to Goa \u2013 Romantic Couple Honeymoon Pass**\n   - \ud83d\udccd **Route:** Coimbatore \u2794 Goa, India (Domestic)\n   - \ud83c\udff7\ufe0f **Category:** Luxury | \u2b50 4.9/5\n   - \ud83d\udcb0 **Price:** \u20b925,600.0 per person\n   - \ud83d\ude80 **Transport:** Direct Flight + Private Cab | \ud83c\udfe8 4-Star Radisson Resort with Pool\n\n**4. Chennai to Goa \u2013 Family Special Combo**\n   - \ud83d\udccd **Route:** Chennai \u2794 Goa, India (Domestic)\n   - \ud83c\udff7\ufe0f **Category:** Standard | \u2b50 4.9/5\n   - \ud83d\udcb0 **Price:** \u20b921,800.0 per person\n   - \ud83d\ude80 **Transport:** Direct Flight + Private Cab | \ud83c\udfe8 4-Star Radisson Resort with Pool\n\n\ud83d\udca1 *You can say **\"Book the second one\"**, **\"Which one has breakfast?\"**, or **\"Show cheaper ones\"** to refine!*"
+      },
+      {
+        "role": "user",
+        "text": "Book package 32: Coimbatore to Goa \u2013 Romantic Couple Honeymoon Pass"
+      },
+      {
+        "role": "assistant",
+        "text": "\ud83c\udf89 **Booking Confirmed by Lyan Travels AI Agent!**\n\nCongratulations System Administrator! Your itinerary for **Coimbatore to Goa \u2013 Romantic Couple Honeymoon Pass** has been created in our operational booking engine.\n\n**\ud83d\udccb Reservation Voucher & PNR Details:**\n- **Booking ID / PNR:** `TRV-2026-3672`\n- **Origin:** Coimbatore\n- **Destination:** Goa, India\n- **Travel Date:** 2026-10-08\n- **Travelers:** 2 Guest(s)\n- **Category:** Luxury\n- **Total Amount:** \u20b953,760.00 (Inclusive of GST)\n- **Status:** Confirmed \u2705\n\n\u2728 *This booking is now visible in your **Customer Dashboard**, **Admin Dashboard**, and **My Trips**!*"
+      }
+    ]
+  },
+  {
+    "conversation_id": "conv-1790594738052",
+    "customer_name": "Alex Traveler",
+    "customer_email": "traveler_1790594737@test.com",
+    "started_at": "2026-09-28T11:25:38Z",
+    "last_updated_at": "2026-09-28T11:25:38Z",
+    "intent": "book_trip",
+    "confidence": 0.95,
+    "entities": {
+      "passengers": 2,
+      "selected_index": 2,
+      "package_id": 2,
+      "travel_date": "2026-11-20",
+      "conversation_id": "conv-1790594738052",
+      "target_package_id": 2
+    },
+    "tools_called": [
+      "checkAvailability",
+      "calculatePrice",
+      "createBooking"
+    ],
+    "booking_created": true,
+    "human_handoff": false,
+    "status": "Booking Completed",
+    "messages": [
+      {
+        "role": "user",
+        "text": "Book package 2 for 2 travelers on 2026-11-20"
+      },
+      {
+        "role": "assistant",
+        "text": "\ud83c\udf89 **Booking Confirmed by Lyan Travels AI Agent!**\n\nCongratulations Alex Traveler! Your itinerary for **Chennai \u2794 Goa Standard Tour** has been created in our operational booking engine.\n\n**\ud83d\udccb Reservation Voucher & PNR Details:**\n- **Booking ID / PNR:** `TRV-2026-1882`\n- **Origin:** Chennai\n- **Destination:** Goa, India\n- **Travel Date:** 2026-11-20\n- **Travelers:** 2 Guest(s)\n- **Category:** Standard\n- **Total Amount:** \u20b939,818.10 (Inclusive of GST)\n- **Status:** Confirmed \u2705\n\n\u2728 *This booking is now visible in your **Customer Dashboard**, **Admin Dashboard**, and **My Trips**!*"
+      }
+    ]
+  },
+  {
+    "conversation_id": "conv-1790594737621",
+    "customer_name": "Guest Traveler",
+    "customer_email": "guest@lyantravel.com",
+    "started_at": "2026-09-28T11:25:37Z",
+    "last_updated_at": "2026-09-28T11:25:37Z",
+    "intent": "search_trips",
+    "confidence": 0.5761,
+    "entities": {
+      "destination": "Goa",
+      "conversation_id": "conv-1790594737621",
+      "last_packages": [
+        {
+          "id": 34,
+          "agent_id": 2,
+          "agent_name": "Sarah Connor",
+          "title": "Tiruchirappalli to Goa \u2013 Senior Citizens Heritage & Wellness",
+          "source": "Tiruchirappalli",
+          "origin": "Tiruchirappalli",
+          "destination": "Goa, India",
+          "destination_type": "Domestic",
+          "amount": 20900.0,
+          "starting_price": 20900.0,
+          "rating": 4.9,
+          "transport": "Direct Flight + Private Cab",
+          "duration_days": 5,
+          "duration": "5D / 4N",
+          "available_seats": 16,
+          "category": "Standard",
+          "description": "Special curated departure from Tiruchirappalli. Senior Citizens Heritage & Wellness tailored for memorable experiences at Goa, India. Includes VIP sightseeing passes.",
+          "image_url": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "hotel_category": "4-Star Radisson Resort with Pool",
+          "meals": "Buffet Breakfast & Sunset Dinner Cruise",
+          "inclusions": [
+            "VIP transport from Tiruchirappalli",
+            "Premium accommodation: 4-Star Radisson Resort with Pool",
+            "Buffet Breakfast & Sunset Dinner Cruise",
+            "Express skip-the-line monument & attraction tickets",
+            "Dedicated local guide & on-trip emergency cover"
+          ]
+        },
+        {
+          "id": 33,
+          "agent_id": 2,
+          "agent_name": "Sarah Connor",
+          "title": "Madurai to Goa \u2013 Weekend Fast-Track Explorer",
+          "source": "Madurai",
+          "origin": "Madurai",
+          "destination": "Goa, India",
+          "destination_type": "Domestic",
+          "amount": 18000.0,
+          "starting_price": 18000.0,
+          "rating": 4.9,
+          "transport": "Direct Flight + Private Cab",
+          "duration_days": 5,
+          "duration": "5D / 4N",
+          "available_seats": 12,
+          "category": "Economy",
+          "description": "Special curated departure from Madurai. Weekend Fast-Track Explorer tailored for memorable experiences at Goa, India. Includes VIP sightseeing passes.",
+          "image_url": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "hotel_category": "4-Star Radisson Resort with Pool",
+          "meals": "Buffet Breakfast & Sunset Dinner Cruise",
+          "inclusions": [
+            "VIP transport from Madurai",
+            "Premium accommodation: 4-Star Radisson Resort with Pool",
+            "Buffet Breakfast & Sunset Dinner Cruise",
+            "Express skip-the-line monument & attraction tickets",
+            "Dedicated local guide & on-trip emergency cover"
+          ]
+        },
+        {
+          "id": 32,
+          "agent_id": 2,
+          "agent_name": "Sarah Connor",
+          "title": "Coimbatore to Goa \u2013 Romantic Couple Honeymoon Pass",
+          "source": "Coimbatore",
+          "origin": "Coimbatore",
+          "destination": "Goa, India",
+          "destination_type": "Domestic",
+          "amount": 25600.0,
+          "starting_price": 25600.0,
+          "rating": 4.9,
+          "transport": "Direct Flight + Private Cab",
+          "duration_days": 5,
+          "duration": "5D / 4N",
+          "available_seats": 18,
+          "category": "Luxury",
+          "description": "Special curated departure from Coimbatore. Romantic Couple Honeymoon Pass tailored for memorable experiences at Goa, India. Includes VIP sightseeing passes.",
+          "image_url": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "hotel_category": "4-Star Radisson Resort with Pool",
+          "meals": "Buffet Breakfast & Sunset Dinner Cruise",
+          "inclusions": [
+            "VIP transport from Coimbatore",
+            "Premium accommodation: 4-Star Radisson Resort with Pool",
+            "Buffet Breakfast & Sunset Dinner Cruise",
+            "Express skip-the-line monument & attraction tickets",
+            "Dedicated local guide & on-trip emergency cover"
+          ]
+        },
+        {
+          "id": 31,
+          "agent_id": 2,
+          "agent_name": "Sarah Connor",
+          "title": "Chennai to Goa \u2013 Family Special Combo",
+          "source": "Chennai",
+          "origin": "Chennai",
+          "destination": "Goa, India",
+          "destination_type": "Domestic",
+          "amount": 21800.0,
+          "starting_price": 21800.0,
+          "rating": 4.9,
+          "transport": "Direct Flight + Private Cab",
+          "duration_days": 5,
+          "duration": "5D / 4N",
+          "available_seats": 15,
+          "category": "Standard",
+          "description": "Special curated departure from Chennai. Family Special Combo tailored for memorable experiences at Goa, India. Includes VIP sightseeing passes.",
+          "image_url": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "hotel_category": "4-Star Radisson Resort with Pool",
+          "meals": "Buffet Breakfast & Sunset Dinner Cruise",
+          "inclusions": [
+            "VIP transport from Chennai",
+            "Premium accommodation: 4-Star Radisson Resort with Pool",
+            "Buffet Breakfast & Sunset Dinner Cruise",
+            "Express skip-the-line monument & attraction tickets",
+            "Dedicated local guide & on-trip emergency cover"
+          ]
+        }
+      ]
+    },
+    "tools_called": [
+      "searchPackages"
+    ],
+    "booking_created": false,
+    "human_handoff": false,
+    "status": "Active",
+    "messages": [
+      {
+        "role": "user",
+        "text": "I want to visit Goa with flights"
+      },
+      {
+        "role": "assistant",
+        "text": "Here are the top matching packages for your journey:\n\n**1. Tiruchirappalli to Goa \u2013 Senior Citizens Heritage & Wellness**\n   - \ud83d\udccd **Route:** Tiruchirappalli \u2794 Goa, India (Domestic)\n   - \ud83c\udff7\ufe0f **Category:** Standard | \u2b50 4.9/5\n   - \ud83d\udcb0 **Price:** \u20b920,900.0 per person\n   - \ud83d\ude80 **Transport:** Direct Flight + Private Cab | \ud83c\udfe8 4-Star Radisson Resort with Pool\n\n**2. Madurai to Goa \u2013 Weekend Fast-Track Explorer**\n   - \ud83d\udccd **Route:** Madurai \u2794 Goa, India (Domestic)\n   - \ud83c\udff7\ufe0f **Category:** Economy | \u2b50 4.9/5\n   - \ud83d\udcb0 **Price:** \u20b918,000.0 per person\n   - \ud83d\ude80 **Transport:** Direct Flight + Private Cab | \ud83c\udfe8 4-Star Radisson Resort with Pool\n\n**3. Coimbatore to Goa \u2013 Romantic Couple Honeymoon Pass**\n   - \ud83d\udccd **Route:** Coimbatore \u2794 Goa, India (Domestic)\n   - \ud83c\udff7\ufe0f **Category:** Luxury | \u2b50 4.9/5\n   - \ud83d\udcb0 **Price:** \u20b925,600.0 per person\n   - \ud83d\ude80 **Transport:** Direct Flight + Private Cab | \ud83c\udfe8 4-Star Radisson Resort with Pool\n\n**4. Chennai to Goa \u2013 Family Special Combo**\n   - \ud83d\udccd **Route:** Chennai \u2794 Goa, India (Domestic)\n   - \ud83c\udff7\ufe0f **Category:** Standard | \u2b50 4.9/5\n   - \ud83d\udcb0 **Price:** \u20b921,800.0 per person\n   - \ud83d\ude80 **Transport:** Direct Flight + Private Cab | \ud83c\udfe8 4-Star Radisson Resort with Pool\n\n\ud83d\udca1 *You can say **\"Book the second one\"**, **\"Which one has breakfast?\"**, or **\"Show cheaper ones\"** to refine!*"
+      }
+    ]
+  },
+  {
+    "conversation_id": "conv-1790579466910",
+    "customer_name": "Kavitha Ramesh",
+    "customer_email": "user@lyantravel.com",
+    "started_at": "2026-09-28T07:11:06Z",
+    "last_updated_at": "2026-09-28T07:11:21Z",
+    "intent": "book_trip",
+    "confidence": 0.95,
+    "entities": {
+      "origin": "Chennai",
+      "source": "Chennai",
+      "destination": "Goa",
+      "conversation_id": "conv-1790579466910",
+      "last_packages": [
+        {
+          "id": 3,
+          "title": "Ultra-Luxury South Goa Private Villa from Chennai",
+          "source": "Chennai",
+          "origin": "Chennai",
+          "destination": "Goa, India",
+          "destination_type": "Domestic",
+          "category": "Luxury",
+          "amount": 39000,
+          "starting_price": 39000,
+          "price_per_person": 39000,
+          "rating": 5,
+          "reviews_count": 84,
+          "transport": "Business Class Flight + Private Mercedes Chauffeur",
+          "hotel_category": "5-Star Taj / Alila Diwa South Goa Beachfront Villa",
+          "meals": "All Inclusive Gourmet Dining & Private Yacht Charter",
+          "duration_days": 5,
+          "duration_nights": 4,
+          "available_seats": 15,
+          "description": "Indulge in royal coastal indulgence departing from Chennai. Private beachfront infinity pool villa, personal butler, Ayurvedic spa therapies, and exclusive 2-hour private yacht cruise.",
+          "image_url": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "inclusions": [
+            "Selected Accommodation (5-Star Taj / Alila Diwa South Goa Beachfront Villa)",
+            "All Inclusive Gourmet Dining & Private Yacht Charter",
+            "Verified Business Class Flight + Private Mercedes Chauffeur from Chennai",
+            "All Government Road / Airport Taxes & Permits",
+            "Dedicated 24/7 Lyan Travels Trip Coordinator"
+          ],
+          "exclusions": [
+            "Personal shopping & souvenirs",
+            "Optional adventure activities not in itinerary",
+            "Travel insurance (can be added at checkout)"
+          ],
+          "cancellation_policy": "Full refund up to 48 hours prior to trip departure. 70% refund thereafter.",
+          "itinerary": [
+            {
+              "day": 1,
+              "title": "Departure from Chennai & Arrival Check-in",
+              "activities": [
+                "Pickup from designated point / airport in Chennai",
+                "Welcome transfer to property",
+                "Check-in & evening leisure walk"
+              ]
+            },
+            {
+              "day": 2,
+              "title": "Sightseeing & Key Highlights Tour",
+              "activities": [
+                "Breakfast at stay",
+                "Guided full-day excursion to premier viewpoints",
+                "Sunset photography and local market tasting"
+              ]
+            },
+            {
+              "day": 3,
+              "title": "Adventure / Leisure & Local Culture",
+              "activities": [
+                "Optional adventure sports or heritage walk",
+                "Traditional regional lunch",
+                "Scenic evening cafe / beach visit"
+              ]
+            },
+            {
+              "day": 4,
+              "title": "Return Transfer to Chennai",
+              "activities": [
+                "Farewell breakfast",
+                "Check-out and souvenir shopping",
+                "Safe transit back to Chennai"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "title": "Goa Sun, Sand & Mandovi Cruise from Chennai",
+          "source": "Chennai",
+          "origin": "Chennai",
+          "destination": "Goa, India",
+          "destination_type": "Domestic",
+          "category": "Standard",
+          "amount": 18500,
+          "starting_price": 18500,
+          "price_per_person": 18500,
+          "rating": 4.9,
+          "reviews_count": 71,
+          "transport": "Direct / Connecting Flight + Private Cab",
+          "hotel_category": "4-Star Beach Resort with Pool (North Goa)",
+          "meals": "Buffet Breakfast & Mandovi Sunset Cruise",
+          "duration_days": 5,
+          "duration_nights": 4,
+          "available_seats": 14,
+          "description": "Complete beach holiday starting from Chennai. Includes private transfers, historic Fort Aguada, water sports at Baga, Dudhsagar Jeep Safari, and luxury beach resort stay.",
+          "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "inclusions": [
+            "Selected Accommodation (4-Star Beach Resort with Pool (North Goa))",
+            "Buffet Breakfast & Mandovi Sunset Cruise",
+            "Verified Direct / Connecting Flight + Private Cab from Chennai",
+            "All Government Road / Airport Taxes & Permits",
+            "Dedicated 24/7 Lyan Travels Trip Coordinator"
+          ],
+          "exclusions": [
+            "Personal shopping & souvenirs",
+            "Optional adventure activities not in itinerary",
+            "Travel insurance (can be added at checkout)"
+          ],
+          "cancellation_policy": "Full refund up to 48 hours prior to trip departure. 70% refund thereafter.",
+          "itinerary": [
+            {
+              "day": 1,
+              "title": "Departure from Chennai & Arrival Check-in",
+              "activities": [
+                "Pickup from designated point / airport in Chennai",
+                "Welcome transfer to property",
+                "Check-in & evening leisure walk"
+              ]
+            },
+            {
+              "day": 2,
+              "title": "Sightseeing & Key Highlights Tour",
+              "activities": [
+                "Breakfast at stay",
+                "Guided full-day excursion to premier viewpoints",
+                "Sunset photography and local market tasting"
+              ]
+            },
+            {
+              "day": 3,
+              "title": "Adventure / Leisure & Local Culture",
+              "activities": [
+                "Optional adventure sports or heritage walk",
+                "Traditional regional lunch",
+                "Scenic evening cafe / beach visit"
+              ]
+            },
+            {
+              "day": 4,
+              "title": "Return Transfer to Chennai",
+              "activities": [
+                "Farewell breakfast",
+                "Check-out and souvenir shopping",
+                "Safe transit back to Chennai"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 1,
+          "title": "Chennai to Goa Beach & Backpacker Shacks",
+          "source": "Chennai",
+          "origin": "Chennai",
+          "destination": "Goa, India",
+          "destination_type": "Domestic",
+          "category": "Budget",
+          "amount": 8000,
+          "starting_price": 8000,
+          "price_per_person": 8000,
+          "rating": 4.8,
+          "reviews_count": 58,
+          "transport": "AC Sleeper Bus",
+          "hotel_category": "Backpacker Panda Calangute / Zostel Morjim (AC Shared Dorm / Pod)",
+          "meals": "Complimentary Breakfast",
+          "duration_days": 4,
+          "duration_nights": 3,
+          "available_seats": 13,
+          "description": "Budget-friendly backpacker getaway from Chennai to North Goa. Chill at Anjuna & Calangute beaches, stay at top-rated youth hostels, explore Portuguese heritage forts and vibrant night markets.",
+          "image_url": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80",
+          "is_featured": false,
+          "popular_from_tn": true,
+          "inclusions": [
+            "Selected Accommodation (Backpacker Panda Calangute / Zostel Morjim (AC Shared Dorm / Pod))",
+            "Complimentary Breakfast",
+            "Verified AC Sleeper Bus from Chennai",
+            "All Government Road / Airport Taxes & Permits",
+            "Dedicated 24/7 Lyan Travels Trip Coordinator"
+          ],
+          "exclusions": [
+            "Personal shopping & souvenirs",
+            "Optional adventure activities not in itinerary",
+            "Travel insurance (can be added at checkout)"
+          ],
+          "cancellation_policy": "Full refund up to 48 hours prior to trip departure. 70% refund thereafter.",
+          "itinerary": [
+            {
+              "day": 1,
+              "title": "Departure from Chennai & Arrival Check-in",
+              "activities": [
+                "Pickup from designated point / airport in Chennai",
+                "Welcome transfer to property",
+                "Check-in & evening leisure walk"
+              ]
+            },
+            {
+              "day": 2,
+              "title": "Sightseeing & Key Highlights Tour",
+              "activities": [
+                "Breakfast at stay",
+                "Guided full-day excursion to premier viewpoints",
+                "Sunset photography and local market tasting"
+              ]
+            },
+            {
+              "day": 3,
+              "title": "Adventure / Leisure & Local Culture",
+              "activities": [
+                "Optional adventure sports or heritage walk",
+                "Traditional regional lunch",
+                "Scenic evening cafe / beach visit"
+              ]
+            },
+            {
+              "day": 4,
+              "title": "Return Transfer to Chennai",
+              "activities": [
+                "Farewell breakfast",
+                "Check-out and souvenir shopping",
+                "Safe transit back to Chennai"
+              ]
+            }
+          ]
+        }
+      ],
+      "selected_index": 2,
+      "package_id": 2,
+      "target_package_id": 2
+    },
+    "tools_called": [
+      "searchPackages",
+      "checkAvailability",
+      "calculatePrice",
+      "createBooking"
+    ],
+    "booking_created": true,
+    "human_handoff": false,
+    "status": "Booking Completed",
+    "messages": [
+      {
+        "role": "user",
+        "text": "i want to travel from chennai to goa"
+      },
+      {
+        "role": "assistant",
+        "text": "Here are the top matching packages for your journey:\n\n**1. Ultra-Luxury South Goa Private Villa from Chennai**\n   - \ud83d\udccd **Route:** Chennai \u2794 Goa, India (Domestic)\n   - \ud83c\udff7\ufe0f **Category:** Luxury | \u2b50 5.0/5\n   - \ud83d\udcb0 **Price:** \u20b939,000.0 per person\n   - \ud83d\ude80 **Transport:** Business Class Flight + Private Mercedes Chauffeur | \ud83c\udfe8 5-Star Taj / Alila Diwa South Goa Beachfront Villa\n\n**2. Goa Sun, Sand & Mandovi Cruise from Chennai**\n   - \ud83d\udccd **Route:** Chennai \u2794 Goa, India (Domestic)\n   - \ud83c\udff7\ufe0f **Category:** Standard | \u2b50 4.9/5\n   - \ud83d\udcb0 **Price:** \u20b918,500.0 per person\n   - \ud83d\ude80 **Transport:** Direct / Connecting Flight + Private Cab | \ud83c\udfe8 4-Star Beach Resort with Pool (North Goa)\n\n**3. Chennai to Goa Beach & Backpacker Shacks**\n   - \ud83d\udccd **Route:** Chennai \u2794 Goa, India (Domestic)\n   - \ud83c\udff7\ufe0f **Category:** Budget | \u2b50 4.8/5\n   - \ud83d\udcb0 **Price:** \u20b98,000.0 per person\n   - \ud83d\ude80 **Transport:** AC Sleeper Bus | \ud83c\udfe8 Backpacker Panda Calangute / Zostel Morjim (AC Shared Dorm / Pod)\n\n\ud83d\udca1 *You can say **\"Book the second one\"**, **\"Which one has breakfast?\"**, or **\"Show cheaper ones\"** to refine!*"
+      },
+      {
+        "role": "user",
+        "text": "Book package 2: Goa Sun, Sand & Mandovi Cruise from Chennai"
+      },
+      {
+        "role": "assistant",
+        "text": "\ud83c\udf89 **Booking Confirmed by Lyan Travels AI Agent!**\n\nCongratulations Kavitha Ramesh! Your itinerary for **Goa Sun, Sand & Mandovi Cruise from Chennai** has been created in our operational booking engine.\n\n**\ud83d\udccb Reservation Voucher & PNR Details:**\n- **Booking ID / PNR:** `TRV-2026-6189`\n- **Origin:** Chennai\n- **Destination:** Goa, India\n- **Travel Date:** 2026-10-08\n- **Travelers:** 1 Guest(s)\n- **Category:** Standard\n- **Total Amount:** \u20b919,425.00 (Inclusive of GST)\n- **Status:** Confirmed \u2705\n\n\u2728 *This booking is now visible in your **Customer Dashboard**, **Admin Dashboard**, and **My Trips**!*"
+      }
+    ]
+  },
+  {
+    "conversation_id": "conv-1790578093785",
+    "customer_name": "Guest Traveler",
+    "customer_email": "guest@lyantravel.com",
+    "started_at": "2026-09-28T06:48:13Z",
+    "last_updated_at": "2026-09-28T06:48:13Z",
+    "intent": "search_trips",
+    "confidence": 0.5492,
+    "entities": {
+      "origin": "Chennai",
+      "source": "Chennai",
+      "budget": 40000,
+      "conversation_id": "conv-1790578093785",
+      "last_packages": [
+        {
+          "id": 40,
+          "title": "Vietnam Ha Long Bay Overnight Cruise from Chennai",
+          "source": "Chennai",
+          "origin": "Chennai",
+          "destination": "Hanoi, Ha Long Bay & Da Nang, Vietnam",
+          "destination_type": "International",
+          "category": "Standard",
+          "amount": 37000.0,
+          "starting_price": 37000.0,
+          "price_per_person": 37000.0,
+          "rating": 4.7,
+          "reviews_count": 205,
+          "transport": "Flight via Bangkok/Kuala Lumpur + Cruise",
+          "hotel_category": "4-Star Hotel in Hanoi Old Quarter + Overnight Ha Long Cruise",
+          "meals": "Buffet Breakfast & Fresh Seafood Cruise Lunches",
+          "duration_days": 6,
+          "duration_nights": 5,
+          "available_seats": 16,
+          "description": "Top trending international holiday from Chennai. Overnight luxury cruise among 2,000 limestone karst islands in Ha Long Bay, kayaking through caves, Golden Hands Bridge in Ba Na Hills, and Hanoi street food.",
+          "image_url": "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "inclusions": [
+            "Selected Accommodation (4-Star Hotel in Hanoi Old Quarter + Overnight Ha Long Cruise)",
+            "Buffet Breakfast & Fresh Seafood Cruise Lunches",
+            "Verified Flight via Bangkok/Kuala Lumpur + Cruise from Chennai",
+            "All Government Road / Airport Taxes & Permits",
+            "Dedicated 24/7 Lyan Travels Trip Coordinator"
+          ],
+          "exclusions": [
+            "Personal shopping & souvenirs",
+            "Optional adventure activities not in itinerary",
+            "Travel insurance (can be added at checkout)"
+          ],
+          "cancellation_policy": "Full refund up to 48 hours prior to trip departure. 70% refund thereafter.",
+          "itinerary": [
+            {
+              "day": 1,
+              "title": "Departure from Chennai & Arrival Check-in",
+              "activities": [
+                "Pickup from designated point / airport in Chennai",
+                "Welcome transfer to property",
+                "Check-in & evening leisure walk"
+              ]
+            },
+            {
+              "day": 2,
+              "title": "Sightseeing & Key Highlights Tour",
+              "activities": [
+                "Breakfast at stay",
+                "Guided full-day excursion to premier viewpoints",
+                "Sunset photography and local market tasting"
+              ]
+            },
+            {
+              "day": 3,
+              "title": "Adventure / Leisure & Local Culture",
+              "activities": [
+                "Optional adventure sports or heritage walk",
+                "Traditional regional lunch",
+                "Scenic evening cafe / beach visit"
+              ]
+            },
+            {
+              "day": 4,
+              "title": "Return Transfer to Chennai",
+              "activities": [
+                "Farewell breakfast",
+                "Check-out and souvenir shopping",
+                "Safe transit back to Chennai"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 36,
+          "title": "Thailand Coral Island & Bangkok Temples from Chennai",
+          "source": "Chennai",
+          "origin": "Chennai",
+          "destination": "Bangkok & Pattaya, Thailand",
+          "destination_type": "International",
+          "category": "Economy",
+          "amount": 28000.0,
+          "starting_price": 28000.0,
+          "price_per_person": 28000.0,
+          "rating": 4.7,
+          "reviews_count": 153,
+          "transport": "Direct Flight (MAA-BKK) + AC Coach",
+          "hotel_category": "3-Star Deluxe Beach Resort in Pattaya + Bangkok Hotel",
+          "meals": "Buffet Breakfast & Coral Island Indian Lunch",
+          "duration_days": 5,
+          "duration_nights": 4,
+          "available_seats": 12,
+          "description": "Unbeatable value international trip departing from Chennai. Speedboat to Coral Island with parasailing, Alcazar Cabaret Show, Golden Buddha & Marble Temple, and Chatuchak shopping.",
+          "image_url": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "inclusions": [
+            "Selected Accommodation (3-Star Deluxe Beach Resort in Pattaya + Bangkok Hotel)",
+            "Buffet Breakfast & Coral Island Indian Lunch",
+            "Verified Direct Flight (MAA-BKK) + AC Coach from Chennai",
+            "All Government Road / Airport Taxes & Permits",
+            "Dedicated 24/7 Lyan Travels Trip Coordinator"
+          ],
+          "exclusions": [
+            "Personal shopping & souvenirs",
+            "Optional adventure activities not in itinerary",
+            "Travel insurance (can be added at checkout)"
+          ],
+          "cancellation_policy": "Full refund up to 48 hours prior to trip departure. 70% refund thereafter.",
+          "itinerary": [
+            {
+              "day": 1,
+              "title": "Departure from Chennai & Arrival Check-in",
+              "activities": [
+                "Pickup from designated point / airport in Chennai",
+                "Welcome transfer to property",
+                "Check-in & evening leisure walk"
+              ]
+            },
+            {
+              "day": 2,
+              "title": "Sightseeing & Key Highlights Tour",
+              "activities": [
+                "Breakfast at stay",
+                "Guided full-day excursion to premier viewpoints",
+                "Sunset photography and local market tasting"
+              ]
+            },
+            {
+              "day": 3,
+              "title": "Adventure / Leisure & Local Culture",
+              "activities": [
+                "Optional adventure sports or heritage walk",
+                "Traditional regional lunch",
+                "Scenic evening cafe / beach visit"
+              ]
+            },
+            {
+              "day": 4,
+              "title": "Return Transfer to Chennai",
+              "activities": [
+                "Farewell breakfast",
+                "Check-out and souvenir shopping",
+                "Safe transit back to Chennai"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 34,
+          "title": "Singapore Universal Studios & Gardens by the Bay from Chennai",
+          "source": "Chennai",
+          "origin": "Chennai",
+          "destination": "Singapore City & Sentosa Island",
+          "destination_type": "International",
+          "category": "Standard",
+          "amount": 40000.0,
+          "starting_price": 40000.0,
+          "price_per_person": 40000.0,
+          "rating": 4.9,
+          "reviews_count": 127,
+          "transport": "Direct Flight (MAA/TRZ/CJB-SIN) + MRT Card & Cabs",
+          "hotel_category": "4-Star City Hotel near Clarke Quay / Orchard",
+          "meals": "Buffet Breakfast Included",
+          "duration_days": 5,
+          "duration_nights": 4,
+          "available_seats": 28,
+          "description": "Seamless international trip from Chennai. Includes Universal Studios Singapore all-day pass, Gardens by the Bay Cloud Forest & Flower Dome, Sentosa Cable Car, and Marina Bay light show.",
+          "image_url": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "inclusions": [
+            "Selected Accommodation (4-Star City Hotel near Clarke Quay / Orchard)",
+            "Buffet Breakfast Included",
+            "Verified Direct Flight (MAA/TRZ/CJB-SIN) + MRT Card & Cabs from Chennai",
+            "All Government Road / Airport Taxes & Permits",
+            "Dedicated 24/7 Lyan Travels Trip Coordinator"
+          ],
+          "exclusions": [
+            "Personal shopping & souvenirs",
+            "Optional adventure activities not in itinerary",
+            "Travel insurance (can be added at checkout)"
+          ],
+          "cancellation_policy": "Full refund up to 48 hours prior to trip departure. 70% refund thereafter.",
+          "itinerary": [
+            {
+              "day": 1,
+              "title": "Departure from Chennai & Arrival Check-in",
+              "activities": [
+                "Pickup from designated point / airport in Chennai",
+                "Welcome transfer to property",
+                "Check-in & evening leisure walk"
+              ]
+            },
+            {
+              "day": 2,
+              "title": "Sightseeing & Key Highlights Tour",
+              "activities": [
+                "Breakfast at stay",
+                "Guided full-day excursion to premier viewpoints",
+                "Sunset photography and local market tasting"
+              ]
+            },
+            {
+              "day": 3,
+              "title": "Adventure / Leisure & Local Culture",
+              "activities": [
+                "Optional adventure sports or heritage walk",
+                "Traditional regional lunch",
+                "Scenic evening cafe / beach visit"
+              ]
+            },
+            {
+              "day": 4,
+              "title": "Return Transfer to Chennai",
+              "activities": [
+                "Farewell breakfast",
+                "Check-out and souvenir shopping",
+                "Safe transit back to Chennai"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 33,
+          "title": "Kuala Lumpur Petronas & Genting Highlands from Chennai",
+          "source": "Chennai",
+          "origin": "Chennai",
+          "destination": "Kuala Lumpur & Genting Highlands, Malaysia",
+          "destination_type": "International",
+          "category": "Standard",
+          "amount": 33000.0,
+          "starting_price": 33000.0,
+          "price_per_person": 33000.0,
+          "rating": 4.8,
+          "reviews_count": 114,
+          "transport": "Direct Flight (MAA/TRZ-KUL) + Express Coach",
+          "hotel_category": "4-Star Hotel in Bukit Bintang / City Centre",
+          "meals": "Buffet Breakfast & Genting Cable Car Ticket",
+          "duration_days": 5,
+          "duration_nights": 4,
+          "available_seats": 27,
+          "description": "Popular international tour from Chennai. Petronas Twin Towers observation deck, Batu Caves rainbow steps, Genting SkyWorlds Theme Park, and street food at Jalan Alor.",
+          "image_url": "https://images.unsplash.com/photo-1596422846543-75c6fc197f07?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "inclusions": [
+            "Selected Accommodation (4-Star Hotel in Bukit Bintang / City Centre)",
+            "Buffet Breakfast & Genting Cable Car Ticket",
+            "Verified Direct Flight (MAA/TRZ-KUL) + Express Coach from Chennai",
+            "All Government Road / Airport Taxes & Permits",
+            "Dedicated 24/7 Lyan Travels Trip Coordinator"
+          ],
+          "exclusions": [
+            "Personal shopping & souvenirs",
+            "Optional adventure activities not in itinerary",
+            "Travel insurance (can be added at checkout)"
+          ],
+          "cancellation_policy": "Full refund up to 48 hours prior to trip departure. 70% refund thereafter.",
+          "itinerary": [
+            {
+              "day": 1,
+              "title": "Departure from Chennai & Arrival Check-in",
+              "activities": [
+                "Pickup from designated point / airport in Chennai",
+                "Welcome transfer to property",
+                "Check-in & evening leisure walk"
+              ]
+            },
+            {
+              "day": 2,
+              "title": "Sightseeing & Key Highlights Tour",
+              "activities": [
+                "Breakfast at stay",
+                "Guided full-day excursion to premier viewpoints",
+                "Sunset photography and local market tasting"
+              ]
+            },
+            {
+              "day": 3,
+              "title": "Adventure / Leisure & Local Culture",
+              "activities": [
+                "Optional adventure sports or heritage walk",
+                "Traditional regional lunch",
+                "Scenic evening cafe / beach visit"
+              ]
+            },
+            {
+              "day": 4,
+              "title": "Return Transfer to Chennai",
+              "activities": [
+                "Farewell breakfast",
+                "Check-out and souvenir shopping",
+                "Safe transit back to Chennai"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "tools_called": [
+      "searchPackages"
+    ],
+    "booking_created": false,
+    "human_handoff": false,
+    "status": "Active",
+    "messages": [
+      {
+        "role": "user",
+        "text": "Find trips from Chennai under 40k"
+      },
+      {
+        "role": "assistant",
+        "text": "Here are the top matching packages for your journey:\n\n**1. Vietnam Ha Long Bay Overnight Cruise from Chennai**\n   - \ud83d\udccd **Route:** Chennai \u2794 Hanoi, Ha Long Bay & Da Nang, Vietnam (International)\n   - \ud83c\udff7\ufe0f **Category:** Standard | \u2b50 4.7/5\n   - \ud83d\udcb0 **Price:** \u20b937,000.0 per person\n   - \ud83d\ude80 **Transport:** Flight via Bangkok/Kuala Lumpur + Cruise | \ud83c\udfe8 4-Star Hotel in Hanoi Old Quarter + Overnight Ha Long Cruise\n\n**2. Thailand Coral Island & Bangkok Temples from Chennai**\n   - \ud83d\udccd **Route:** Chennai \u2794 Bangkok & Pattaya, Thailand (International)\n   - \ud83c\udff7\ufe0f **Category:** Economy | \u2b50 4.7/5\n   - \ud83d\udcb0 **Price:** \u20b928,000.0 per person\n   - \ud83d\ude80 **Transport:** Direct Flight (MAA-BKK) + AC Coach | \ud83c\udfe8 3-Star Deluxe Beach Resort in Pattaya + Bangkok Hotel\n\n**3. Singapore Universal Studios & Gardens by the Bay from Chennai**\n   - \ud83d\udccd **Route:** Chennai \u2794 Singapore City & Sentosa Island (International)\n   - \ud83c\udff7\ufe0f **Category:** Standard | \u2b50 4.9/5\n   - \ud83d\udcb0 **Price:** \u20b940,000.0 per person\n   - \ud83d\ude80 **Transport:** Direct Flight (MAA/TRZ/CJB-SIN) + MRT Card & Cabs | \ud83c\udfe8 4-Star City Hotel near Clarke Quay / Orchard\n\n**4. Kuala Lumpur Petronas & Genting Highlands from Chennai**\n   - \ud83d\udccd **Route:** Chennai \u2794 Kuala Lumpur & Genting Highlands, Malaysia (International)\n   - \ud83c\udff7\ufe0f **Category:** Standard | \u2b50 4.8/5\n   - \ud83d\udcb0 **Price:** \u20b933,000.0 per person\n   - \ud83d\ude80 **Transport:** Direct Flight (MAA/TRZ-KUL) + Express Coach | \ud83c\udfe8 4-Star Hotel in Bukit Bintang / City Centre\n\n\ud83d\udca1 *You can say **\"Book the second one\"**, **\"Which one has breakfast?\"**, or **\"Show cheaper ones\"** to refine!*"
+      }
+    ]
+  },
+  {
+    "conversation_id": "conv-1790577266138",
+    "customer_name": "Guest Traveler",
+    "customer_email": "guest@lyantravel.com",
+    "started_at": "2026-09-28T06:34:26Z",
+    "last_updated_at": "2026-09-28T06:34:26Z",
+    "intent": "search_trips",
+    "confidence": 0.5492,
+    "entities": {
+      "origin": "Chennai",
+      "source": "Chennai",
+      "budget": 40000,
+      "conversation_id": "conv-1790577266138",
+      "last_packages": [
+        {
+          "id": 17,
+          "title": "Kashmir Heaven on Earth: Srinagar, Gulmarg & Dal Lake",
+          "source": "Chennai",
+          "origin": "Chennai",
+          "destination": "Srinagar, Gulmarg & Pahalgam, Kashmir",
+          "destination_type": "Domestic",
+          "category": "Standard",
+          "amount": 28999.0,
+          "starting_price": 28999.0,
+          "price_per_person": 28999.0,
+          "rating": 4.9,
+          "reviews_count": 140,
+          "transport": "Flight from Chennai (via DEL) + Shikara & AC Cab",
+          "hotel_category": "Heritage Wooden Houseboat + 4-Star Hotel",
+          "meals": "Daily Breakfast & Kashmiri Dinners",
+          "duration_days": 6,
+          "duration_nights": 5,
+          "available_seats": 16,
+          "description": "Escape from Chennai heat to snow-clad Kashmir. Stay in a carved cedar houseboat on Dal Lake, glide in a Shikara, ride the Gulmarg Gondola cable car to snow peaks, and explore Betaab Valley in Pahalgam.",
+          "image_url": "https://images.unsplash.com/photo-1595815771614-ade9d652a65d?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "inclusions": [
+            "Return flights from Chennai to Srinagar",
+            "1 Night Dal Lake Houseboat stay",
+            "4 Nights premium hotel stays (Gulmarg, Pahalgam, Srinagar)",
+            "Shikara boat ride on Dal Lake",
+            "All transfers and sightseeing by private cab"
+          ],
+          "exclusions": [
+            "Gulmarg Gondola Phase 2 tickets (~\u20b91,000)",
+            "Pony rides in Pahalgam"
+          ],
+          "cancellation_policy": "Full refund up to 7 days before departure.",
+          "itinerary": [
+            {
+              "day": 1,
+              "title": "Chennai to Srinagar & Houseboat Stay",
+              "activities": [
+                "Flight arrival in Srinagar",
+                "Check-in at traditional Dal Lake Houseboat",
+                "Sunset Shikara ride through floating gardens"
+              ]
+            },
+            {
+              "day": 2,
+              "title": "Srinagar to Gulmarg Meadow of Flowers",
+              "activities": [
+                "Scenic drive to Gulmarg",
+                "Gulmarg Gondola cable car ride to Kongdoori & Apharwat",
+                "Snow activities & pine forest walk"
+              ]
+            },
+            {
+              "day": 3,
+              "title": "Gulmarg to Pahalgam Valley",
+              "activities": [
+                "Drive along saffron fields of Pampore",
+                "Avantipur temple ruins visit",
+                "Arrival in Pahalgam along Lidder River"
+              ]
+            },
+            {
+              "day": 4,
+              "title": "Pahalgam Betaab Valley & Aru Valley",
+              "activities": [
+                "Excursion to Betaab Valley (Bollywood fame)",
+                "Aru Valley scenic meadows",
+                "Evening stroll in Pahalgam market"
+              ]
+            },
+            {
+              "day": 5,
+              "title": "Pahalgam to Srinagar Mughal Gardens",
+              "activities": [
+                "Return to Srinagar city",
+                "Mughal Gardens: Shalimar Bagh & Nishat Bagh",
+                "Chashme Shahi spring & local craft shopping"
+              ]
+            },
+            {
+              "day": 6,
+              "title": "Flight back to Chennai",
+              "activities": [
+                "Transfer to Srinagar Airport",
+                "Flight returning to Chennai"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "title": "Bangkok & Phuket Beach Carnival",
+          "source": "Chennai",
+          "origin": "Chennai",
+          "destination": "Bangkok & Phuket, Thailand",
+          "destination_type": "International",
+          "category": "Standard",
+          "amount": 39999.0,
+          "starting_price": 39999.0,
+          "price_per_person": 39999.0,
+          "rating": 4.8,
+          "reviews_count": 182,
+          "transport": "Direct Flight from Chennai + Speedboat & AC Coach",
+          "hotel_category": "4-Star Hotels in Patong & Bangkok",
+          "meals": "Buffet Breakfast + Phi Phi Island Lunch",
+          "duration_days": 5,
+          "duration_nights": 4,
+          "available_seats": 22,
+          "description": "Direct flight from Chennai to Thailand. Stay by Patong Beach, take a full-day speedboat excursion to Phi Phi Islands & Maya Bay, and experience Bangkok Grand Palace and river cruise.",
+          "image_url": "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "inclusions": [
+            "Direct return flight Chennai-Bangkok",
+            "Domestic flight Bangkok-Phuket",
+            "4-Star hotels with daily breakfast",
+            "Phi Phi Islands speedboat tour with buffet lunch",
+            "Bangkok city temples tour",
+            "Free Visa on Arrival for Indian passport holders"
+          ],
+          "exclusions": [
+            "National Park Fee (~400 THB)",
+            "Dinners",
+            "Personal shopping"
+          ],
+          "cancellation_policy": "Full refund up to 7 days before departure.",
+          "itinerary": [
+            {
+              "day": 1,
+              "title": "Chennai to Phuket & Patong Beach",
+              "activities": [
+                "Fly from Chennai to Phuket",
+                "Hotel check-in near Patong Beach",
+                "Night walk on vibrant Bangla Road"
+              ]
+            },
+            {
+              "day": 2,
+              "title": "Phi Phi Islands & Maya Bay Speedboat Tour",
+              "activities": [
+                "Speedboat to Maya Bay (The Beach movie site)",
+                "Snorkeling at Pileh Lagoon",
+                "Buffet lunch on Phi Phi Don",
+                "Monkey Beach photo stop"
+              ]
+            },
+            {
+              "day": 3,
+              "title": "Phuket to Bangkok & Chao Phraya Cruise",
+              "activities": [
+                "Short flight to Bangkok",
+                "Check-in at central Bangkok hotel",
+                "Evening Chao Phraya River dinner cruise"
+              ]
+            },
+            {
+              "day": 4,
+              "title": "Bangkok Temples & Shopping",
+              "activities": [
+                "Wat Traimit (Golden Buddha) & Wat Pho",
+                "MBK Center & Platinum Fashion Mall shopping",
+                "Indra Square Indian food & electronics"
+              ]
+            },
+            {
+              "day": 5,
+              "title": "Return Flight to Chennai",
+              "activities": [
+                "Morning leisure breakfast",
+                "Transfer to Suvarnabhumi Airport",
+                "Direct flight back to Chennai"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 11,
+          "title": "Andaman Coral Paradise: Port Blair & Havelock Scuba",
+          "source": "Chennai",
+          "origin": "Chennai",
+          "destination": "Port Blair & Havelock Island, Andaman",
+          "destination_type": "Domestic",
+          "category": "Standard",
+          "amount": 36999.0,
+          "starting_price": 36999.0,
+          "price_per_person": 36999.0,
+          "rating": 4.9,
+          "reviews_count": 105,
+          "transport": "Direct 2-hour Flight (MAA-IXZ) + High-Speed Catamaran",
+          "hotel_category": "3-Star Deluxe Beach Resort",
+          "meals": "Daily Buffet Breakfast Included",
+          "duration_days": 6,
+          "duration_nights": 5,
+          "available_seats": 14,
+          "description": "Direct flight from Chennai across the Bay of Bengal to emerald Andaman. Relax at Radhanagar Beach (Asia's top-rated beach), scuba dive at Elephant Beach coral reef, and visit Cellular Jail.",
+          "image_url": "https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "inclusions": [
+            "Return flights from Chennai (MAA-IXZ)",
+            "Makruzz high-speed catamaran tickets",
+            "Beach resort stays in Port Blair & Havelock",
+            "Cellular Jail light & sound show",
+            "Radhanagar beach sunset tour"
+          ],
+          "exclusions": [
+            "Scuba diving ticket (~\u20b93,500)",
+            "Water sports at Elephant beach"
+          ],
+          "cancellation_policy": "Full refund up to 7 days before travel.",
+          "itinerary": [
+            {
+              "day": 1,
+              "title": "Chennai to Port Blair & Cellular Jail",
+              "activities": [
+                "Direct 2h 15m flight from Chennai",
+                "Check-in at Port Blair hotel",
+                "Cellular Jail visit and moving light & sound show"
+              ]
+            },
+            {
+              "day": 2,
+              "title": "High-Speed Cruise to Havelock Island",
+              "activities": [
+                "Board Makruzz catamaran to Havelock",
+                "Check-in at beachside resort",
+                "Evening at Radhanagar Beach Sunset"
+              ]
+            },
+            {
+              "day": 3,
+              "title": "Elephant Beach & Snorkeling / Scuba",
+              "activities": [
+                "Speedboat to Elephant Beach",
+                "Snorkeling amidst live coral reefs",
+                "Water sports: Sea walk, Jet Ski, Banana ride"
+              ]
+            },
+            {
+              "day": 4,
+              "title": "Kalapathar Beach & Return to Port Blair",
+              "activities": [
+                "Sunrise at serene Kalapathar Beach",
+                "Catamaran cruise back to Port Blair",
+                "Shopping for pearl jewellery & shell crafts"
+              ]
+            },
+            {
+              "day": 5,
+              "title": "Ross Island & North Bay Coral Island",
+              "activities": [
+                "Ferry to historic Ross Island (British penal colony ruins)",
+                "North Bay Island glass bottom boat ride"
+              ]
+            },
+            {
+              "day": 6,
+              "title": "Flight back to Chennai",
+              "activities": [
+                "Airport transfer for direct flight back to Chennai"
+              ]
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "title": "Spiritual Tamil Nadu: Rameswaram, Madurai & Kanyakumari",
+          "source": "Chennai",
+          "origin": "Chennai",
+          "destination": "Madurai, Rameswaram & Kanyakumari, Tamil Nadu",
+          "destination_type": "Domestic",
+          "category": "Budget",
+          "amount": 8999.0,
+          "starting_price": 8999.0,
+          "price_per_person": 8999.0,
+          "rating": 4.9,
+          "reviews_count": 210,
+          "transport": "AC Train / Sleeper Coach + Private Cab",
+          "hotel_category": "3-Star Pilgrim Hotels",
+          "meals": "Traditional South Indian Breakfasts",
+          "duration_days": 4,
+          "duration_nights": 3,
+          "available_seats": 30,
+          "description": "Comprehensive spiritual pilgrimage circuit across southern Tamil Nadu. Visit Madurai Meenakshi Temple, Pamban Sea Bridge, Rameswaram Ramanathaswamy 22 sacred wells, Dhanushkodi ghost town, and Kanyakumari sunrise.",
+          "image_url": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80",
+          "is_featured": false,
+          "popular_from_tn": true,
+          "inclusions": [
+            "AC transport throughout the circuit",
+            "Hotel stays in Madurai (1N), Rameswaram (1N), Kanyakumari (1N)",
+            "Daily traditional breakfast",
+            "Special Darshan assistance"
+          ],
+          "exclusions": [
+            "Special pooja ticket charges",
+            "Ferry ticket to Vivekananda Rock (~\u20b950)"
+          ],
+          "cancellation_policy": "Full refund up to 48 hours before departure.",
+          "itinerary": [
+            {
+              "day": 1,
+              "title": "Chennai to Madurai Meenakshi Temple",
+              "activities": [
+                "Morning arrival in Madurai",
+                "Darshan at historic Meenakshi Amman Temple",
+                "Thirumalai Nayakkar Palace light show"
+              ]
+            },
+            {
+              "day": 2,
+              "title": "Madurai to Rameswaram via Pamban Bridge",
+              "activities": [
+                "Drive across majestic Pamban Sea Bridge",
+                "Ramanathaswamy Temple 22 kund bath",
+                "Visit APJ Abdul Kalam Memorial"
+              ]
+            },
+            {
+              "day": 3,
+              "title": "Dhanushkodi Land's End & Kanyakumari Sunset",
+              "activities": [
+                "4x4 drive to Dhanushkodi ruins and Ram Setu point",
+                "Drive to Kanyakumari (Triveni Sangam)",
+                "Evening sunset view at Sunset Point"
+              ]
+            },
+            {
+              "day": 4,
+              "title": "Vivekananda Rock Memorial & Return",
+              "activities": [
+                "Early morning Kanyakumari sunrise",
+                "Ferry to Vivekananda Rock & Thiruvalluvar Statue",
+                "Evening departure back to Chennai"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "tools_called": [
+      "searchPackages"
+    ],
+    "booking_created": false,
+    "human_handoff": false,
+    "status": "Active",
+    "messages": [
+      {
+        "role": "user",
+        "text": "Find trips from Chennai under 40k"
+      },
+      {
+        "role": "assistant",
+        "text": "Here are the top matching packages for your journey:\n\n**1. Kashmir Heaven on Earth: Srinagar, Gulmarg & Dal Lake**\n   - \ud83d\udccd **Route:** Chennai \u2794 Srinagar, Gulmarg & Pahalgam, Kashmir (Domestic)\n   - \ud83c\udff7\ufe0f **Category:** Standard | \u2b50 4.9/5\n   - \ud83d\udcb0 **Price:** \u20b928,999.0 per person\n   - \ud83d\ude80 **Transport:** Flight from Chennai (via DEL) + Shikara & AC Cab | \ud83c\udfe8 Heritage Wooden Houseboat + 4-Star Hotel\n\n**2. Bangkok & Phuket Beach Carnival**\n   - \ud83d\udccd **Route:** Chennai \u2794 Bangkok & Phuket, Thailand (International)\n   - \ud83c\udff7\ufe0f **Category:** Standard | \u2b50 4.8/5\n   - \ud83d\udcb0 **Price:** \u20b939,999.0 per person\n   - \ud83d\ude80 **Transport:** Direct Flight from Chennai + Speedboat & AC Coach | \ud83c\udfe8 4-Star Hotels in Patong & Bangkok\n\n**3. Andaman Coral Paradise: Port Blair & Havelock Scuba**\n   - \ud83d\udccd **Route:** Chennai \u2794 Port Blair & Havelock Island, Andaman (Domestic)\n   - \ud83c\udff7\ufe0f **Category:** Standard | \u2b50 4.9/5\n   - \ud83d\udcb0 **Price:** \u20b936,999.0 per person\n   - \ud83d\ude80 **Transport:** Direct 2-hour Flight (MAA-IXZ) + High-Speed Catamaran | \ud83c\udfe8 3-Star Deluxe Beach Resort\n\n**4. Spiritual Tamil Nadu: Rameswaram, Madurai & Kanyakumari**\n   - \ud83d\udccd **Route:** Chennai \u2794 Madurai, Rameswaram & Kanyakumari, Tamil Nadu (Domestic)\n   - \ud83c\udff7\ufe0f **Category:** Budget | \u2b50 4.9/5\n   - \ud83d\udcb0 **Price:** \u20b98,999.0 per person\n   - \ud83d\ude80 **Transport:** AC Train / Sleeper Coach + Private Cab | \ud83c\udfe8 3-Star Pilgrim Hotels\n\n\ud83d\udca1 *You can say **\"Book the second one\"**, **\"Which one has breakfast?\"**, or **\"Show cheaper ones\"** to refine!*"
+      }
+    ]
+  },
+  {
+    "conversation_id": "conv-1790344918404",
+    "customer_name": "Alex Traveler",
+    "customer_email": "traveler_1790344918@test.com",
+    "started_at": "2026-09-25T14:01:58Z",
+    "last_updated_at": "2026-09-25T14:01:58Z",
+    "intent": "book_trip",
+    "confidence": 0.95,
+    "entities": {
+      "passengers": 2,
+      "selected_index": 2,
+      "package_id": 2,
+      "travel_date": "2026-11-20",
+      "conversation_id": "conv-1790344918404",
+      "target_package_id": 2
+    },
+    "tools_called": [
+      "checkAvailability",
+      "calculatePrice",
+      "createBooking"
+    ],
+    "booking_created": true,
+    "human_handoff": false,
+    "status": "Booking Completed",
+    "messages": [
+      {
+        "role": "user",
+        "text": "Book package 2 for 2 travelers on 2026-11-20"
+      },
+      {
+        "role": "assistant",
+        "text": "\ud83c\udf89 **Booking Confirmed by Lyan Travels AI Agent!**\n\nCongratulations Alex Traveler! Your itinerary for **Goa Beach Party & Heritage Forts Getaway** has been created in our operational booking engine.\n\n**\ud83d\udccb Reservation Voucher & PNR Details:**\n- **Booking ID / PNR:** `TRV-2026-8082`\n- **Origin:** Coimbatore\n- **Destination:** Goa, India\n- **Travel Date:** 2026-11-20\n- **Travelers:** 2 Guest(s)\n- **Category:** Standard\n- **Total Amount:** \u20b952,497.90 (Inclusive of GST)\n- **Status:** Confirmed \u2705\n\n\u2728 *This booking is now visible in your **Customer Dashboard**, **Admin Dashboard**, and **My Trips**!*"
+      }
+    ]
+  },
+  {
+    "conversation_id": "conv-1790344918164",
+    "customer_name": "Guest Traveler",
+    "customer_email": "guest@lyantravel.com",
+    "started_at": "2026-09-25T14:01:58Z",
+    "last_updated_at": "2026-09-25T14:01:58Z",
+    "intent": "search_trips",
+    "confidence": 0.5761,
+    "entities": {
+      "destination": "Goa",
+      "conversation_id": "conv-1790344918164",
+      "last_packages": [
+        {
+          "id": 2,
+          "title": "Goa Beach Party & Heritage Forts Getaway",
+          "source": "Coimbatore",
+          "origin": "Coimbatore",
+          "destination": "Goa, India",
+          "destination_type": "Domestic",
+          "category": "Standard",
+          "amount": 24999.0,
+          "starting_price": 24999.0,
+          "price_per_person": 24999.0,
+          "rating": 4.8,
+          "reviews_count": 98,
+          "transport": "Connecting Flight via BLR + Private Cab",
+          "hotel_category": "4-Star Beach Resort",
+          "meals": "Buffet Breakfast Included",
+          "duration_days": 5,
+          "duration_nights": 4,
+          "available_seats": 12,
+          "description": "Fly from Coimbatore to Goa for 5 days of sun, sand, beach shacks, historic Portuguese churches, water sports at Baga Beach, and an evening sunset cruise on the Mandovi River.",
+          "image_url": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80",
+          "is_featured": true,
+          "popular_from_tn": true,
+          "inclusions": [
+            "Return flights (CJB-GOI)",
+            "4-Star North Goa Beach Resort",
+            "Daily buffet breakfast",
+            "Full day North Goa & South Goa cab",
+            "Mandovi River Cruise tickets"
+          ],
+          "exclusions": [
+            "Water sports fees",
+            "Nightclub entry charges",
+            "Meals other than breakfast"
+          ],
+          "cancellation_policy": "Free cancellation 7 days before departure. 50% airline fee within 7 days.",
+          "itinerary": [
+            {
+              "day": 1,
+              "title": "Arrival in Goa & Beach Leisure",
+              "activities": [
+                "Airport reception and transfer to resort",
+                "Welcome drink & check-in",
+                "Sunset cocktail at Calangute Beach"
+              ]
+            },
+            {
+              "day": 2,
+              "title": "North Goa Forts & Water Sports",
+              "activities": [
+                "Visit historic Fort Aguada",
+                "Parasailing & jet ski at Baga Beach",
+                "Evening at Tito's Lane"
+              ]
+            },
+            {
+              "day": 3,
+              "title": "South Goa Heritage & Cathedrals",
+              "activities": [
+                "Basilica of Bom Jesus & Se Cathedral",
+                "Miramar beach walk",
+                "1-hour Mandovi River sunset cruise"
+              ]
+            },
+            {
+              "day": 4,
+              "title": "Dudhsagar Falls & Spice Plantation",
+              "activities": [
+                "Jeep safari to Dudhsagar Waterfalls",
+                "Traditional Goan buffet at spice farm",
+                "Flea market shopping in Anjuna"
+              ]
+            },
+            {
+              "day": 5,
+              "title": "Departure to Coimbatore",
+              "activities": [
+                "Relaxed breakfast & pool time",
+                "Souvenir shopping in Panaji",
+                "Airport drop for flight to Coimbatore"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "tools_called": [
+      "searchPackages"
+    ],
+    "booking_created": false,
+    "human_handoff": false,
+    "status": "Active",
+    "messages": [
+      {
+        "role": "user",
+        "text": "I want to visit Goa with flights"
+      },
+      {
+        "role": "assistant",
+        "text": "Here are the top matching packages for your journey:\n\n**1. Goa Beach Party & Heritage Forts Getaway**\n   - \ud83d\udccd **Route:** Coimbatore \u2794 Goa, India (Domestic)\n   - \ud83c\udff7\ufe0f **Category:** Standard | \u2b50 4.8/5\n   - \ud83d\udcb0 **Price:** \u20b924,999.0 per person\n   - \ud83d\ude80 **Transport:** Connecting Flight via BLR + Private Cab | \ud83c\udfe8 4-Star Beach Resort\n\n\ud83d\udca1 *You can say **\"Book the second one\"**, **\"Which one has breakfast?\"**, or **\"Show cheaper ones\"** to refine!*"
+      }
+    ]
+  },
+  {
+    "conversation_id": "conv-101",
+    "customer_name": "Alex Traveler",
+    "customer_email": "user@lyantravel.com",
+    "started_at": "2026-09-24T10:10:00Z",
+    "last_updated_at": "2026-09-24T10:15:00Z",
+    "intent": "support_handoff",
+    "confidence": 0.94,
+    "entities": {
+      "origin": "Chennai",
+      "destination": "Maldives",
+      "passengers": 2,
+      "budget": 80000
+    },
+    "tools_called": [
+      "searchPackages",
+      "getPackageDetails",
+      "createSupportRequest"
+    ],
+    "booking_created": false,
+    "human_handoff": true,
+    "status": "Handoff to Agent",
+    "messages": [
+      {
+        "role": "user",
+        "text": "I want a trip to Maldives from Chennai for 2 people around 80k."
+      },
+      {
+        "role": "assistant",
+        "text": "I found our 'Maldives Tropical Escape' package from Chennai at \u20b978,999 per person. It includes speedboat transfers and all meals."
+      },
+      {
+        "role": "user",
+        "text": "I want to talk to someone about special candlelight beach dinner."
+      },
+      {
+        "role": "assistant",
+        "text": "Certainly! I've connected you with our human travel consultant Sarah Connor. She will review your conversation and assist with your dining requests."
+      }
+    ]
+  },
+  {
+    "conversation_id": "conv-103",
+    "customer_name": "Siddharth Kumar",
+    "customer_email": "sid.chennai@example.com",
+    "started_at": "2026-09-25T09:40:00Z",
+    "last_updated_at": "2026-09-25T09:48:00Z",
+    "intent": "book_trip",
+    "confidence": 0.96,
+    "entities": {
+      "origin": "Chennai",
+      "destination": "Goa",
+      "passengers": 4,
+      "category": "Economy"
+    },
+    "tools_called": [
+      "searchPackages",
+      "checkAvailability",
+      "calculatePrice"
+    ],
+    "booking_created": true,
+    "human_handoff": false,
+    "status": "Booking In Progress",
+    "messages": [
+      {
+        "role": "user",
+        "text": "Find me an affordable trip from Chennai for 4 people."
+      },
+      {
+        "role": "assistant",
+        "text": "Sure! Are you looking for domestic options like Kerala or Goa, or international like Sri Lanka?"
+      },
+      {
+        "role": "user",
+        "text": "Domestic beach trip please."
+      },
+      {
+        "role": "assistant",
+        "text": "I found Goa Beach Party & Heritage Getaway (\u20b924,999) and Andaman Coral Paradise (\u20b936,999). Which one fits your style?"
+      },
+      {
+        "role": "user",
+        "text": "Goa trip looks great for 4 people."
+      },
+      {
+        "role": "assistant",
+        "text": "Total for 4 passengers is \u20b999,996 + 5% GST = \u20b91,04,995.80. Ready to proceed with booking details?"
+      }
+    ]
+  }
+]

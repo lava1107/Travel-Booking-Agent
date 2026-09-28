@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "user_id": 2,
+    "type": "booking",
+    "title": "Trip Confirmed: Goa Beach Vacation",
+    "message": "Your booking TRV-2026-5763 has been confirmed. Boarding passes and e-tickets are ready in your dashboard.",
+    "created_at": "2026-09-25T06:24:00Z",
+    "read": false
+  },
+  {
+    "id": 2,
+    "user_id": 2,
+    "type": "offer",
+    "title": "New Weekend Getaway from Chennai",
+    "message": "Special 15% discount on Ooty & Kodaikanal packages departing this weekend!",
+    "created_at": "2026-09-24T14:00:00Z",
+    "read": true
+  }
+]
