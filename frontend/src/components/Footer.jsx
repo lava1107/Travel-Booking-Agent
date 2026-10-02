@@ -43,8 +43,7 @@ export default function Footer() {
             <li><Link to="/explore" style={{ color: '#94a3b8' }}>🌏 Explore Destinations</Link></li>
             <li><Link to="/packages" style={{ color: '#94a3b8' }}>📦 All Travel Packages</Link></li>
             <li><Link to="/planner" style={{ color: '#94a3b8' }}>🗺️ AI Trip Planner</Link></li>
-            <li><Link to="/compare" style={{ color: '#94a3b8' }}>⚖️ Package Comparison</Link></li>
-            <li><Link to="/api-access" style={{ color: '#38bdf8', fontWeight: '700' }}>⚡ Developer REST API</Link></li>
+            <li><Link to="/payments" style={{ color: '#94a3b8' }}>💳 Payments & Invoices</Link></li>
             <li><Link to="/hotels" style={{ color: '#94a3b8' }}>🏨 Partner Hotels & Resorts</Link></li>
             <li><Link to="/offers" style={{ color: '#94a3b8' }}>🏷️ Seasonal Deals & Offers</Link></li>
           </ul>

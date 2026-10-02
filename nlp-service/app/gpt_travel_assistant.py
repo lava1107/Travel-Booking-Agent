@@ -16,6 +16,7 @@ DATA_DIR = os.path.join(os.path.dirname(__file__), "..", "data")
 AI_CONV_FILE = os.path.join(DATA_DIR, "ai_conversations.json")
 SUPPORT_FILE = os.path.join(DATA_DIR, "support_requests.json")
 DESTINATIONS_FILE = os.path.join(DATA_DIR, "destinations.json")
+HOSTELS_FILE = os.path.join(DATA_DIR, "hostels.json")
 
 
 class AITravelAgent:
@@ -225,6 +226,348 @@ class AITravelAgent:
             print(f"Error saving AI conversation log: {e}")
 
     # ==========================================
+    # DOMAIN KNOWLEDGE ENCYCLOPEDIA & DEEP DIVES
+    # ==========================================
+
+    def handle_website_inquiry(
+        self,
+        topic: str,
+        ctx: Dict[str, Any],
+        user: Optional[Dict[str, Any]],
+        raw_msg: str
+    ) -> Dict[str, Any]:
+        """Provides an exhaustive, structured guide to everything on the Lyan Travels platform."""
+        reply = (
+            "🌐 **Welcome to Lyan Travels — Travel Agent Management & Booking System**\n\n"
+            "Lyan Travels is an all-in-one travel intelligence platform built specifically for travelers departing from Tamil Nadu (Chennai, Coimbatore, Madurai, Trichy, Salem, Vellore) and across India.\n\n"
+            "Here is **everything** you can do on our website:\n\n"
+            "────────────────────────────────────────\n"
+            "### 🗺️ 1. Tour Package Explorer & Custom Itinerary Planner\n"
+            "- **Extensive Catalog:** 100+ curated domestic & international packages departing from major Tamil Nadu transit hubs.\n"
+            "- **Categories:** Budget, Economy, Standard, Premium, and Ultra-Luxury tiers.\n"
+            "- **Smart Search:** Filter by departure city, budget cap, duration, and theme (Beach, Hills, Heritage, Honeymoon, Wildlife, Adventure).\n"
+            "- **Custom Trip Planner:** Input your origin, destination, days, and traveler count to automatically build a custom day-by-day itinerary.\n\n"
+            "────────────────────────────────────────\n"
+            "### 🤖 2. Conversational AI Travel Concierge (Voice Enabled)\n"
+            "- **24/7 Machine Learning Travel Brain:** Multi-turn conversational agent with context tracking, intent classification, and NER.\n"
+            "- **🎙️ Speech-to-Text (Voice Input):** Tap the microphone button in the chat input bar to speak your destination or questions naturally!\n"
+            "- **🔊 Text-to-Speech (Voice Output):** Tap the speaker icon on any message to listen aloud, or turn on 'Auto-Voice' in the header for automatic speech readout.\n"
+            "- **Instant In-Chat Bookings:** Reserve tour packages right inside this chat window and receive official PNR boarding vouchers instantly.\n\n"
+            "────────────────────────────────────────\n"
+            "### 🏨 3. Backpacker Hostels & Youth Stays\n"
+            "- Direct partnerships with **Zostel**, **The Hosteller**, and certified boutique backpacker hostels across Goa, Kerala, Ooty, Kodaikanal, Manali, and Pondicherry.\n"
+            "- AC dorm beds and private pods starting from **₹499/night** with high-speed WiFi, cafes, and social events.\n\n"
+            "────────────────────────────────────────\n"
+            "### 🎫 4. My Bookings & Boarding Pass Dashboard\n"
+            "- Check live PNR status (`TRV-2026-XXX`), view travel dates, traveler rosters, and download digital e-tickets anytime in the **My Bookings** tab.\n\n"
+            "────────────────────────────────────────\n"
+            "### 💳 5. 100% Safe Payments\n"
+            "- **UPI:** Google Pay, PhonePe, Paytm, BHIM (instant zero-fee verification).\n"
+            "- **Cards:** Visa, MasterCard, RuPay (credit & debit cards).\n"
+            "- **Net Banking & EMI:** Zero-cost 3-month and 6-month EMI plans available on trips above ₹20,000.\n\n"
+            "────────────────────────────────────────\n"
+            "### 🛡️ 6. 48-Hour Free Cancellation & Full Refund\n"
+            "- Cancel any reservation up to 48 hours prior to departure for a **100% full refund** to your original payment method with zero hidden penalties.\n\n"
+            "────────────────────────────────────────\n"
+            "### 🎁 7. Active Promo Codes\n"
+            "- **`TAMILNADU10`** — Flat 10% instant discount for departures from any Tamil Nadu city.\n"
+            "- **`LYANFIRST`** — Flat ₹1,500 off your very first vacation booking.\n"
+            "- **`SUMMER25`** — 25% discount on Luxury and Honeymoon packages.\n\n"
+            "────────────────────────────────────────\n"
+            "### 👤 8. 24/7 Human Agent Concierge\n"
+            "- Need personalized travel consulting? Connect directly with Senior Consultant **Sarah Connor** (+91 98400 11223) with a single tap!\n\n"
+            "💡 *What would you like to explore next? You can ask me **'Tell me everything about Goa'**, **'Find trips from Chennai under 40k'**, or **'Hostels in Kerala'**!*"
+        )
+        return {
+            "intent": "help",
+            "confidence": 0.99,
+            "entities": {},
+            "context": ctx,
+            "reply": reply,
+            "packages": [],
+            "suggestions": [
+                "Everything about Goa",
+                "Trips from Chennai under 40k",
+                "Hostels & Dorms",
+                "Talk to human agent"
+            ]
+        }
+
+    def handle_destination_deep_dive(
+        self,
+        dest_name: str,
+        ctx: Dict[str, Any],
+        user: Optional[Dict[str, Any]],
+        raw_msg: str
+    ) -> Dict[str, Any]:
+        """Provides an exhaustive, structured encyclopedia guide and packages for any destination."""
+        dest_clean = dest_name.strip().title()
+        if "Goa" in dest_clean or "goa" in raw_msg.lower():
+            dest_clean = "Goa"
+
+        origin = ctx.get("origin") or "Chennai"
+
+        # Load live packages matching this destination
+        pkgs = travel_catalog.get_all(destination=dest_clean, limit=6)
+        if not pkgs:
+            pkgs = travel_catalog.get_all(destination="Goa", limit=6)
+
+        ctx["last_packages"] = pkgs[:4]
+
+        # Format package lines
+        pkg_summaries = []
+        for i, p in enumerate(pkgs[:4], 1):
+            pkg_summaries.append(
+                f"**{i}. {p['title']}**\n"
+                f"   - 📍 **Route:** {p.get('source', 'Chennai')} ➔ {p['destination']} ({p.get('destination_type', 'Domestic')})\n"
+                f"   - 💰 **Price:** ₹{int(p['amount']):,} per person | ⭐ {p.get('rating', 4.9)}/5\n"
+                f"   - ⏱️ **Duration:** {p.get('duration', '5D / 4N')} | 🏷️ **Tier:** {p.get('category', 'Standard')}\n"
+                f"   - 🚀 **Transport:** {p.get('transport', 'Flight + Cab')} | 🏨 **Stay:** {p.get('hotel_category', '4-Star Beach Resort')}\n"
+                f"   - 🍳 **Meals:** {p.get('meals', 'Buffet Breakfast & Dinner Cruise')}"
+            )
+        pkg_text = "\n\n".join(pkg_summaries)
+
+        if dest_clean.lower() == "goa":
+            reply = (
+                "🌴 **Complete Travel & Vacation Guide: Goa, India** 🌴\n\n"
+                "Welcome to Goa — India's premier coastal haven! Where 450 years of Portuguese heritage, sun-drenched Arabian Sea beaches, swaying coconut palms, vibrant beach shacks, and a relaxed 'Susegad' lifestyle meet thrilling water sports and electrifying nightlife.\n\n"
+                "Here is **everything** you need to know about Goa and our top travel offerings:\n\n"
+                "────────────────────────────────────────\n"
+                "### 📦 1. Curated Tour Packages (Departing from Tamil Nadu)\n"
+                f"We offer direct departures from **Chennai, Coimbatore, Madurai, Trichy, and Salem**:\n\n"
+                f"{pkg_text}\n\n"
+                "────────────────────────────────────────\n"
+                "### 🏖️ 2. North Goa vs. South Goa Sightseeing Highlights\n"
+                "**North Goa (Buzzing Beaches, Water Sports & Nightlife):**\n"
+                "- **Baga & Calangute Beach:** High-energy water sports (Parasailing, Jet Ski, Banana Boat), famous beach shacks (Britto's, Souza Lobo).\n"
+                "- **Anjuna & Vagator Beach:** Stunning red laterite cliffs, sunset views, Curlies Beach Shack, and Wednesday Anjuna Flea Market.\n"
+                "- **Chapora Fort:** Panoramic clifftop fortress made legendary by *Dil Chahta Hai* overlooking Vagator bay.\n"
+                "- **Fort Aguada & Lighthouse:** 17th-century Portuguese coastal bastion with pristine Arabian Sea views.\n"
+                "- **Tito's Lane:** World-renowned party promenade featuring Club Tito's and Café Mambo.\n\n"
+                "**South Goa (Pristine Shores, Heritage & Peaceful Nature):**\n"
+                "- **Palolem & Butterfly Beach:** Crescent-shaped beach with gentle turquoise waves, kayaking, and dolphin spotting.\n"
+                "- **Colva & Benaulim Beach:** Miles of powdery white sand, serene sunsets, and luxury beachfront dining.\n"
+                "- **Dudhsagar Waterfalls:** Majestic 310m 4-tiered waterfall in Bhagwan Mahavir Sanctuary with exhilarating 4x4 Jeep safaris.\n"
+                "- **Old Goa Basilicas (UNESCO World Heritage):** Basilica of Bom Jesus (sacred relics of St. Francis Xavier) and Se Cathedral.\n"
+                "- **Sahakari Spice Plantation:** Traditional guided walk with organic spice tastings, elephant bathing, and authentic Goan buffet lunch.\n\n"
+                "────────────────────────────────────────\n"
+                "### 🏨 3. Accommodation & Hostel Options\n"
+                "- **Backpacker & Youth Hostels (from ₹799/night):**\n"
+                "  • *Zostel Morjim:* Beachfront location, rooftop cafe, surf lessons, vibrant community.\n"
+                "  • *The Hosteller Anjuna:* Poolside lounge, container pods, game room, organized pub crawls.\n"
+                "- **Luxury Beachfront Resorts (from ₹9,500/night):**\n"
+                "  • *Taj Exotica Resort & Spa (Benaulim):* 56 acres of Mediterranean luxury with private beach.\n"
+                "  • *W Goa (Vagator):* Trendy cliffside luxury, rock pool, and world-class spa.\n"
+                "  • *Caravela Beach Resort (Varca):* Pristine white-sand direct access with golf putting green.\n\n"
+                "────────────────────────────────────────\n"
+                "### ✈️ 4. Travel & Transit Connectivity from Tamil Nadu\n"
+                "- **Direct Flights:** Daily non-stop flights from Chennai (MAA) & Coimbatore (CJB) to Goa Dabolim (GOI) / Manohar Mopa (GOX) (1h 45m).\n"
+                "- **Express Trains:** Vasco Da Gama Express departing from Chennai Central & Coimbatore Junction.\n"
+                "- **Luxury Sleeper Buses:** Daily overnight multi-axle Volvo & Scania AC sleepers from Chennai, Coimbatore, and Bengaluru.\n\n"
+                "────────────────────────────────────────\n"
+                "### 🏄 5. Must-Do Activities & Experiences\n"
+                "- **Scuba Diving & Snorkeling:** Explore coral reefs and shipwrecks at Grande Island with certified PADI divemasters.\n"
+                "- **Mandovi River Sunset Dinner Cruise:** 2-hour cruise with live Goan folk dance (Dekhni & Fugdi), DJ, and open buffet.\n"
+                "- **Offshore Floating Casinos:** Deltin Royale & Casino Pride for gaming, entertainment, and gourmet dining.\n\n"
+                "────────────────────────────────────────\n"
+                "### 💡 6. Best Season & Local Travel Advice\n"
+                "- **Peak Season (October to April):** Perfect beach weather (28°C–32°C), all shacks open, water sports operating.\n"
+                "- **Monsoon Season (June to September):** Emerald-green countryside, Dudhsagar Falls in full power, 40% cheaper luxury resorts.\n"
+                "- **Scooter Rentals:** Available everywhere for ₹350–₹500/day (helmets & valid license mandatory).\n\n"
+                "💡 *You can click **'Book This'** on any package below, or say **'Book the first one'**, **'Show hostels in Goa'**, or **'Talk to human agent'**!*"
+            )
+
+            suggestions = [
+                "Book package 1",
+                "Show hostels in Goa",
+                "Which package has flights?",
+                "Talk to human agent"
+            ]
+        elif dest_clean.lower() in ["kerala", "munnar", "alleppey"]:
+            reply = (
+                "🌿 **Complete Travel & Vacation Guide: Kerala & Munnar** 🌿\n\n"
+                "Welcome to God's Own Country! Celebrated for mist-covered tea plantations in Munnar, serene emerald backwaters in Alleppey, Ayurvedic wellness sanctuaries, and dramatic ocean cliffs in Varkala.\n\n"
+                "────────────────────────────────────────\n"
+                "### 📦 1. Curated Kerala Tour Packages\n"
+                f"{pkg_text}\n\n"
+                "────────────────────────────────────────\n"
+                "### 🏞️ 2. Top Sightseeing & Highlights\n"
+                "- **Munnar Tea Valleys:** Sprawling Tata Tea Museum, Mattupetty Dam, Top Station, and Nilgiri Tahr sightings at Eravikulam National Park.\n"
+                "- **Alleppey Backwaters:** Private traditional Kettuvallam houseboats with onboard chefs serving fresh Karimeen fish fry.\n"
+                "- **Varkala Cliff Beach:** Red laterite cliffs overlooking the Arabian Sea, yoga retreats, and sunset cafes.\n"
+                "- **Thekkady (Periyar):** Bamboo rafting, spice plantation walks, and wild elephant boat safaris.\n\n"
+                "────────────────────────────────────────\n"
+                "### 🏨 3. Hostels & Resorts\n"
+                "- *Zostel Munnar & The Lost Hostels Varkala Beach Cliff* (Dorms from ₹650/night).\n"
+                "- *3-Star & 5-Star Luxury:* Fragrant Nature Resort Munnar, Kumarakom Lake Resort.\n\n"
+                "────────────────────────────────────────\n"
+                "### ✈️ 4. Connectivity from Tamil Nadu\n"
+                "- Vande Bharat Express & daily trains from Chennai Central, Coimbatore, and Madurai to Ernakulam / Kottayam.\n"
+                "- Direct luxury AC sleeper buses from Chennai, Coimbatore, and Salem.\n\n"
+                "💡 *Click **'Book This'** on any package card below to confirm with AI Concierge!*"
+            )
+            suggestions = [
+                "Book package 1",
+                "Houseboat details",
+                "Hostels in Kerala",
+                "Talk to human agent"
+            ]
+        elif dest_clean.lower() in ["ooty", "coonoor"]:
+            reply = (
+                "🌲 **Complete Travel & Vacation Guide: Ooty & Coonoor** 🌲\n\n"
+                "Welcome to the Queen of Hill Stations! Nestled in the Nilgiri Hills of Tamil Nadu at an elevation of 2,240m, famed for cool climate, eucalyptus forests, and English colonial charm.\n\n"
+                "────────────────────────────────────────\n"
+                "### 📦 1. Curated Ooty Tour Packages\n"
+                f"{pkg_text}\n\n"
+                "────────────────────────────────────────\n"
+                "### 🚂 2. Sightseeing Highlights\n"
+                "- **UNESCO Nilgiri Mountain Toy Train:** Century-old steam railway bridging Mettupalayam, Coonoor, and Ooty through 16 tunnels.\n"
+                "- **Doddabetta Peak:** Highest point in the Nilgiris (2,637m) with telescope house.\n"
+                "- **Ooty Botanical Gardens & Rose Garden:** 20,000+ varieties of exotic flora.\n"
+                "- **Pykara Falls & Speed Boating:** Pine forests and cascading mountain streams.\n"
+                "- **Homemade Chocolate & Tea Shopping:** Nilgiri CTC tea and hazelnut fudges.\n\n"
+                "────────────────────────────────────────\n"
+                "### 🚗 3. Transit from Tamil Nadu\n"
+                "- Coimbatore Airport/Railway Station (85 km) with direct private cab transfers.\n"
+                "- Overnight luxury sleeper buses departing daily from Chennai, Madurai, and Trichy.\n\n"
+                "💡 *Click **'Book This'** below to reserve your mountain getaway!*"
+            )
+            suggestions = [
+                "Book package 1",
+                "Toy train tickets",
+                "Ooty weekend trips",
+                "Talk to human agent"
+            ]
+        elif dest_clean.lower() in ["andaman", "havelock"]:
+            reply = (
+                "🏝️ **Complete Travel & Vacation Guide: Andaman Islands** 🏝️\n\n"
+                "India's tropical paradise in the Bay of Bengal, featuring Asia's finest turquoise beaches, vibrant living coral reefs, and profound freedom history.\n\n"
+                "────────────────────────────────────────\n"
+                "### 📦 1. Curated Andaman Tour Packages\n"
+                f"{pkg_text}\n\n"
+                "────────────────────────────────────────\n"
+                "### 🌊 2. Sightseeing & Activities\n"
+                "- **Radhanagar Beach (Havelock):** Awarded Asia's Best Beach by Time Magazine with white sands and calm sunset waters.\n"
+                "- **Scuba Diving & Snorkeling at Elephant Beach:** Certified PADI dive with clownfish, sea turtles, and corals.\n"
+                "- **Cellular Jail (Port Blair):** Historic Kaala Paani memorial with moving evening Light & Sound narration.\n"
+                "- **Makruzz Catamaran:** High-speed luxury ferry cruising between Port Blair, Havelock, and Neil Island.\n\n"
+                "────────────────────────────────────────\n"
+                "### ✈️ 3. Transit from Tamil Nadu\n"
+                "- Daily non-stop 2-hour flights from Chennai International Airport (MAA) to Port Blair Veer Savarkar Airport (IXZ).\n\n"
+                "💡 *Click **'Book This'** below to reserve your island getaway!*"
+            )
+            suggestions = [
+                "Book package 1",
+                "Scuba diving details",
+                "Flights from Chennai",
+                "Talk to human agent"
+            ]
+        elif dest_clean.lower() in ["dubai", "uae"]:
+            reply = (
+                "🏙️ **Complete Travel & Vacation Guide: Dubai & Abu Dhabi** 🏙️\n\n"
+                "The futuristic metropolis of world records, desert adventures, luxury shopping, and golden skylines.\n\n"
+                "────────────────────────────────────────\n"
+                "### 📦 1. Curated Dubai Tour Packages\n"
+                f"{pkg_text}\n\n"
+                "────────────────────────────────────────\n"
+                "### 🌟 2. Top Attractions\n"
+                "- **Burj Khalifa 'At The Top':** Observation decks on 124th & 148th floors.\n"
+                "- **Desert Dune Safari:** 4x4 red dune bashing, camel rides, belly dance, and BBQ dinner under the stars.\n"
+                "- **Marina Dhow Dinner Cruise:** Luxury traditional boat gliding along Dubai Marina.\n"
+                "- **Museum of the Future & Dubai Mall:** Indoor Olympic ice rink and giant aquarium.\n\n"
+                "────────────────────────────────────────\n"
+                "### ✈️ 3. Transit from Tamil Nadu\n"
+                "- Direct daily 4-hour flights from Chennai (MAA) and Coimbatore (CJB) to Dubai (DXB).\n"
+                "- Fast 48-hour UAE tourist visa processing included in our international packages.\n\n"
+                "💡 *Click **'Book This'** below to book your Dubai holiday!*"
+            )
+            suggestions = [
+                "Book package 1",
+                "Visa requirements",
+                "Desert safari details",
+                "Talk to human agent"
+            ]
+        elif dest_clean.lower() in ["singapore"]:
+            reply = (
+                "🦁 **Complete Travel & Vacation Guide: Singapore** 🦁\n\n"
+                "The world's premier Garden City blending futuristic architecture, family theme parks, and Michelin-star street food.\n\n"
+                "────────────────────────────────────────\n"
+                "### 📦 1. Curated Singapore Tour Packages\n"
+                f"{pkg_text}\n\n"
+                "────────────────────────────────────────\n"
+                "### 🎡 2. Top Attractions\n"
+                "- **Universal Studios Singapore:** Sentosa Island's world-class theme park with Transformers and Battlestar Galactica.\n"
+                "- **Gardens by the Bay:** Supertree Grove light show, Cloud Forest indoor waterfall, and Flower Dome.\n"
+                "- **Marina Bay Sands SkyPark:** 57th floor panoramic observation deck.\n"
+                "- **Singapore Night Safari:** World's first nocturnal wildlife park.\n\n"
+                "────────────────────────────────────────\n"
+                "### ✈️ 3. Transit from Tamil Nadu\n"
+                "- Direct daily flights from Chennai (MAA) and Trichy (TRZ) to Singapore Changi Airport (SIN) (3h 50m).\n\n"
+                "💡 *Click **'Book This'** below to lock in your Singapore trip!*"
+            )
+            suggestions = [
+                "Book package 1",
+                "Universal Studios pass",
+                "Flights from Trichy/Chennai",
+                "Talk to human agent"
+            ]
+        elif dest_clean.lower() in ["maldives"]:
+            reply = (
+                "🌊 **Complete Travel & Vacation Guide: Maldives Islands** 🌊\n\n"
+                "The ultimate tropical luxury retreat featuring turquoise lagoons, overwater villas with private glass floors, and world-class marine life.\n\n"
+                "────────────────────────────────────────\n"
+                "### 📦 1. Curated Maldives Tour Packages\n"
+                f"{pkg_text}\n\n"
+                "────────────────────────────────────────\n"
+                "### 🤿 2. Highlights & Inclusions\n"
+                "- **Overwater Pool Villas:** Direct ladder into coral lagoons.\n"
+                "- **Speedboat / Seaplane Airport Transfers:** Breathtaking aerial views from Velana International Airport.\n"
+                "- **All-Inclusive Dining:** Daily gourmet buffet meals and sunset cocktails.\n"
+                "- **Free 30-Day Visa on Arrival** for Indian passport holders.\n\n"
+                "────────────────────────────────────────\n"
+                "### ✈️ 3. Transit from Tamil Nadu\n"
+                "- Quick direct flights from Chennai (MAA) and Kochi to Male (MLE) (under 2 hours).\n\n"
+                "💡 *Click **'Book This'** below to confirm your luxury villa!*"
+            )
+            suggestions = [
+                "Book package 1",
+                "Overwater villa rates",
+                "Honeymoon complimentary perks",
+                "Talk to human agent"
+            ]
+        else:
+            # Generic smart destination fallback
+            reply = (
+                f"🌍 **Complete Travel & Vacation Guide: {dest_clean}** 🌍\n\n"
+                f"Here is our complete vacation breakdown for **{dest_clean}**, featuring top-rated packages departing from Tamil Nadu ({origin}):\n\n"
+                "────────────────────────────────────────\n"
+                f"### 📦 1. Curated Vacation Packages\n"
+                f"{pkg_text}\n\n"
+                "────────────────────────────────────────\n"
+                f"### ✈️ 2. Transport & Accommodation Details\n"
+                f"- Verified transport from **{origin}** (Direct Flights / AC Sleeper Coach / Vande Bharat Express).\n"
+                f"- Accommodations: Deluxe 3-Star and 4-Star resorts with daily buffet breakfast.\n"
+                f"- 24/7 on-trip emergency support and dedicated local sightseeing guide.\n\n"
+                f"💡 *Click **'Book This'** below or ask me to customize this journey for you!*"
+            )
+            suggestions = [
+                "Book package 1",
+                "Which one has breakfast?",
+                "Change departure city",
+                "Talk to human agent"
+            ]
+
+        return {
+            "intent": "search_trips",
+            "confidence": 0.99,
+            "entities": {"destination": dest_clean},
+            "context": ctx,
+            "reply": reply,
+            "packages": pkgs[:4],
+            "suggestions": suggestions
+        }
+
+    # ==========================================
     # CORE REASONING & RESPONSE GENERATION
     # ==========================================
 
@@ -262,7 +605,40 @@ class AITravelAgent:
         user_name = user["name"] if user else "Guest Traveler"
         user_email = user["email"] if user else "guest@lyantravel.com"
         conv_id = ctx.get("conversation_id") or f"conv-{int(time.time()*1000)}"
-        ctx["conversation_id"] = conv_id
+        # =========================================================
+        # INTENT 0A: WEBSITE & PLATFORM INQUIRY
+        # =========================================================
+        website_triggers = [
+            "about website", "about the website", "tell me about website", "tell me about the website",
+            "about this website", "website features", "features of website", "what can this website do",
+            "what does this website do", "how to use this website", "how does this website work",
+            "how to book", "payment methods", "payment options", "how to pay",
+            "cancellation policy", "refund policy", "refunds", "cancel policy",
+            "special offers", "coupons", "discounts", "promo code", "promo codes",
+            "who are you", "what can you do", "website details", "everything about website",
+            "about lyan", "about lyan travels", "what is lyan travels"
+        ]
+        if any(w in t_low for w in website_triggers) or (t_low in ["website", "features", "about"]):
+            return self.handle_website_inquiry(t_low, ctx, user, msg)
+
+        # =========================================================
+        # INTENT 0B: DESTINATION DEEP DIVE ("goa", "tell me about goa", "everything about goa")
+        # =========================================================
+        dest_val = new_entities.get("destination") or ctx.get("destination")
+        is_goa_explicit = "goa" in t_low
+        dest_deep_triggers = ["tell me about", "everything about", "details", "info", "what to do in", "explore", "about", "guide"]
+        is_deep_ask = any(w in t_low for w in dest_deep_triggers)
+        single_dest_tokens = [
+            "goa", "kerala", "munnar", "alleppey", "ooty", "coonoor", "kodaikanal",
+            "andaman", "manali", "kashmir", "jaipur", "udaipur", "dubai",
+            "singapore", "maldives", "thailand", "sri lanka", "bali", "pondicherry"
+        ]
+
+        if is_goa_explicit or is_deep_ask or (t_low in single_dest_tokens) or (dest_val and len(t_low.split()) <= 3):
+            # Ensure user did not intend an immediate booking or cancellation
+            if not any(w in t_low for w in ["book", "cancel", "reservation", "status", "confirm", "pnr"]):
+                target_dest = "Goa" if is_goa_explicit else (dest_val or (t_low if t_low in single_dest_tokens else "Goa"))
+                return self.handle_destination_deep_dive(target_dest, ctx, user, msg)
 
         # =========================================================
         # INTENT 1: HUMAN AGENT HANDOFF ("I want to talk to someone")

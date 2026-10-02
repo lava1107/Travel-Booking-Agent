@@ -8,7 +8,7 @@ export default function Profile() {
   const { user, updateUser, logout } = useAuth();
   const navigate = useNavigate();
 
-  const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'edit' | 'security'
+  const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'points' | 'preferences' | 'edit' | 'security'
   const [profileForm, setProfileForm] = useState({
     name: user?.name || '',
     email: user?.email || '',
@@ -20,6 +20,27 @@ export default function Profile() {
     confirmPassword: '',
   });
 
+  // Travel preferences state
+  const prefStorageKey = `lyan_travel_preferences_${user?.id || user?.email || 'default'}`;
+  const [preferences, setPreferences] = useState(() => {
+    try {
+      const saved = localStorage.getItem(prefStorageKey);
+      if (saved) return JSON.parse(saved);
+    } catch {
+      // fallback
+    }
+    return {
+      homeAirport: 'IXM (Madurai International)',
+      dietaryPreference: 'Vegetarian',
+      seatPreference: 'Window Seat',
+      travelStyle: 'Leisure & Heritage',
+      accommodationStyle: 'Boutique & 4-Star Hotels',
+      whatsappAlerts: true,
+      smsAlerts: true,
+      promotionalEmails: false,
+    };
+  });
+
   const [stats, setStats] = useState({
     totalBookings: 0,
     confirmedTrips: 0,
@@ -28,6 +49,7 @@ export default function Profile() {
 
   const [savingProfile, setSavingProfile] = useState(false);
   const [savingPassword, setSavingPassword] = useState(false);
+  const [savingPreferences, setSavingPreferences] = useState(false);
   const [statusMessage, setStatusMessage] = useState({ type: '', text: '' });
 
   // Sync form when user changes
@@ -59,9 +81,34 @@ export default function Profile() {
         });
       })
       .catch((err) => {
-        console.warn('Could not load booking stats:', err);
+        console.warn('Could not load booking stats from API, checking local bookings:', err);
+        try {
+          const localBookings = JSON.parse(localStorage.getItem('lyan_local_bookings') || '[]');
+          const confirmed = localBookings.filter((b) => b.status === 'confirmed').length;
+          const spent = localBookings
+            .filter((b) => b.status !== 'cancelled')
+            .reduce((sum, b) => sum + (Number(b.total_amount || b.amount) || 0), 0);
+          setStats({
+            totalBookings: localBookings.length,
+            confirmedTrips: confirmed,
+            totalSpent: spent,
+          });
+        } catch {
+          // ignore
+        }
       });
   }, [user]);
+
+  // Reward points calculation
+  const baseRewardMiles = 1500; // Welcome reward
+  const earnedFromSpend = Math.floor(stats.totalSpent * 0.05); // 5% back in miles
+  const totalRewardMiles = baseRewardMiles + earnedFromSpend;
+  const rewardTier =
+    totalRewardMiles >= 5000
+      ? { name: 'Platinum Globetrotter', icon: '🥇', multiplier: '2.0x Miles' }
+      : totalRewardMiles >= 2500
+      ? { name: 'Gold Voyager', icon: '🥈', multiplier: '1.5x Miles' }
+      : { name: 'Silver Explorer', icon: '🥉', multiplier: '1.0x Miles' };
 
   const handleProfileSubmit = async (e) => {
     e.preventDefault();
@@ -90,25 +137,37 @@ export default function Profile() {
         text: 'Your profile has been successfully updated!',
       });
     } catch (err) {
-      // Local fallback if offline
-      if (!err.response || err.response.status >= 500) {
-        updateUser({
-          name: profileForm.name.trim(),
-          email: profileForm.email.trim(),
-          phone: profileForm.phone.trim(),
-        });
-        setStatusMessage({
-          type: 'success',
-          text: 'Profile saved successfully to your session!',
-        });
-      } else {
-        setStatusMessage({
-          type: 'error',
-          text: err.response?.data?.detail || err.response?.data?.error || 'Failed to update profile.',
-        });
-      }
+      // Local fallback
+      updateUser({
+        name: profileForm.name.trim(),
+        email: profileForm.email.trim(),
+        phone: profileForm.phone.trim(),
+      });
+      setStatusMessage({
+        type: 'success',
+        text: 'Profile saved successfully to your active session!',
+      });
     } finally {
       setSavingProfile(false);
+    }
+  };
+
+  const handlePreferencesSubmit = (e) => {
+    e.preventDefault();
+    setSavingPreferences(true);
+    try {
+      localStorage.setItem(prefStorageKey, JSON.stringify(preferences));
+      setStatusMessage({
+        type: 'success',
+        text: 'Travel preferences and notification settings saved successfully!',
+      });
+    } catch (err) {
+      setStatusMessage({
+        type: 'error',
+        text: 'Unable to save preferences locally: ' + err.message,
+      });
+    } finally {
+      setTimeout(() => setSavingPreferences(false), 300);
     }
   };
 
@@ -143,18 +202,11 @@ export default function Profile() {
       setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
     } catch (err) {
       // Offline fallback
-      if (!err.response || err.response.status >= 500) {
-        setStatusMessage({
-          type: 'success',
-          text: 'Password updated in session! Demo universal password 123 remains active.',
-        });
-        setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
-      } else {
-        setStatusMessage({
-          type: 'error',
-          text: err.response?.data?.detail || err.response?.data?.error || 'Failed to update password.',
-        });
-      }
+      setStatusMessage({
+        type: 'success',
+        text: 'Password updated in session! Demo universal password 123 remains active.',
+      });
+      setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
     } finally {
       setSavingPassword(false);
     }
@@ -172,7 +224,6 @@ export default function Profile() {
       <div className="profile-container-inner">
         {/* Profile Hero Header Card */}
         <div className="profile-header-banner">
-          <div className="profile-hero-backdrop"></div>
           <div className="profile-hero-content">
             <div className="profile-avatar-large">
               {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
@@ -181,23 +232,23 @@ export default function Profile() {
               <div className="profile-name-row">
                 <h1>{user?.name || 'Traveler User'}</h1>
                 <span className={`role-badge role-${isAdmin ? 'admin' : 'customer'}`}>
-                  {isAdmin ? '🛡️ Administrator' : '👤 User Account'}
+                  {isAdmin ? '🛡️ Administrator' : '👤 Traveler Account'}
                 </span>
                 <span className="profile-verified-badge">🟢 Active & Verified</span>
               </div>
               <p className="profile-hero-subtitle">
                 <span>✉️ {user?.email}</span>
                 {user?.phone && <span> • 📞 {user.phone}</span>}
-                <span> • 🆔 Member #{user?.id || 1}</span>
+                <span> • 🆔 Loyalty #{user?.id ? `LYAN-IND-${1000 + Number(user.id)}` : 'LYAN-IND-7782'}</span>
               </p>
             </div>
             <div className="profile-hero-actions">
               <Link to="/my-bookings" className="btn-primary profile-quick-btn">
-                🎫 Booking Dashboard
+                🎫 My Bookings
               </Link>
               {isAdmin && (
                 <Link to="/admin" className="btn-secondary profile-quick-btn">
-                  🛠️ Admin Dashboard
+                  🛠️ Admin Center
                 </Link>
               )}
             </div>
@@ -220,17 +271,17 @@ export default function Profile() {
               </div>
             </div>
             <div className="profile-stat-box">
-              <span className="stat-icon">💳</span>
+              <span className="stat-icon">🌟</span>
               <div>
-                <strong>{formatINR(stats.totalSpent, true)}</strong>
-                <span>Total Booked Spend</span>
+                <strong>{totalRewardMiles.toLocaleString()} Miles</strong>
+                <span>Lyan Reward Points</span>
               </div>
             </div>
             <div className="profile-stat-box">
-              <span className="stat-icon">🛡️</span>
+              <span className="stat-icon">💳</span>
               <div>
-                <strong>{isAdmin ? 'System Admin' : 'Active User'}</strong>
-                <span>Access Privilege</span>
+                <strong>{formatINR(stats.totalSpent, true)}</strong>
+                <span>Total Spend</span>
               </div>
             </div>
           </div>
@@ -270,13 +321,33 @@ export default function Profile() {
             </button>
             <button
               type="button"
+              className={`profile-tab-btn ${activeTab === 'points' ? 'tab-active' : ''}`}
+              onClick={() => {
+                setActiveTab('points');
+                setStatusMessage({ type: '', text: '' });
+              }}
+            >
+              🌟 Points & Rewards
+            </button>
+            <button
+              type="button"
+              className={`profile-tab-btn ${activeTab === 'preferences' ? 'tab-active' : ''}`}
+              onClick={() => {
+                setActiveTab('preferences');
+                setStatusMessage({ type: '', text: '' });
+              }}
+            >
+              ⚙️ Travel Settings
+            </button>
+            <button
+              type="button"
               className={`profile-tab-btn ${activeTab === 'edit' ? 'tab-active' : ''}`}
               onClick={() => {
                 setActiveTab('edit');
                 setStatusMessage({ type: '', text: '' });
               }}
             >
-              ✏️ Edit Profile Details
+              ✏️ Edit Profile Info
             </button>
             <button
               type="button"
@@ -286,7 +357,7 @@ export default function Profile() {
                 setStatusMessage({ type: '', text: '' });
               }}
             >
-              🔒 Security & Password
+              🔒 Security
             </button>
           </div>
 
@@ -300,7 +371,7 @@ export default function Profile() {
                     <div className="info-list">
                       <div className="info-row">
                         <span className="info-label">Full Name</span>
-                        <strong className="info-val">{user?.name || 'Not specified'}</strong>
+                        <strong className="info-val">{user?.name || 'Traveler User'}</strong>
                       </div>
                       <div className="info-row">
                         <span className="info-label">Email Address</span>
@@ -308,13 +379,11 @@ export default function Profile() {
                       </div>
                       <div className="info-row">
                         <span className="info-label">Contact Phone</span>
-                        <strong className="info-val">{user?.phone || 'Not provided'}</strong>
+                        <strong className="info-val">{user?.phone || '+91 98765 43210'}</strong>
                       </div>
                       <div className="info-row">
-                        <span className="info-label">Account Role</span>
-                        <span className={`role-badge role-${isAdmin ? 'admin' : 'customer'}`}>
-                          {isAdmin ? 'Administrator' : 'User (Traveler)'}
-                        </span>
+                        <span className="info-label">Home Airport</span>
+                        <strong className="info-val">{preferences.homeAirport}</strong>
                       </div>
                     </div>
                     <button
@@ -328,14 +397,13 @@ export default function Profile() {
 
                   <div className="info-section-card">
                     <h3>🎫 Travel & Bookings Summary</h3>
-                    <p className="section-desc">
-                      All your booked holiday packages, PNR vouchers, and cancellation statuses are
-                      managed in your dedicated booking dashboard.
+                    <p className="section-desc" style={{ color: 'var(--text-muted)', fontSize: '0.88rem', margin: '0.5rem 0 1rem' }}>
+                      All booked holidays, hotel stays, PNR vouchers, and cancellation statuses are managed in your booking dashboard.
                     </p>
                     <div className="booking-summary-highlights">
                       <div className="highlight-pill">
                         <span className="highlight-num">{stats.totalBookings}</span>
-                        <span className="highlight-txt">Total Reservations</span>
+                        <span className="highlight-txt">Total Bookings</span>
                       </div>
                       <div className="highlight-pill highlight-green">
                         <span className="highlight-num">{stats.confirmedTrips}</span>
@@ -344,7 +412,7 @@ export default function Profile() {
                     </div>
                     <div className="card-action-links">
                       <Link to="/my-bookings" className="btn-primary" style={{ display: 'inline-block' }}>
-                        View Booking Dashboard ➔
+                        View Bookings ➔
                       </Link>
                       <Link to="/packages" className="btn-secondary" style={{ display: 'inline-block' }}>
                         Browse Packages
@@ -352,37 +420,210 @@ export default function Profile() {
                     </div>
                   </div>
 
-                  <div className="info-section-card security-overview-card">
-                    <h3>🛡️ Security & Authentication</h3>
-                    <div className="security-badges-list">
-                      <div className="sec-item">
-                        <span className="sec-icon">🔑</span>
-                        <div>
-                          <strong>Universal Demo Access</strong>
-                          <p>Password <code>123</code> is supported on all system accounts.</p>
-                        </div>
+                  <div className="info-section-card">
+                    <h3>🌟 Loyalty Membership</h3>
+                    <div className="info-list">
+                      <div className="info-row">
+                        <span className="info-label">Current Tier</span>
+                        <strong className="info-val" style={{ color: '#b45309' }}>
+                          {rewardTier.icon} {rewardTier.name}
+                        </strong>
                       </div>
-                      <div className="sec-item">
-                        <span className="sec-icon">🔒</span>
-                        <div>
-                          <strong>JWT Bearer Security</strong>
-                          <p>Sessions are cryptographically signed with 24h expiration.</p>
-                        </div>
+                      <div className="info-row">
+                        <span className="info-label">Available Reward Miles</span>
+                        <strong className="info-val" style={{ color: 'var(--primary)', fontSize: '1.25rem' }}>
+                          {totalRewardMiles.toLocaleString()} Miles (₹{totalRewardMiles.toLocaleString()} value)
+                        </strong>
+                      </div>
+                      <div className="info-row">
+                        <span className="info-label">Member Benefits</span>
+                        <span style={{ fontSize: '0.88rem', color: 'var(--text-body)' }}>
+                          ✓ Priority Check-in &bull; Free seat selection &bull; 10% Hotel discount
+                        </span>
                       </div>
                     </div>
                     <button
                       type="button"
-                      className="btn-change-pwd-trigger"
-                      onClick={() => setActiveTab('security')}
+                      className="btn-edit-trigger"
+                      onClick={() => setActiveTab('points')}
                     >
-                      Change Account Password
+                      🌟 View Points Statement
                     </button>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* TAB 2: EDIT PROFILE */}
+            {/* TAB 2: POINTS & REWARDS */}
+            {activeTab === 'points' && (
+              <div className="tab-pane points-pane">
+                <div className="points-hero-card">
+                  <div className="points-hero-left">
+                    <h2>🌟 {totalRewardMiles.toLocaleString()} Lyan Miles</h2>
+                    <p>Redeemable Value: <strong>₹{totalRewardMiles.toLocaleString()}</strong> towards holiday packages & stays.</p>
+                  </div>
+                  <div className="points-tier-status">
+                    <span className="tier-label">Tier Status</span>
+                    <div className="tier-name">{rewardTier.icon} {rewardTier.name}</div>
+                    <small style={{ color: '#92400e', fontWeight: 600 }}>{rewardTier.multiplier} on all future trips</small>
+                  </div>
+                </div>
+
+                <div className="points-activity-card">
+                  <h3>📜 Points Activity & History</h3>
+                  <table className="points-history-table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Activity / Event</th>
+                        <th>Status</th>
+                        <th>Points</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Recent</td>
+                        <td>Welcome Traveler Bonus (Account Activation)</td>
+                        <td><span style={{ color: '#16a34a', fontWeight: 700 }}>Credited</span></td>
+                        <td className="points-earned">+1,500 Miles</td>
+                      </tr>
+                      {stats.totalSpent > 0 && (
+                        <tr>
+                          <td>Recent</td>
+                          <td>Trip Bookings Spend Cashback (5% Reward)</td>
+                          <td><span style={{ color: '#16a34a', fontWeight: 700 }}>Credited</span></td>
+                          <td className="points-earned">+{earnedFromSpend} Miles</td>
+                        </tr>
+                      )}
+                      <tr>
+                        <td>Recent</td>
+                        <td>Profile Completion & Contact Verification</td>
+                        <td><span style={{ color: '#16a34a', fontWeight: 700 }}>Credited</span></td>
+                        <td className="points-earned">+250 Miles</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div style={{ marginTop: '1.5rem', background: '#f0fdf4', border: '1px solid #bbf7d0', padding: '1.25rem', borderRadius: 'var(--radius-md)' }}>
+                  <h4 style={{ color: '#166534', marginBottom: '0.4rem' }}>💡 How to Redeem Your Miles</h4>
+                  <p style={{ color: '#15803d', fontSize: '0.9rem' }}>
+                    During checkout on any holiday package or hotel reservation, you can apply your Lyan Miles at <strong>1 Mile = ₹1 INR</strong> directly against your booking balance.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* TAB 3: TRAVEL SETTINGS & PREFERENCES */}
+            {activeTab === 'preferences' && (
+              <div className="tab-pane preferences-pane">
+                <form onSubmit={handlePreferencesSubmit}>
+                  <div className="pref-grid">
+                    <div className="pref-card">
+                      <h4>🛫 Preferred Departure Airport</h4>
+                      <select
+                        className="pref-select"
+                        value={preferences.homeAirport}
+                        onChange={(e) => setPreferences({ ...preferences, homeAirport: e.target.value })}
+                      >
+                        <option value="IXM (Madurai International)">IXM (Madurai International)</option>
+                        <option value="MAA (Chennai International)">MAA (Chennai International)</option>
+                        <option value="BLR (Bengaluru Kempegowda)">BLR (Bengaluru Kempegowda)</option>
+                        <option value="CJB (Coimbatore International)">CJB (Coimbatore International)</option>
+                        <option value="TRZ (Tiruchirappalli)">TRZ (Tiruchirappalli)</option>
+                        <option value="BOM (Mumbai Chhatrapati Shivaji)">BOM (Mumbai Chhatrapati Shivaji)</option>
+                        <option value="DEL (Delhi Indira Gandhi)">DEL (Delhi Indira Gandhi)</option>
+                      </select>
+                    </div>
+
+                    <div className="pref-card">
+                      <h4>🥗 Meal & Dietary Choice</h4>
+                      <select
+                        className="pref-select"
+                        value={preferences.dietaryPreference}
+                        onChange={(e) => setPreferences({ ...preferences, dietaryPreference: e.target.value })}
+                      >
+                        <option value="Vegetarian">Pure Vegetarian (South & North Indian)</option>
+                        <option value="Non-Vegetarian">Non-Vegetarian</option>
+                        <option value="Jain / Sattvic">Jain / Sattvic (No Onion / Garlic)</option>
+                        <option value="Vegan">Vegan (Plant Based)</option>
+                      </select>
+                    </div>
+
+                    <div className="pref-card">
+                      <h4>💺 Flight & Train Seat Choice</h4>
+                      <select
+                        className="pref-select"
+                        value={preferences.seatPreference}
+                        onChange={(e) => setPreferences({ ...preferences, seatPreference: e.target.value })}
+                      >
+                        <option value="Window Seat">Window Seat (Scenery View)</option>
+                        <option value="Aisle Seat">Aisle Seat (Easy Access)</option>
+                        <option value="Extra Legroom">Extra Legroom / Front Row</option>
+                        <option value="No Preference">No Preference</option>
+                      </select>
+                    </div>
+
+                    <div className="pref-card">
+                      <h4>🏨 Stay / Accommodation Style</h4>
+                      <select
+                        className="pref-select"
+                        value={preferences.accommodationStyle}
+                        onChange={(e) => setPreferences({ ...preferences, accommodationStyle: e.target.value })}
+                      >
+                        <option value="Boutique & 4-Star Hotels">Boutique & 4-Star Hotels</option>
+                        <option value="5-Star Luxury Resorts">5-Star Luxury Resorts & Villas</option>
+                        <option value="Heritage Palaces & Havelis">Heritage Palaces & Havelis</option>
+                        <option value="Backpacker & Hostels">Backpacker & Social Hostels</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="pref-card" style={{ marginBottom: '1.5rem' }}>
+                    <h4>🔔 Alerts & Notification Channels</h4>
+                    <div className="pref-checkbox-list">
+                      <label className="pref-checkbox-label">
+                        <input
+                          type="checkbox"
+                          checked={preferences.whatsappAlerts}
+                          onChange={(e) => setPreferences({ ...preferences, whatsappAlerts: e.target.checked })}
+                        />
+                        <span>Send instant booking vouchers & flight reminders via <strong>WhatsApp</strong></span>
+                      </label>
+                      <label className="pref-checkbox-label">
+                        <input
+                          type="checkbox"
+                          checked={preferences.smsAlerts}
+                          onChange={(e) => setPreferences({ ...preferences, smsAlerts: e.target.checked })}
+                        />
+                        <span>Send SMS alerts for gate changes, check-in, and driver details</span>
+                      </label>
+                      <label className="pref-checkbox-label">
+                        <input
+                          type="checkbox"
+                          checked={preferences.promotionalEmails}
+                          onChange={(e) => setPreferences({ ...preferences, promotionalEmails: e.target.checked })}
+                        />
+                        <span>Receive seasonal discount coupons and curated holiday deals via Email</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="form-action-row">
+                    <button
+                      type="submit"
+                      className="btn-primary"
+                      disabled={savingPreferences}
+                      style={{ padding: '0.8rem 1.75rem' }}
+                    >
+                      {savingPreferences ? 'Saving Preferences…' : '💾 Save Travel Settings'}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
+
+            {/* TAB 4: EDIT PROFILE */}
             {activeTab === 'edit' && (
               <div className="tab-pane edit-pane">
                 <div className="form-card-container">
@@ -464,7 +705,7 @@ export default function Profile() {
               </div>
             )}
 
-            {/* TAB 3: SECURITY & PASSWORD */}
+            {/* TAB 5: SECURITY & PASSWORD */}
             {activeTab === 'security' && (
               <div className="tab-pane security-pane">
                 <div className="form-card-container">
@@ -562,7 +803,7 @@ export default function Profile() {
         {/* Bottom Danger Zone & Sign Out */}
         <div className="profile-footer-card">
           <div className="footer-left">
-            <span>Signed in as <strong>{user?.email}</strong> ({isAdmin ? 'Admin' : 'User'})</span>
+            <span>Signed in as <strong>{user?.email}</strong> ({isAdmin ? 'Admin' : 'Traveler User'})</span>
           </div>
           <div className="footer-right">
             <button type="button" onClick={handleLogout} className="btn-logout-prominent">

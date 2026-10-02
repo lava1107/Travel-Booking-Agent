@@ -4,6 +4,9 @@ import api from '../api/client';
 import PackageCard from '../components/PackageCard';
 import BookingModal from '../components/BookingModal';
 import { formatINR } from '../utils/currency';
+import fallbackPackages from '../data/packagesFallback.json';
+import fallbackDestinations from '../data/destinationsFallback.json';
+import fallbackReviews from '../data/reviewsFallback.json';
 
 const TN_CITIES = [
   'Chennai',
@@ -44,22 +47,56 @@ export default function Home() {
   const [nlpQuery, setNlpQuery] = useState('');
 
   useEffect(() => {
-    Promise.all([
+    let isMounted = true;
+    Promise.allSettled([
       api.get('/trips', { params: { limit: 12 } }),
       api.get('/destinations'),
       api.get('/reviews'),
     ])
       .then(([tripsRes, destsRes, revsRes]) => {
-        const all = tripsRes.data.data || [];
+        if (!isMounted) return;
+
+        let all = [];
+        if (tripsRes.status === 'fulfilled' && tripsRes.value?.data?.data?.length) {
+          all = tripsRes.value.data.data;
+        } else {
+          all = fallbackPackages;
+        }
+
         setFeaturedTrips(all.filter((t) => t.is_featured));
         setTnTrips(all.filter((t) => t.popular_from_tn || t.source === 'Chennai' || t.origin === 'Chennai'));
         setIntlTrips(all.filter((t) => t.destination_type === 'International'));
         setBudgetTrips(all.filter((t) => t.amount <= 22000));
-        setDestinations(destsRes.data.data || []);
-        setReviews(revsRes.data.data || []);
+
+        if (destsRes.status === 'fulfilled' && destsRes.value?.data?.data?.length) {
+          setDestinations(destsRes.value.data.data);
+        } else {
+          setDestinations(fallbackDestinations);
+        }
+
+        if (revsRes.status === 'fulfilled' && revsRes.value?.data?.data?.length) {
+          setReviews(revsRes.value.data.data);
+        } else {
+          setReviews(fallbackReviews);
+        }
       })
-      .catch((err) => console.error('Failed to load home data:', err))
-      .finally(() => setLoading(false));
+      .catch((err) => {
+        console.warn('Home data fallback activated:', err);
+        if (!isMounted) return;
+        setFeaturedTrips(fallbackPackages.filter((t) => t.is_featured));
+        setTnTrips(fallbackPackages.filter((t) => t.popular_from_tn || t.source === 'Chennai'));
+        setIntlTrips(fallbackPackages.filter((t) => t.destination_type === 'International'));
+        setBudgetTrips(fallbackPackages.filter((t) => t.amount <= 22000));
+        setDestinations(fallbackDestinations);
+        setReviews(fallbackReviews);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleQuickSearch = (e) => {

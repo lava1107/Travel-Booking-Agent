@@ -32,9 +32,9 @@ USERS = [
     },
     {
         "id": 3,
-        "name": "Kavitha Ramesh",
-        "email": "user@lyantravel.com",
-        "username": "user",
+        "name": "Lavanya",
+        "email": "lavanya@lyantravel.com",
+        "username": "lavanya",
         "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99", # 123
         "role": "customer",
         "phone": "+91 98402 33445",
@@ -43,9 +43,9 @@ USERS = [
     },
     {
         "id": 4,
-        "name": "Anand Mohan",
-        "email": "anand.chennai@gmail.com",
-        "username": "anandm",
+        "name": "Divya",
+        "email": "divya.chennai@gmail.com",
+        "username": "divya",
         "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
         "role": "customer",
         "phone": "+91 98403 44556",
@@ -54,9 +54,9 @@ USERS = [
     },
     {
         "id": 5,
-        "name": "Priya Soundararajan",
-        "email": "priya.coimbatore@gmail.com",
-        "username": "priyas",
+        "name": "Raja",
+        "email": "raja.coimbatore@gmail.com",
+        "username": "raja",
         "password_hash": "pbkdf2_sha256$100000$c2FsdF90cmF2ZWxfMjAyNg==$5f4dcc3b5aa765d61d8327deb882cf99",
         "role": "customer",
         "phone": "+91 98404 55667",
@@ -193,8 +193,8 @@ def build_bookings():
 
     bookings = []
     
-    # Pre-crafted specific bookings to guarantee Kavitha (user@lyantravel.com) has diverse booking history
-    kavitha_user = next(u for u in USERS if u["email"] == "user@lyantravel.com")
+    # Pre-crafted specific bookings to guarantee Lavanya (lavanya@lyantravel.com) has diverse booking history
+    lavanya_user = next(u for u in USERS if u["email"] == "lavanya@lyantravel.com")
     
     sample_targets = [
         (1, "2026-10-15", 2, "confirmed", "paid"),
@@ -214,9 +214,9 @@ def build_bookings():
 
         bookings.append({
             "id": bid,
-            "user_id": kavitha_user["id"],
-            "user_name": kavitha_user["name"],
-            "user_email": kavitha_user["email"],
+            "user_id": lavanya_user["id"],
+            "user_name": lavanya_user["name"],
+            "user_email": lavanya_user["email"],
             "agent_id": 2,
             "agent_name": "Sarah Connor",
             "trip_id": p["id"],
@@ -226,7 +226,7 @@ def build_bookings():
             "category": p["category"],
             "travel_date": t_date,
             "travelers_count": pax,
-            "traveler_names": [kavitha_user["name"], "Ramesh S", "Ananya R", "Kavya R"][:pax],
+            "traveler_names": [lavanya_user["name"], "Ramesh S", "Ananya R", "Kavya R"][:pax],
             "special_requests": "Window seats requested; vegetarian meals preferred.",
             "payment_method": "UPI (Google Pay)",
             "transaction_id": f"UPI-TXN-{bid * 84210}",

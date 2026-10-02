@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import api from '../api/client';
 import { useAuth } from '../context/AuthContext';
+import fallbackReviews from '../data/reviewsFallback.json';
 
 export default function ReviewsPage() {
   const { user, isAuthenticated } = useAuth();
@@ -20,9 +21,14 @@ export default function ReviewsPage() {
     setLoading(true);
     try {
       const { data } = await api.get('/reviews');
-      setReviews(data.data || []);
+      if (data?.data && Array.isArray(data.data) && data.data.length > 0) {
+        setReviews(data.data);
+      } else {
+        setReviews(fallbackReviews);
+      }
     } catch (err) {
-      console.error('Failed to load reviews:', err);
+      console.warn('Reviews API fallback activated:', err);
+      setReviews(fallbackReviews);
     } finally {
       setLoading(false);
     }

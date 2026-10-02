@@ -37,57 +37,39 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Dynamic Navigation according to Role */}
-        <nav className="site-nav">
-          <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>
-            🏠 {t('navHome')}
-          </Link>
-          <Link to="/packages" className={`nav-link ${isActive('/packages') ? 'active' : ''}`}>
-            📦 {t('navPackages')}
-          </Link>
-          <Link to="/planner" className={`nav-link ${isActive('/planner') ? 'active' : ''}`}>
-            🗺️ {t('navPlanner')}
-          </Link>
-          <Link to="/compare" className={`nav-link ${isActive('/compare') ? 'active' : ''}`}>
-            ⚖️ {t('navCompare')}
-          </Link>
-          <Link to="/hotels" className={`nav-link ${isActive('/hotels') ? 'active' : ''}`}>
-            🏨 {t('navHotels')}
-          </Link>
-          <Link to="/api-access" className={`nav-link ${isActive('/api-access') ? 'active' : ''}`}>
-            ⚡ {t('navApi')}
-          </Link>
+        {/* Dynamic Navigation - ONLY visible after login */}
+        {isAuthenticated && (
+          <nav className="site-nav">
+            <Link to={isAdmin ? '/admin' : '/dashboard'} className={`nav-link ${isActive('/dashboard') || isActive('/admin') ? 'active' : ''}`}>
+              📊 Dashboard
+            </Link>
+            <Link to="/packages" className={`nav-link ${isActive('/packages') ? 'active' : ''}`}>
+              📦 {t('navPackages')}
+            </Link>
+            <Link to="/planner" className={`nav-link ${isActive('/planner') ? 'active' : ''}`}>
+              🗺️ {t('navPlanner')}
+            </Link>
+            <Link to="/compare" className={`nav-link ${isActive('/compare') ? 'active' : ''}`}>
+              ⚖️ Compare Tiers
+            </Link>
+            <Link to="/hotels" className={`nav-link ${isActive('/hotels') ? 'active' : ''}`}>
+              🏨 {t('navHotels')}
+            </Link>
+            <Link to="/my-bookings" className={`nav-link ${isActive('/my-bookings') ? 'active' : ''}`}>
+              🧳 {t('navBookings')}
+            </Link>
+            <Link to="/payments" className={`nav-link ${isActive('/payments') ? 'active' : ''}`}>
+              💳 Payments
+            </Link>
 
-          {/* Customer Logged-in links */}
-          {isAuthenticated && isCustomer && (
-            <>
-              <Link to="/dashboard" className={`nav-link ${isActive('/dashboard') ? 'active' : ''}`}>
-                📊 Dashboard
+            {/* Admin Specific Portal Link */}
+            {isAdmin && (
+              <Link to="/admin" className={`nav-link ${isActive('/admin') ? 'active' : ''}`} style={{ color: '#f59e0b', fontWeight: '800' }}>
+                🛡️ Admin Console
               </Link>
-              <Link to="/my-bookings" className={`nav-link ${isActive('/my-bookings') ? 'active' : ''}`}>
-                🧳 {t('navBookings')}
-              </Link>
-            </>
-          )}
-
-          {/* Travel Agent Logged-in links */}
-          {isAuthenticated && isAgent && (
-            <>
-              <Link to="/agent" className={`nav-link ${isActive('/agent') ? 'active' : ''}`}>
-                💼 {t('navAgent')}
-              </Link>
-            </>
-          )}
-
-          {/* Admin Logged-in links */}
-          {isAuthenticated && isAdmin && (
-            <>
-              <Link to="/admin" className={`nav-link ${isActive('/admin') ? 'active' : ''}`}>
-                🛡️ {t('navAdmin')}
-              </Link>
-            </>
-          )}
-        </nav>
+            )}
+          </nav>
+        )}
 
         {/* Header Right Action Items */}
         <div className="header-actions">
@@ -116,34 +98,36 @@ export default function Navbar() {
             </select>
           </div>
 
-          {/* Recently Accessed Dropdown Flyout */}
-          <div style={{ position: 'relative' }}>
-            <button
-              type="button"
-              onClick={() => setShowRecentMenu(!showRecentMenu)}
-              style={{
-                background: recentPackages.length > 0 ? '#eff6ff' : '#f8fafc',
-                border: '1px solid #cbd5e1',
-                borderRadius: 'var(--radius-full)',
-                padding: '0.35rem 0.75rem',
-                fontSize: '0.8rem',
-                fontWeight: '700',
-                color: recentPackages.length > 0 ? '#1d4ed8' : '#64748b',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.35rem'
-              }}
-              title="View recently accessed packages and destinations"
-            >
-              <span>🕒</span>
-              <span className="hide-on-mobile">{t('recentlyViewed')}</span>
-              {recentPackages.length > 0 && (
-                <span style={{ background: '#2563eb', color: '#fff', fontSize: '0.7rem', padding: '0.1rem 0.4rem', borderRadius: '10px' }}>
-                  {recentPackages.length}
-                </span>
-              )}
-            </button>
+          {/* Recently Accessed Dropdown Flyout - ONLY when authenticated */}
+          {isAuthenticated && (
+            <div style={{ position: 'relative' }}>
+              <button
+                type="button"
+                onClick={() => setShowRecentMenu(!showRecentMenu)}
+                style={{
+                  background: recentPackages.length > 0 ? '#eff6ff' : '#f8fafc',
+                  border: '1px solid #cbd5e1',
+                  borderRadius: 'var(--radius-full)',
+                  padding: '0.35rem 0.75rem',
+                  fontSize: '0.8rem',
+                  fontWeight: '700',
+                  color: recentPackages.length > 0 ? '#1d4ed8' : '#64748b',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.35rem'
+                }}
+                title="View recently accessed packages and destinations"
+              >
+                <span>🕒</span>
+                <span className="hide-on-mobile">{t('recentlyViewed')}</span>
+                {recentPackages.length > 0 && (
+                  <span style={{ background: '#2563eb', color: '#fff', fontSize: '0.7rem', padding: '0.1rem 0.4rem', borderRadius: '10px' }}>
+                    {recentPackages.length}
+                  </span>
+                )}
+              </button>
+
 
             {showRecentMenu && (
               <div
@@ -218,27 +202,28 @@ export default function Navbar() {
               </div>
             )}
           </div>
+        )}
 
           {/* User Auth Section */}
           {isAuthenticated ? (
             <div className="user-menu">
-              <span className={`role-badge role-${role}`}>
-                {isAdmin ? 'Admin' : (isAgent ? 'Travel Agent' : 'Traveler')}
+              <span className={`role-badge role-${isAdmin ? 'admin' : 'customer'}`}>
+                {isAdmin ? '🛡️ Admin' : '👤 Traveler'}
               </span>
 
               {user?.oauth_provider && (
                 <span
                   style={{
                     fontSize: '0.7rem',
-                    background: user.oauth_provider === 'google' ? '#fef3c7' : '#e2e8f0',
-                    color: user.oauth_provider === 'google' ? '#92400e' : '#0f172a',
+                    background: '#fef3c7',
+                    color: '#92400e',
                     padding: '0.15rem 0.45rem',
                     borderRadius: '4px',
                     fontWeight: '800'
                   }}
-                  title={`Signed in via ${user.oauth_provider}`}
+                  title="Signed in with verified Google account"
                 >
-                  {user.oauth_provider === 'google' ? 'Google' : 'GitHub'}
+                  🌐 Google
                 </span>
               )}
 

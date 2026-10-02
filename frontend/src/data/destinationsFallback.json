@@ -1,0 +1,236 @@
+[
+  {
+    "id": 1,
+    "name": "Munnar & Alleppey",
+    "state": "Kerala",
+    "country": "India",
+    "type": "Domestic",
+    "popular_from_tamil_nadu": true,
+    "popular_routes": [
+      "Chennai \u2192 Munnar",
+      "Coimbatore \u2192 Alleppey",
+      "Madurai \u2192 Thekkady"
+    ],
+    "starting_price": 14999.0,
+    "best_season": "September to March",
+    "average_duration": "4 - 5 Days",
+    "description": "God's Own Country, famed for sprawling tea estates in the Western Ghats and peaceful palm-fringed backwaters.",
+    "image_url": "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=800&q=80",
+    "activities": [
+      "Houseboat Stay",
+      "Tea Plantation Walk",
+      "Ayurvedic Spa",
+      "Kathakali Shows"
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Goa",
+    "state": "Goa",
+    "country": "India",
+    "type": "Domestic",
+    "popular_from_tamil_nadu": true,
+    "popular_routes": [
+      "Chennai \u2192 Goa",
+      "Coimbatore \u2192 Goa",
+      "Madurai \u2192 Goa"
+    ],
+    "starting_price": 18499.0,
+    "best_season": "October to April",
+    "average_duration": "4 - 6 Days",
+    "description": "India's beach haven blending Portuguese colonial architecture with buzzing beach shacks, scuba diving, and nightlife.",
+    "image_url": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=800&q=80",
+    "activities": [
+      "Water Sports",
+      "Beach Clubs",
+      "Mandovi River Cruise",
+      "Fort Tours",
+      "Seafood Dining"
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Singapore",
+    "state": "Singapore",
+    "country": "Singapore",
+    "type": "International",
+    "popular_from_tamil_nadu": true,
+    "popular_routes": [
+      "Chennai \u2192 Singapore (Direct Flights)",
+      "Trichy \u2192 Singapore (Direct Flights)"
+    ],
+    "starting_price": 54999.0,
+    "best_season": "All Year Round",
+    "average_duration": "4 - 6 Days",
+    "description": "Global hub with lush tropical gardens, world-class Universal Studios theme park, and vibrant Little India shopping.",
+    "image_url": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=800&q=80",
+    "activities": [
+      "Universal Studios",
+      "Gardens by the Bay",
+      "Night Safari",
+      "Sentosa Cable Car",
+      "Orchard Road Shopping"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Maldives",
+    "state": "Maldives",
+    "country": "Maldives",
+    "type": "International",
+    "popular_from_tamil_nadu": true,
+    "popular_routes": [
+      "Chennai \u2192 Maldives",
+      "Coimbatore \u2192 Maldives via Kochi"
+    ],
+    "starting_price": 78999.0,
+    "best_season": "November to April",
+    "average_duration": "4 - 5 Days",
+    "description": "Archipelago of coral atolls offering world-famous overwater villas, crystal lagoons, and free 30-day visa on arrival for Indians.",
+    "image_url": "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?auto=format&fit=crop&w=800&q=80",
+    "activities": [
+      "Overwater Villa",
+      "Snorkeling with Manta Rays",
+      "Sunset Dolphin Safari",
+      "Undersea Dining"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Dubai",
+    "state": "Dubai",
+    "country": "United Arab Emirates",
+    "type": "International",
+    "popular_from_tamil_nadu": true,
+    "popular_routes": [
+      "Chennai \u2192 Dubai (Direct)",
+      "Coimbatore \u2192 Dubai",
+      "Madurai \u2192 Dubai via Colombo"
+    ],
+    "starting_price": 48999.0,
+    "best_season": "October to April",
+    "average_duration": "5 - 6 Days",
+    "description": "City of futuristic superlatives featuring the Burj Khalifa, desert dune safaris, indoor ski slopes, and luxury gold souks.",
+    "image_url": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=800&q=80",
+    "activities": [
+      "Burj Khalifa Observation Deck",
+      "Desert Safari BBQ",
+      "Marina Dhow Cruise",
+      "Museum of the Future"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Sri Lanka",
+    "state": "Western / Central",
+    "country": "Sri Lanka",
+    "type": "International",
+    "popular_from_tamil_nadu": true,
+    "popular_routes": [
+      "Trichy \u2192 Colombo (Direct 55m)",
+      "Chennai \u2192 Colombo (Direct 1h 10m)"
+    ],
+    "starting_price": 26500.0,
+    "best_season": "December to April",
+    "average_duration": "4 - 6 Days",
+    "description": "Just across the Palk Strait from Tamil Nadu! Boasts ancient Buddhist temples, lush Ceylon tea hills, and pristine beaches.",
+    "image_url": "https://images.unsplash.com/photo-1586861635167-e5223aadc9fe?auto=format&fit=crop&w=800&q=80",
+    "activities": [
+      "Temple of the Tooth",
+      "Nuwara Eliya Tea Gardens",
+      "Bentota Beach & Water Sports",
+      "Galle Dutch Fort"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Ooty & Coonoor",
+    "state": "Tamil Nadu",
+    "country": "India",
+    "type": "Domestic",
+    "popular_from_tamil_nadu": true,
+    "popular_routes": [
+      "Chennai \u2192 Ooty",
+      "Coimbatore \u2192 Ooty",
+      "Salem \u2192 Ooty"
+    ],
+    "starting_price": 7999.0,
+    "best_season": "October to June",
+    "average_duration": "3 - 4 Days",
+    "description": "Queen of Nilgiris with aromatic eucalyptus forests, historical UNESCO toy train, and botanical gardens.",
+    "image_url": "https://images.unsplash.com/photo-1589182373726-e4f658ab50f0?auto=format&fit=crop&w=800&q=80",
+    "activities": [
+      "Nilgiri Toy Train",
+      "Ooty Lake Boating",
+      "Doddabetta Peak",
+      "Homemade Chocolate Shopping"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Andaman Islands",
+    "state": "Andaman & Nicobar",
+    "country": "India",
+    "type": "Domestic",
+    "popular_from_tamil_nadu": true,
+    "popular_routes": [
+      "Chennai \u2192 Port Blair (Direct Flights)"
+    ],
+    "starting_price": 36999.0,
+    "best_season": "November to May",
+    "average_duration": "5 - 7 Days",
+    "description": "Tropical archipelago in the Bay of Bengal with Asia's best beaches, coral snorkeling, and historic Cellular Jail.",
+    "image_url": "https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=800&q=80",
+    "activities": [
+      "Radhanagar Beach",
+      "Scuba Diving Elephant Beach",
+      "Cellular Jail Light & Sound",
+      "High-speed Catamaran"
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Thailand",
+    "state": "Bangkok / Phuket",
+    "country": "Thailand",
+    "type": "International",
+    "popular_from_tamil_nadu": true,
+    "popular_routes": [
+      "Chennai \u2192 Bangkok (Direct)"
+    ],
+    "starting_price": 39999.0,
+    "best_season": "November to April",
+    "average_duration": "5 - 7 Days",
+    "description": "Land of Smiles featuring turquoise waters of Phi Phi Islands, ornate golden temples, night markets, and street food.",
+    "image_url": "https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=800&q=80",
+    "activities": [
+      "Phi Phi Speedboat",
+      "Grand Palace",
+      "Chao Phraya Dinner Cruise",
+      "Patong Beach Watersports"
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Rajasthan (Jaipur & Udaipur)",
+    "state": "Rajasthan",
+    "country": "India",
+    "type": "Domestic",
+    "popular_from_tamil_nadu": true,
+    "popular_routes": [
+      "Chennai \u2192 Jaipur",
+      "Madurai \u2192 Jaipur"
+    ],
+    "starting_price": 32999.0,
+    "best_season": "October to March",
+    "average_duration": "5 - 7 Days",
+    "description": "Royal land of maharajas, desert forts, pink palaces, and serene boat cruises on Lake Pichola.",
+    "image_url": "https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80",
+    "activities": [
+      "Amber Fort Safari",
+      "Lake Pichola Boat Cruise",
+      "Chokhi Dhani Dinner",
+      "Desert Camel Safari"
+    ]
+  }
+]

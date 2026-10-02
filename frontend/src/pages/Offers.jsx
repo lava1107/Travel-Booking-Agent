@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
+import fallbackOffers from '../data/offersFallback.json';
 
 export default function Offers() {
   const navigate = useNavigate();
@@ -9,10 +10,27 @@ export default function Offers() {
   const [copiedCode, setCopiedCode] = useState(null);
 
   useEffect(() => {
+    let isMounted = true;
     api.get('/offers')
-      .then(({ data }) => setOffers(data.data || []))
-      .catch((err) => console.error('Failed to load offers:', err))
-      .finally(() => setLoading(false));
+      .then(({ data }) => {
+        if (!isMounted) return;
+        if (data?.data && Array.isArray(data.data) && data.data.length > 0) {
+          setOffers(data.data);
+        } else {
+          setOffers(fallbackOffers);
+        }
+      })
+      .catch((err) => {
+        console.warn('Offers API fallback activated:', err);
+        if (isMounted) setOffers(fallbackOffers);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleCopy = (code) => {

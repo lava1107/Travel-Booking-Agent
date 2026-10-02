@@ -33,9 +33,9 @@ A modern, full-featured Travel Agent Management System powered by **Python (Fast
   | **🛡️ System Administrator** | System Admin | `admin@lyantravel.com` | `123` |
   | **💼 Certified Senior Agent** | Sarah Connor | `agent@lyantravel.com` | `123` |
   | **💼 Certified Travel Agent** | Rajesh Kannan | `agent.rajesh@lyantravel.com` | `123` |
-  | **👤 Verified Customer** | Kavitha Ramesh | `user@lyantravel.com` | `123` |
-  | **👤 Verified Customer** | Anand Mohan | `anand.chennai@gmail.com` | `123` |
-  | **👤 Verified Customer** | Priya Soundararajan | `priya.coimbatore@gmail.com` | `123` |
+  | **👤 Verified Customer** | Lavanya | `lavanya@lyantravel.com` | `123` |
+  | **👤 Verified Customer** | Divya | `divya.chennai@gmail.com` | `123` |
+  | **👤 Verified Customer** | Raja | `raja.coimbatore@gmail.com` | `123` |
 
 ### 4. 🛡️ Admin Command Dashboard (`/admin`)
 - Real-time KPI summaries: Total Bookings, Gross Revenue, Active Catalog, Active Users, System Health.
@@ -109,7 +109,7 @@ npm run dev
 cd nlp-service
 py tests/test_mandatory_logins.py
 ```
-*Validates Admin, Agent Sarah, Agent Rajesh, Kavitha, Anand, and Priya logins.*
+*Validates Admin, Agent Sarah, Agent Rajesh, Lavanya, Divya, and Raja logins.*
 
 ### 2. Test Core NLP Model & Multi-Turn Context Tracking
 ```bash

@@ -23,7 +23,6 @@ export default function Login() {
   useEffect(() => {
     if (!loading && user) {
       if (user.role === 'admin') navigate('/admin', { replace: true });
-      else if (user.role === 'agent') navigate('/agent', { replace: true });
       else navigate('/dashboard', { replace: true });
     }
   }, [user, loading, navigate]);
@@ -41,7 +40,6 @@ export default function Login() {
     try {
       const authUser = await login(email, pwd);
       if (authUser.role === 'admin') navigate('/admin', { replace: true });
-      else if (authUser.role === 'agent') navigate('/agent', { replace: true });
       else navigate('/dashboard', { replace: true });
     } catch (err) {
       setError(err.response?.data?.detail || 'Quick sign in failed.');
@@ -50,15 +48,10 @@ export default function Login() {
     }
   };
 
-  const handleOpenOAuth = (provider) => {
-    setOauthProvider(provider);
-    if (provider === 'google') {
-      setOauthEmail('alex.traveler@gmail.com');
-      setOauthName('Alex Traveler');
-    } else {
-      setOauthEmail('alex.developer@github.com');
-      setOauthName('Alex Developer');
-    }
+  const handleOpenOAuth = (provider = 'google') => {
+    setOauthProvider('google');
+    setOauthEmail('alex.traveler@gmail.com');
+    setOauthName('Alex Traveler');
   };
 
   const handleExecuteOAuth = async (e) => {
@@ -77,7 +70,6 @@ export default function Login() {
       });
       setOauthProvider(null);
       if (authUser.role === 'admin') navigate('/admin', { replace: true });
-      else if (authUser.role === 'agent') navigate('/agent', { replace: true });
       else navigate('/dashboard', { replace: true });
     } catch (err) {
       setError(err.response?.data?.detail || 'OAuth sign-in failed.');
@@ -104,7 +96,6 @@ export default function Login() {
     try {
       const authUser = await login(trimmedIdentifier, form.password);
       if (authUser.role === 'admin') navigate('/admin', { replace: true });
-      else if (authUser.role === 'agent') navigate('/agent', { replace: true });
       else navigate('/dashboard', { replace: true });
     } catch (err) {
       const respData = err.response?.data;
@@ -186,9 +177,9 @@ export default function Login() {
                 “Booked our family vacation from Chennai to Kerala effortlessly. Clear pricing and great itinerary planning!”
               </p>
               <div className="testimonial-author">
-                <span className="author-avatar">KR</span>
+                <span className="author-avatar">LR</span>
                 <div>
-                  <strong>Kavitha Ramesh</strong>
+                  <strong>Lavanya</strong>
                   <span>Chennai, Tamil Nadu</span>
                 </div>
               </div>
@@ -202,70 +193,52 @@ export default function Login() {
             <div className="auth-form-header">
               <div className="auth-form-icon">🔑</div>
               <h2>Member Sign In</h2>
-              <p>Access customer dashboard, bookings, or agent console</p>
+              <p>Access your personal travel dashboard and bookings</p>
             </div>
 
-            {/* 6 Quick Demo Logins Bar (At Least 5 Accounts Checked) */}
+            {/* Quick Demo Logins Bar (Admin and Users Only) */}
             <div className="demo-accounts-card" style={{ marginBottom: '1.25rem' }}>
               <div className="demo-accounts-title" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span>⚡ Quick 1-Click Verified Logins (Pwd: 123):</span>
-                <span style={{ fontSize: '0.72rem', background: '#dcfce7', color: '#16a34a', padding: '0.1rem 0.4rem', borderRadius: '4px', fontWeight: '800' }}>6 Verified Accounts</span>
+                <span>⚡ 1-Click Verified Logins (Pwd: 123):</span>
+                <span style={{ fontSize: '0.72rem', background: '#dcfce7', color: '#16a34a', padding: '0.1rem 0.4rem', borderRadius: '4px', fontWeight: '800' }}>4 Active Accounts</span>
               </div>
-              <div className="demo-btn-group" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.4rem', marginTop: '0.5rem' }}>
+              <div className="demo-btn-group" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.45rem', marginTop: '0.5rem' }}>
                 <button
                   type="button"
                   className="demo-pill-btn admin-btn"
                   onClick={() => handleInstantSignIn('admin@lyantravel.com', '123')}
                   title="Sign in as System Admin"
                 >
-                  🛡️ Admin
-                </button>
-                <button
-                  type="button"
-                  className="demo-pill-btn agent-btn"
-                  style={{ background: '#f0fdf4', color: '#16a34a', border: '1px solid #bbf7d0' }}
-                  onClick={() => handleInstantSignIn('agent@lyantravel.com', '123')}
-                  title="Sign in as Agent Sarah"
-                >
-                  💼 Agent Sarah
-                </button>
-                <button
-                  type="button"
-                  className="demo-pill-btn agent-btn"
-                  style={{ background: '#f0fdf4', color: '#16a34a', border: '1px solid #bbf7d0' }}
-                  onClick={() => handleInstantSignIn('agent.rajesh@lyantravel.com', '123')}
-                  title="Sign in as Agent Rajesh"
-                >
-                  💼 Agent Rajesh
+                  🛡️ System Admin
                 </button>
                 <button
                   type="button"
                   className="demo-pill-btn customer-btn"
-                  onClick={() => handleInstantSignIn('user@lyantravel.com', '123')}
-                  title="Sign in as Customer Kavitha"
+                  onClick={() => handleInstantSignIn('lavanya@lyantravel.com', '123')}
+                  title="Sign in as Customer Lavanya"
                 >
-                  👤 Kavitha (User)
+                  👤 Lavanya (User)
                 </button>
                 <button
                   type="button"
                   className="demo-pill-btn customer-btn"
-                  onClick={() => handleInstantSignIn('anand.chennai@gmail.com', '123')}
-                  title="Sign in as Customer Anand"
+                  onClick={() => handleInstantSignIn('divya.chennai@gmail.com', '123')}
+                  title="Sign in as Customer Divya"
                 >
-                  👤 Anand (User)
+                  👤 Divya (User)
                 </button>
                 <button
                   type="button"
                   className="demo-pill-btn customer-btn"
-                  onClick={() => handleInstantSignIn('priya.coimbatore@gmail.com', '123')}
-                  title="Sign in as Customer Priya"
+                  onClick={() => handleInstantSignIn('raja.coimbatore@gmail.com', '123')}
+                  title="Sign in as Customer Raja"
                 >
-                  👤 Priya (User)
+                  👤 Raja (User)
                 </button>
               </div>
             </div>
 
-            {/* OAuth 2.0 Single Sign-On Buttons */}
+            {/* Google Identity Single Sign-On Button */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '1.25rem' }}>
               <button
                 type="button"
@@ -277,14 +250,14 @@ export default function Login() {
                   gap: '0.75rem',
                   padding: '0.75rem 1rem',
                   borderRadius: 'var(--radius-md)',
-                  border: '1.5px solid #e2e8f0',
-                  background: '#fff',
+                  border: '1.5px solid #dadce0',
+                  background: '#ffffff',
                   color: '#1e293b',
                   fontWeight: '700',
-                  fontSize: '0.9rem',
+                  fontSize: '0.92rem',
                   cursor: 'pointer',
                   transition: 'all 0.2s',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.08)'
                 }}
               >
                 <svg width="20" height="20" viewBox="0 0 24 24">
@@ -293,33 +266,7 @@ export default function Login() {
                   <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.04 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
                   <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
                 </svg>
-                <span>{t('oauthGoogle')}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleOpenOAuth('github')}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '0.75rem',
-                  padding: '0.75rem 1rem',
-                  borderRadius: 'var(--radius-md)',
-                  border: '1.5px solid #0f172a',
-                  background: '#0f172a',
-                  color: '#fff',
-                  fontWeight: '700',
-                  fontSize: '0.9rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
-                }}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
-                </svg>
-                <span>{t('oauthGithub')}</span>
+                <span>Continue with Google</span>
               </button>
             </div>
 
@@ -346,7 +293,7 @@ export default function Login() {
                     autoComplete="username"
                     value={form.identifier}
                     onChange={(e) => setForm({ ...form, identifier: e.target.value })}
-                    placeholder="e.g. user@lyantravel.com, agent, or admin"
+                    placeholder="e.g. lavanya@lyantravel.com, agent, or admin"
                   />
                 </div>
               </div>
@@ -428,56 +375,88 @@ export default function Login() {
         </div>
       </div>
 
-      {/* Interactive OAuth 2.0 Provider Dialog */}
+      {/* Official Google Identity Authentication Dialog */}
       {oauthProvider && (
         <div className="modal-backdrop" onClick={() => setOauthProvider(null)}>
-          <div className="booking-modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '440px' }}>
+          <div className="google-auth-dialog" onClick={(e) => e.stopPropagation()}>
             <button className="modal-close-btn" onClick={() => setOauthProvider(null)}>✕</button>
-            <div className="modal-header" style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>
-                {oauthProvider === 'google' ? '🌐' : '🐙'}
+            <div className="google-auth-header">
+              <div className="google-auth-logo">
+                <svg width="36" height="36" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.8-2.4 3.66v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.15z"/>
+                  <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z"/>
+                  <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.04 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                  <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                </svg>
               </div>
-              <h2>Sign in with {oauthProvider === 'google' ? 'Google' : 'GitHub'}</h2>
-              <p className="subtitle">
-                Select a verified account or enter your email to receive an instant JWT authentication session.
-              </p>
+              <h2 className="google-auth-title">Sign in with Google</h2>
+              <p className="google-auth-subtitle">to continue to <strong>Lyan Travels</strong></p>
             </div>
 
-            <form onSubmit={handleExecuteOAuth} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1.25rem' }}>
-              <div className="input-group">
-                <label>Account Name</label>
-                <input
-                  type="text"
-                  value={oauthName}
-                  onChange={(e) => setOauthName(e.target.value)}
-                  placeholder="Your Full Name"
-                  required
-                />
+            <form onSubmit={handleExecuteOAuth} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+              <div className="google-account-list">
+                <button
+                  type="button"
+                  className={`google-account-row ${oauthEmail === 'alex.traveler@gmail.com' ? 'selected' : ''}`}
+                  onClick={() => {
+                    setOauthName('Alex Traveler');
+                    setOauthEmail('alex.traveler@gmail.com');
+                  }}
+                >
+                  <img
+                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100"
+                    alt="Alex Traveler"
+                    className="google-avatar"
+                  />
+                  <div>
+                    <div className="google-account-name">Alex Traveler (Verified)</div>
+                    <div className="google-account-email">alex.traveler@gmail.com</div>
+                  </div>
+                </button>
               </div>
 
-              <div className="input-group">
-                <label>{oauthProvider === 'google' ? 'Google Email' : 'GitHub Email'}</label>
-                <input
-                  type="email"
-                  value={oauthEmail}
-                  onChange={(e) => setOauthEmail(e.target.value)}
-                  placeholder="name@domain.com"
-                  required
-                />
-              </div>
-
-              <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: 'var(--radius-md)', fontSize: '0.8rem', color: '#64748b' }}>
-                🛡️ Fast-track OAuth 2.0 flow: automatically links profile and provisions RFC 7519 signed JWT Bearer credentials.
+              <div style={{ borderTop: '1px solid #dadce0', paddingTop: '0.85rem' }}>
+                <span style={{ fontSize: '0.8rem', fontWeight: '600', color: '#5f6368', display: 'block', marginBottom: '0.5rem' }}>
+                  Or enter your real Google account details:
+                </span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                  <div>
+                    <label style={{ fontSize: '0.78rem', color: '#5f6368', fontWeight: '600' }}>Google Account Name</label>
+                    <input
+                      type="text"
+                      value={oauthName}
+                      onChange={(e) => setOauthName(e.target.value)}
+                      placeholder="e.g. Rahul Sharma"
+                      required
+                      style={{ width: '100%', padding: '0.65rem 0.85rem', borderRadius: '6px', border: '1px solid #dadce0', fontSize: '0.9rem', outline: 'none' }}
+                    />
+                  </div>
+                  <div>
+                    <label style={{ fontSize: '0.78rem', color: '#5f6368', fontWeight: '600' }}>Google Email Address</label>
+                    <input
+                      type="email"
+                      value={oauthEmail}
+                      onChange={(e) => setOauthEmail(e.target.value)}
+                      placeholder="e.g. rahul.traveler@gmail.com"
+                      required
+                      style={{ width: '100%', padding: '0.65rem 0.85rem', borderRadius: '6px', border: '1px solid #dadce0', fontSize: '0.9rem', outline: 'none' }}
+                    />
+                  </div>
+                </div>
               </div>
 
               <button
                 type="submit"
-                className="btn-primary"
+                className="google-submit-btn"
                 disabled={oauthLoading}
-                style={{ width: '100%', justifyContent: 'center', padding: '0.8rem' }}
+                style={{ marginTop: '0.75rem' }}
               >
-                {oauthLoading ? 'Authenticating with OAuth…' : `Confirm Sign In with ${oauthProvider === 'google' ? 'Google' : 'GitHub'} ➔`}
+                {oauthLoading ? 'Authenticating with Google…' : `Continue as ${oauthName || 'Traveler'} ➔`}
               </button>
+
+              <p className="google-privacy-notice">
+                Google will securely authenticate your identity and share your verified name & email with Lyan Travels.
+              </p>
             </form>
           </div>
         </div>
@@ -503,24 +482,16 @@ export default function Login() {
                 <code>admin@lyantravel.com</code> (Password: <code>123</code>)
               </div>
               <div className="cred-item">
-                <span className="cred-role">💼 Senior Agent:</span>
-                <code>agent@lyantravel.com</code> (Password: <code>123</code>)
+                <span className="cred-role">👤 User Lavanya:</span>
+                <code>lavanya@lyantravel.com</code> (Password: <code>123</code>)
               </div>
               <div className="cred-item">
-                <span className="cred-role">💼 Verified Agent:</span>
-                <code>agent.rajesh@lyantravel.com</code> (Password: <code>123</code>)
+                <span className="cred-role">👤 User Divya:</span>
+                <code>divya.chennai@gmail.com</code> (Password: <code>123</code>)
               </div>
               <div className="cred-item">
-                <span className="cred-role">👤 Customer Kavitha:</span>
-                <code>user@lyantravel.com</code> (Password: <code>123</code>)
-              </div>
-              <div className="cred-item">
-                <span className="cred-role">👤 Customer Anand:</span>
-                <code>anand.chennai@gmail.com</code> (Password: <code>123</code>)
-              </div>
-              <div className="cred-item">
-                <span className="cred-role">👤 Customer Priya:</span>
-                <code>priya.coimbatore@gmail.com</code> (Password: <code>123</code>)
+                <span className="cred-role">👤 User Raja:</span>
+                <code>raja.coimbatore@gmail.com</code> (Password: <code>123</code>)
               </div>
             </div>
             <div className="modal-actions" style={{ marginTop: '1.5rem', display: 'flex', gap: '0.75rem' }}>
@@ -539,10 +510,10 @@ export default function Login() {
                 className="btn-secondary"
                 onClick={() => {
                   setShowForgotModal(false);
-                  handleInstantSignIn('user@lyantravel.com', '123');
+                  handleInstantSignIn('lavanya@lyantravel.com', '123');
                 }}
               >
-                Log In as Customer (123)
+                Log In as Lavanya (123)
               </button>
             </div>
           </div>

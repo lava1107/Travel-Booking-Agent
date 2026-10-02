@@ -119,25 +119,38 @@ class AuthService:
             print(f"Failed to save users.json: {e}")
 
     def find_by_email_or_username(self, identifier: str) -> Optional[Dict[str, Any]]:
+        self.load_users()
         target = identifier.strip().lower()
         if not target:
             return None
 
-        # Direct alias checks for admin / user
+        # Direct alias checks for admin / primary customer personas
         if target in ("admin", "administrator"):
             for u in self.users.values():
                 if u.get("role") == "admin":
                     return u
-        if target in ("user", "traveler", "customer"):
+        if target in ("lavanya", "lavanya@lyantravel.com", "lava@gmail.com", "user", "traveler", "customer", "user@lyantravel.com"):
+            for u in self.users.values():
+                if u.get("id") == 3 or u.get("name", "").lower() == "lavanya" or u.get("email", "").lower() == "lavanya@lyantravel.com":
+                    return u
             for u in self.users.values():
                 if u.get("role") == "customer":
                     return u
+        if target in ("divya", "divya.chennai@gmail.com", "anand.chennai@gmail.com", "anandm"):
+            for u in self.users.values():
+                if u.get("id") == 4 or u.get("name", "").lower() == "divya" or u.get("email", "").lower() == "divya.chennai@gmail.com":
+                    return u
+        if target in ("raja", "raja.coimbatore@gmail.com", "priya.coimbatore@gmail.com", "priyas"):
+            for u in self.users.values():
+                if u.get("id") == 5 or u.get("name", "").lower() == "raja" or u.get("email", "").lower() == "raja.coimbatore@gmail.com":
+                    return u
 
-        # Exact or prefix match on email or name
+        # Exact or prefix match on email, username, or name
         for u in self.users.values():
-            u_email = u["email"].lower()
-            u_name = u["name"].lower()
-            if u_email == target or u_name == target:
+            u_email = u.get("email", "").lower()
+            u_name = u.get("name", "").lower()
+            u_user = u.get("username", "").lower()
+            if u_email == target or u_name == target or u_user == target:
                 return u
             if target == u_email.split('@')[0]:
                 return u

@@ -21,7 +21,6 @@ export default function Register() {
   useEffect(() => {
     if (!loading && user) {
       if (user.role === 'admin') navigate('/admin', { replace: true });
-      else if (user.role === 'agent') navigate('/agent', { replace: true });
       else navigate('/dashboard', { replace: true });
     }
   }, [user, loading, navigate]);
@@ -81,8 +80,6 @@ export default function Register() {
       const authUser = await register(payload);
       if (authUser.role === 'admin') {
         navigate('/admin', { replace: true });
-      } else if (authUser.role === 'agent') {
-        navigate('/agent', { replace: true });
       } else {
         navigate('/dashboard', { replace: true });
       }
@@ -179,7 +176,7 @@ export default function Register() {
             <div className="auth-form-header">
               <div className="auth-form-icon">✨</div>
               <h2>Create an Account</h2>
-              <p>Register as a Traveler, Travel Consultant, or Administrator</p>
+              <p>Register as a Traveler or Administrator</p>
             </div>
 
             {error && (
@@ -248,7 +245,6 @@ export default function Register() {
                       className="auth-role-select"
                     >
                       <option value="customer">Customer / Traveler</option>
-                      <option value="agent">Travel Consultant / Agent</option>
                       <option value="admin">System Administrator</option>
                     </select>
                   </div>

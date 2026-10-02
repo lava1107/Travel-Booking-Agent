@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api/client';
 import { formatINR } from '../utils/currency';
+import fallbackDestinations from '../data/destinationsFallback.json';
 
 const CATEGORIES = [
   'All',
@@ -38,10 +39,27 @@ export default function Explore() {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
+    let isMounted = true;
     api.get('/destinations')
-      .then(({ data }) => setDestinations(data.data || []))
-      .catch((err) => console.error('Failed to load destinations:', err))
-      .finally(() => setLoading(false));
+      .then(({ data }) => {
+        if (!isMounted) return;
+        if (data?.data && Array.isArray(data.data) && data.data.length > 0) {
+          setDestinations(data.data);
+        } else {
+          setDestinations(fallbackDestinations);
+        }
+      })
+      .catch((err) => {
+        console.warn('Destinations API fallback activated:', err);
+        if (isMounted) setDestinations(fallbackDestinations);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const filtered = destinations.filter((d) => {

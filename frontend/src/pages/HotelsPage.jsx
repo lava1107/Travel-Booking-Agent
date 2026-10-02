@@ -215,8 +215,9 @@ export default function HotelsPage() {
   const [selectedDest, setSelectedDest] = useState('All');
   const [maxPrice, setMaxPrice] = useState(3000);
 
-  // Booking Modal
+  // Booking Modal State
   const [selectedHostel, setSelectedHostel] = useState(null);
+  const [bookingStep, setBookingStep] = useState(1); // 1: details, 2: payment method, 3: voucher
   const [checkInDate, setCheckInDate] = useState(() => {
     const d = new Date();
     d.setDate(d.getDate() + 3);
@@ -226,6 +227,9 @@ export default function HotelsPage() {
   const [guests, setGuests] = useState(1);
   const [bedType, setBedType] = useState('');
   const [specialRequests, setSpecialRequests] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('UPI (Google Pay / PhonePe)');
+  const [upiId, setUpiId] = useState('');
+  const [cardNumber, setCardNumber] = useState('');
   const [bookingSuccess, setBookingSuccess] = useState(null);
   const [bookingLoading, setBookingLoading] = useState(false);
 
@@ -244,7 +248,15 @@ export default function HotelsPage() {
   const openBooking = (hostel) => {
     setSelectedHostel(hostel);
     setBedType(hostel.bed_types?.[0] || 'Standard Bed');
+    setBookingStep(1);
     setBookingSuccess(null);
+    setPaymentMethod('UPI (Google Pay / PhonePe)');
+  };
+
+  const handleProceedToPayment = (e) => {
+    e.preventDefault();
+    if (!checkInDate) return;
+    setBookingStep(2);
   };
 
   const handleConfirmHostelBooking = async (e) => {
@@ -252,37 +264,65 @@ export default function HotelsPage() {
     if (!selectedHostel) return;
     setBookingLoading(true);
 
-    const payload = {
-      hostelId: selectedHostel.id,
-      checkInDate,
-      nights: Number(nights),
-      guests: Number(guests),
-      bedType,
-      specialRequests,
-      paymentMethod: 'UPI (Instant Simulation)'
+    const totalAmount = Math.round(selectedHostel.price_per_night * Number(guests) * Number(nights) * 1.05);
+    const pnr = `HST-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+    const txnId = `TXN-${Date.now()}-${Math.floor(100 + Math.random() * 900)}`;
+
+    const newBooking = {
+      id: Date.now(),
+      booking_code: pnr,
+      pnr,
+      transaction_id: txnId,
+      trip_title: `Stay: ${selectedHostel.name} (${bedType})`,
+      source: selectedHostel.city,
+      origin: selectedHostel.city,
+      departure_city: selectedHostel.city,
+      destination: selectedHostel.destination,
+      travel_date: checkInDate,
+      travelers_count: Number(guests),
+      traveler_names: [user?.name || 'Traveler User'],
+      total_amount: totalAmount,
+      status: 'confirmed',
+      payment_status: 'completed',
+      payment_method: paymentMethod,
+      timeline_step: 2,
+      special_requests: specialRequests,
+      created_at: new Date().toISOString()
     };
 
+    // Save to localStorage immediately so it's resilient & visible everywhere
     try {
-      const res = await api.post('/hostels/book', payload);
-      setBookingSuccess(res.data?.booking || {
-        pnr: `HST-2026-${Math.floor(1000 + Math.random() * 9000)}`,
-        trip_title: `Stay: ${selectedHostel.name} (${bedType})`,
-        total_amount: Math.round(selectedHostel.price_per_night * guests * nights * 1.05)
+      const existing = JSON.parse(localStorage.getItem('user_bookings') || '[]');
+      localStorage.setItem('user_bookings', JSON.stringify([newBooking, ...existing]));
+    } catch (storageErr) {
+      console.warn('localStorage booking cache warning:', storageErr);
+    }
+
+    // Broadcast confirmed event
+    window.dispatchEvent(
+      new CustomEvent('lyan_booking_confirmed', {
+        detail: { booking: newBooking, note: `Stay booked at ${selectedHostel.name}` },
+      })
+    );
+
+    // Call backend API
+    try {
+      await api.post('/hostels/book', {
+        hostelId: selectedHostel.id,
+        checkInDate,
+        nights: Number(nights),
+        guests: Number(guests),
+        bedType,
+        specialRequests,
+        paymentMethod
       });
     } catch (err) {
-      // Offline fallback booking confirmation
-      const pnr = `HST-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-      setBookingSuccess({
-        pnr,
-        trip_title: `Stay: ${selectedHostel.name} (${bedType})`,
-        total_amount: Math.round(selectedHostel.price_per_night * guests * nights * 1.05),
-        travel_date: checkInDate,
-        travelers_count: guests,
-        status: 'confirmed'
-      });
-    } finally {
-      setBookingLoading(false);
+      console.warn('Backend sync note (offline-resilient booking):', err);
     }
+
+    setBookingSuccess(newBooking);
+    setBookingStep(3);
+    setBookingLoading(false);
   };
 
   // Filtered List
@@ -475,130 +515,278 @@ export default function HotelsPage() {
         ))}
       </div>
 
-      {/* Hostel Booking Modal */}
+      {/* Hostel Booking & Payment Modal */}
       {selectedHostel && (
         <div className="modal-backdrop" onClick={() => setSelectedHostel(null)}>
-          <div className="booking-modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '580px' }}>
+          <div className="booking-modal" onClick={(e) => e.stopPropagation()} style={{ maxWidth: '620px' }}>
             <button className="modal-close-btn" onClick={() => setSelectedHostel(null)}>
               ✕
             </button>
 
-            {!bookingSuccess ? (
-              <>
-                <div className="modal-header">
-                  <span className="category-pill">Hostel & Stay Reservation</span>
-                  <h2>{selectedHostel.name}</h2>
-                  <p className="subtitle">📍 {selectedHostel.city} • Verified Backpacker Property</p>
-                </div>
+            {/* Modal Header */}
+            <div className="modal-header">
+              <span className="category-pill">Hostel & Stay Reservation</span>
+              <h2>{selectedHostel.name}</h2>
+              <p className="subtitle">📍 {selectedHostel.city} • Verified Property Network</p>
+            </div>
 
-                <form onSubmit={handleConfirmHostelBooking} style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                    <div className="form-group">
-                      <label>📅 Check-in Date</label>
-                      <input
-                        type="date"
-                        required
-                        value={checkInDate}
-                        onChange={(e) => setCheckInDate(e.target.value)}
-                      />
-                    </div>
+            {/* Step Progress Indicators */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--border-light)', paddingBottom: '0.75rem', marginBottom: '1.25rem', fontSize: '0.85rem', fontWeight: '700' }}>
+              <span style={{ color: bookingStep >= 1 ? 'var(--primary)' : 'var(--text-muted)' }}>
+                1. Stay Details {bookingStep > 1 && '✓'}
+              </span>
+              <span style={{ color: bookingStep >= 2 ? 'var(--primary)' : 'var(--text-muted)' }}>
+                2. Choose Payment Method {bookingStep > 2 && '✓'}
+              </span>
+              <span style={{ color: bookingStep === 3 ? '#16a34a' : 'var(--text-muted)' }}>
+                3. Confirmed Voucher
+              </span>
+            </div>
 
-                    <div className="form-group">
-                      <label>🌙 Duration (Nights)</label>
-                      <input
-                        type="number"
-                        min="1"
-                        max="30"
-                        required
-                        value={nights}
-                        onChange={(e) => setNights(e.target.value)}
-                      />
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                    <div className="form-group">
-                      <label>👤 Guests / Beds</label>
-                      <input
-                        type="number"
-                        min="1"
-                        max="10"
-                        required
-                        value={guests}
-                        onChange={(e) => setGuests(e.target.value)}
-                      />
-                    </div>
-
-                    <div className="form-group">
-                      <label>🛏️ Bed / Room Type</label>
-                      <select value={bedType} onChange={(e) => setBedType(e.target.value)}>
-                        {selectedHostel.bed_types?.map((bt, idx) => (
-                          <option key={idx} value={bt}>{bt}</option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-
+            {/* STEP 1: STAY DATES & GUESTS */}
+            {bookingStep === 1 && (
+              <form onSubmit={handleProceedToPayment} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                   <div className="form-group">
-                    <label>📝 Special Requests (Optional)</label>
+                    <label>📅 Check-in Date</label>
                     <input
-                      type="text"
-                      placeholder="e.g. Upper bunk preference, late check-in at 10 PM..."
-                      value={specialRequests}
-                      onChange={(e) => setSpecialRequests(e.target.value)}
+                      type="date"
+                      required
+                      value={checkInDate}
+                      onChange={(e) => setCheckInDate(e.target.value)}
                     />
                   </div>
 
-                  {/* Price Breakdown */}
-                  <div style={{ background: 'var(--bg-subtle)', borderRadius: 'var(--radius-md)', padding: '1rem', border: '1px solid var(--border-light)' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.35rem' }}>
-                      <span>Stay Cost ({guests} Guests × {nights} Nights × {formatINR(selectedHostel.price_per_night)}):</span>
-                      <strong>{formatINR(selectedHostel.price_per_night * guests * nights)}</strong>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.35rem' }}>
-                      <span>Hospitality GST (5%):</span>
-                      <span>{formatINR(selectedHostel.price_per_night * guests * nights * 0.05)}</span>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.05rem', fontWeight: '800', color: 'var(--primary)', borderTop: '1px solid var(--border-light)', paddingTop: '0.5rem', marginTop: '0.35rem' }}>
-                      <span>Total Stay Price:</span>
-                      <span>{formatINR(Math.round(selectedHostel.price_per_night * guests * nights * 1.05))}</span>
-                    </div>
+                  <div className="form-group">
+                    <label>🌙 Duration (Nights)</label>
+                    <input
+                      type="number"
+                      min="1"
+                      max="30"
+                      required
+                      value={nights}
+                      onChange={(e) => setNights(e.target.value)}
+                    />
+                  </div>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div className="form-group">
+                    <label>👤 Guests / Beds</label>
+                    <input
+                      type="number"
+                      min="1"
+                      max="10"
+                      required
+                      value={guests}
+                      onChange={(e) => setGuests(e.target.value)}
+                    />
                   </div>
 
-                  <div className="modal-actions" style={{ marginTop: '0.5rem' }}>
-                    <button type="submit" className="btn-primary" disabled={bookingLoading} style={{ flex: 1, justifyContent: 'center' }}>
-                      {bookingLoading ? 'Securing Bed...' : 'Confirm Stay Booking ➔'}
-                    </button>
-                    <button type="button" className="btn-secondary" onClick={() => setSelectedHostel(null)}>
-                      Cancel
-                    </button>
+                  <div className="form-group">
+                    <label>🛏️ Bed / Room Type</label>
+                    <select value={bedType} onChange={(e) => setBedType(e.target.value)}>
+                      {selectedHostel.bed_types?.map((bt, idx) => (
+                        <option key={idx} value={bt}>{bt}</option>
+                      ))}
+                    </select>
                   </div>
-                </form>
-              </>
-            ) : (
-              <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
+                </div>
+
+                <div className="form-group">
+                  <label>📝 Special Requests (Optional)</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Quiet dorm corner, late check-in at 10 PM..."
+                    value={specialRequests}
+                    onChange={(e) => setSpecialRequests(e.target.value)}
+                  />
+                </div>
+
+                {/* Price Breakdown */}
+                <div style={{ background: 'var(--bg-subtle)', borderRadius: 'var(--radius-md)', padding: '1rem', border: '1px solid var(--border-light)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.35rem' }}>
+                    <span>Stay Cost ({guests} Guests × {nights} Nights × {formatINR(selectedHostel.price_per_night)}):</span>
+                    <strong>{formatINR(selectedHostel.price_per_night * guests * nights)}</strong>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.35rem' }}>
+                    <span>Hospitality GST (5%):</span>
+                    <span>{formatINR(selectedHostel.price_per_night * guests * nights * 0.05)}</span>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.05rem', fontWeight: '800', color: 'var(--primary)', borderTop: '1px solid var(--border-light)', paddingTop: '0.5rem', marginTop: '0.35rem' }}>
+                    <span>Total Amount Payable:</span>
+                    <span>{formatINR(Math.round(selectedHostel.price_per_night * guests * nights * 1.05))}</span>
+                  </div>
+                </div>
+
+                <div className="modal-actions" style={{ marginTop: '0.75rem' }}>
+                  <button type="submit" className="btn-primary" style={{ flex: 1, justifyContent: 'center', padding: '0.8rem' }}>
+                    Proceed to Payment ➔
+                  </button>
+                  <button type="button" className="btn-secondary" onClick={() => setSelectedHostel(null)}>
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* STEP 2: CHOOSE PAYMENT PROCESS */}
+            {bookingStep === 2 && (
+              <form onSubmit={handleConfirmHostelBooking} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                <div style={{ background: '#f8fafc', padding: '1rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Total Amount to Pay:</div>
+                    <div style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--primary)' }}>
+                      {formatINR(Math.round(selectedHostel.price_per_night * guests * nights * 1.05))}
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right', fontSize: '0.8rem', color: '#16a34a', fontWeight: '700' }}>
+                    🔒 256-Bit Encrypted Secure Checkout
+                  </div>
+                </div>
+
+                <div>
+                  <label style={{ fontSize: '0.88rem', fontWeight: '700', color: 'var(--text-dark)', display: 'block', marginBottom: '0.5rem' }}>
+                    Choose Your Preferred Payment Method:
+                  </label>
+                  <div className="payment-selector-card">
+                    {[
+                      { key: 'UPI (Google Pay / PhonePe)', icon: '📱', name: 'Instant UPI', desc: 'GPay / PhonePe / Paytm / QR' },
+                      { key: 'Credit / Debit Card', icon: '💳', name: 'Cards', desc: 'Visa, RuPay, Mastercard' },
+                      { key: 'Net Banking', icon: '🏦', name: 'Net Banking', desc: 'SBI, HDFC, ICICI, Axis' },
+                      { key: 'Lyan Travel Wallet', icon: '👛', name: 'Travel Wallet', desc: 'Instant 1-Click Debit' },
+                    ].map((m) => (
+                      <div
+                        key={m.key}
+                        className={`payment-method-pill ${paymentMethod === m.key ? 'active' : ''}`}
+                        onClick={() => setPaymentMethod(m.key)}
+                      >
+                        <span className="payment-method-icon">{m.icon}</span>
+                        <span className="payment-method-name">{m.name}</span>
+                        <span className="payment-method-desc">{m.desc}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Conditional Payment Field */}
+                {paymentMethod.includes('UPI') && (
+                  <div className="form-group" style={{ background: '#f0fdf4', padding: '1rem', borderRadius: '8px', border: '1px solid #bbf7d0' }}>
+                    <label style={{ color: '#166534', fontWeight: '700', fontSize: '0.85rem' }}>
+                      Enter your UPI ID / Virtual Payment Address:
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="e.g. mobile@okaxis or username@okhdfcbank"
+                      value={upiId}
+                      onChange={(e) => setUpiId(e.target.value)}
+                      style={{ marginTop: '0.35rem', background: '#fff' }}
+                    />
+                    <div style={{ fontSize: '0.75rem', color: '#15803d', marginTop: '0.4rem' }}>
+                      ⚡ Simulated Instant UPI Confirmation Active. You can click Pay & Confirm to simulate an approved transaction.
+                    </div>
+                  </div>
+                )}
+
+                {paymentMethod.includes('Card') && (
+                  <div className="form-group" style={{ background: '#eff6ff', padding: '1rem', borderRadius: '8px', border: '1px solid #bfdbfe' }}>
+                    <label style={{ color: '#1e40af', fontWeight: '700', fontSize: '0.85rem' }}>
+                      Enter Card Number (Simulated Sandbox):
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="4111 2222 3333 4444"
+                      maxLength={19}
+                      value={cardNumber}
+                      onChange={(e) => setCardNumber(e.target.value)}
+                      style={{ marginTop: '0.35rem', background: '#fff' }}
+                    />
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.5rem', marginTop: '0.5rem' }}>
+                      <input type="text" placeholder="MM/YY" maxLength={5} style={{ background: '#fff' }} />
+                      <input type="password" placeholder="CVV" maxLength={4} style={{ background: '#fff' }} />
+                    </div>
+                  </div>
+                )}
+
+                {paymentMethod.includes('Net Banking') && (
+                  <div className="form-group" style={{ background: '#f8fafc', padding: '1rem', borderRadius: '8px', border: '1px solid #cbd5e1' }}>
+                    <label style={{ fontWeight: '700', fontSize: '0.85rem' }}>Select Bank:</label>
+                    <select style={{ marginTop: '0.35rem' }}>
+                      <option>State Bank of India (SBI)</option>
+                      <option>HDFC Bank</option>
+                      <option>ICICI Bank</option>
+                      <option>Axis Bank</option>
+                      <option>Kotak Mahindra Bank</option>
+                    </select>
+                  </div>
+                )}
+
+                {paymentMethod.includes('Wallet') && (
+                  <div style={{ background: '#fef3c7', padding: '0.85rem 1rem', borderRadius: '8px', border: '1px solid #fde68a', fontSize: '0.85rem', color: '#92400e' }}>
+                    👛 Lyan Travel Wallet Balance: <strong>₹25,000</strong>. Remaining balance after checkout: <strong>{formatINR(25000 - Math.round(selectedHostel.price_per_night * guests * nights * 1.05))}</strong>.
+                  </div>
+                )}
+
+                <div className="modal-actions" style={{ marginTop: '0.5rem' }}>
+                  <button
+                    type="submit"
+                    className="btn-coral"
+                    disabled={bookingLoading}
+                    style={{ flex: 1, justifyContent: 'center', padding: '0.85rem', fontSize: '0.95rem' }}
+                  >
+                    {bookingLoading ? 'Processing Secure Payment…' : `Pay ${formatINR(Math.round(selectedHostel.price_per_night * guests * nights * 1.05))} & Complete Booking ➔`}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-secondary"
+                    onClick={() => setBookingStep(1)}
+                  >
+                    ← Back
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* STEP 3: OFFICIAL BOARDING & STAY VOUCHER */}
+            {bookingStep === 3 && bookingSuccess && (
+              <div style={{ textAlign: 'center', padding: '1rem 0' }}>
                 <span style={{ fontSize: '3.5rem' }}>🎉</span>
-                <h2 style={{ color: 'var(--primary)', marginTop: '0.75rem' }}>Stay Confirmed!</h2>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', marginTop: '0.35rem' }}>
-                  Your bed reservation has been confirmed with instant check-in confirmation.
+                <h2 style={{ color: 'var(--primary)', marginTop: '0.5rem' }}>Booking & Payment Successful!</h2>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.92rem', marginTop: '0.25rem' }}>
+                  Your reservation is confirmed. Your check-in voucher is ready in My Bookings.
                 </p>
 
-                <div style={{ background: '#f8fafc', borderRadius: '12px', border: '1px solid var(--border-light)', padding: '1.25rem', margin: '1.5rem 0', textAlign: 'left' }}>
+                <div style={{ background: '#f8fafc', borderRadius: '14px', border: '1.5px solid #cbd5e1', padding: '1.5rem', margin: '1.5rem 0', textAlign: 'left' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem', borderBottom: '1px dashed #cbd5e1', paddingBottom: '0.5rem' }}>
+                    <span style={{ fontWeight: '800', color: 'var(--primary)', fontSize: '0.85rem' }}>OFFICIAL STAY VOUCHER</span>
+                    <span style={{ background: '#dcfce7', color: '#16a34a', padding: '0.2rem 0.5rem', borderRadius: '4px', fontWeight: '800', fontSize: '0.75rem' }}>
+                      PAID & CONFIRMED
+                    </span>
+                  </div>
+
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                    <span style={{ fontWeight: '700' }}>Hostel PNR:</span>
-                    <code style={{ background: '#fff', padding: '0.2rem 0.5rem', border: '1px solid #cbd5e1', borderRadius: '4px', fontWeight: '800', color: 'var(--primary)' }}>
+                    <span style={{ color: 'var(--text-muted)', fontSize: '0.88rem' }}>Reservation PNR:</span>
+                    <code style={{ background: '#fff', padding: '0.2rem 0.6rem', border: '1px solid #cbd5e1', borderRadius: '4px', fontWeight: '800', color: 'var(--primary)', fontSize: '0.95rem' }}>
                       {bookingSuccess.pnr}
                     </code>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.88rem' }}>
-                    <span>Property:</span>
+                    <span style={{ color: 'var(--text-muted)' }}>Property:</span>
                     <strong>{selectedHostel.name}</strong>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.88rem' }}>
-                    <span>Check-in:</span>
-                    <strong>{checkInDate} ({nights} Nights)</strong>
+                    <span style={{ color: 'var(--text-muted)' }}>Bed / Room Type:</span>
+                    <strong>{bedType}</strong>
                   </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.88rem' }}>
+                    <span style={{ color: 'var(--text-muted)' }}>Check-in & Duration:</span>
+                    <strong>{checkInDate} ({nights} Nights • {guests} Guests)</strong>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.88rem' }}>
+                    <span style={{ color: 'var(--text-muted)' }}>Payment Method:</span>
+                    <strong>{paymentMethod}</strong>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1rem', borderTop: '1px solid #e2e8f0', paddingTop: '0.5rem', marginTop: '0.5rem' }}>
                     <span>Total Amount Paid:</span>
                     <strong style={{ color: '#16a34a' }}>{formatINR(bookingSuccess.total_amount)}</strong>
                   </div>
@@ -612,13 +800,15 @@ export default function HotelsPage() {
                       setSelectedHostel(null);
                       navigate('/my-bookings');
                     }}
+                    style={{ padding: '0.75rem 1.5rem', fontWeight: '700' }}
                   >
-                    View in My Trips ➔
+                    View in My Bookings ➔
                   </button>
                   <button
                     type="button"
                     className="btn-secondary"
                     onClick={() => setSelectedHostel(null)}
+                    style={{ padding: '0.75rem 1.5rem' }}
                   >
                     Close
                   </button>

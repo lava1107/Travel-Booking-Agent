@@ -5,9 +5,9 @@ USERS_TO_TEST = [
     {"role": "admin", "email": "admin@lyantravel.com", "password": "123"},
     {"role": "agent", "email": "agent@lyantravel.com", "password": "123"},
     {"role": "agent", "email": "agent.rajesh@lyantravel.com", "password": "123"},
-    {"role": "customer", "email": "user@lyantravel.com", "password": "123"},
-    {"role": "customer", "email": "anand.chennai@gmail.com", "password": "123"},
-    {"role": "customer", "email": "priya.coimbatore@gmail.com", "password": "123"}
+    {"role": "customer", "email": "lavanya@lyantravel.com", "password": "123"},
+    {"role": "customer", "email": "divya.chennai@gmail.com", "password": "123"},
+    {"role": "customer", "email": "raja.coimbatore@gmail.com", "password": "123"}
 ]
 
 def test_logins():

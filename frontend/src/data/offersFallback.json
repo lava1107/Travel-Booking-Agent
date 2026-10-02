@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "code": "TAMILNADU10",
+    "title": "Tamil Nadu Early Bird Discount",
+    "description": "Flat \u20b92,000 discount on all domestic trips originating from Chennai, Coimbatore, Madurai, or Trichy.",
+    "discount_type": "flat",
+    "discount_value": 2000,
+    "min_amount": 15000,
+    "valid_until": "2026-12-31",
+    "category": "Domestic",
+    "badge": "Popular in TN"
+  },
+  {
+    "id": 2,
+    "code": "STUDENTTRIP",
+    "title": "College & Student Getaway Offer",
+    "description": "15% off on budget weekend getaways to Ooty, Kodaikanal, Hampi, and Pondicherry with valid student ID.",
+    "discount_type": "percentage",
+    "discount_value": 15,
+    "min_amount": 5000,
+    "valid_until": "2026-11-30",
+    "category": "Budget",
+    "badge": "Student Special"
+  },
+  {
+    "id": 3,
+    "code": "SINGAPOREFEST",
+    "title": "Direct Flights to Singapore Saver",
+    "description": "Save \u20b95,000 on Singapore & Malaysia combo packages departing from Chennai International Airport.",
+    "discount_type": "flat",
+    "discount_value": 5000,
+    "min_amount": 50000,
+    "valid_until": "2026-12-15",
+    "category": "International",
+    "badge": "Hot Deal"
+  },
+  {
+    "id": 4,
+    "code": "FAMILYVACAY",
+    "title": "Family Travel Special (4+ Travelers)",
+    "description": "Complimentary room upgrade & \u20b94,000 cash discount for families booking Kerala, Goa or Andaman packages.",
+    "discount_type": "flat",
+    "discount_value": 4000,
+    "min_amount": 35000,
+    "valid_until": "2026-12-31",
+    "category": "Family",
+    "badge": "Family Favorite"
+  }
+]

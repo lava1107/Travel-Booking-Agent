@@ -10,9 +10,8 @@ export const TRANSLATIONS = {
     navCompare: 'Compare',
     navPlanner: 'AI Trip Planner',
     navBookings: 'My Bookings',
-    navApi: 'Developer API',
+    navPayments: 'Payments',
     navAdmin: 'Admin Console',
-    navAgent: 'Agent Portal',
     navLogin: 'Sign In',
     navRegister: 'Register',
     navLogout: 'Sign Out',
@@ -36,8 +35,7 @@ export const TRANSLATIONS = {
     verifiedAgent: 'Verified Travel System',
     seatsLeft: 'seats available',
     perPerson: 'per traveler (GST included)',
-    oauthGoogle: 'Continue with Google',
-    oauthGithub: 'Continue with GitHub'
+    oauthGoogle: 'Continue with Google'
   },
   ta: {
     navHome: 'முகப்பு',
@@ -46,9 +44,8 @@ export const TRANSLATIONS = {
     navCompare: 'ஒப்பீடு',
     navPlanner: 'AI பயணத் திட்டமிடல்',
     navBookings: 'என் முன்பதிவுகள்',
-    navApi: 'டெவலப்பர் API',
+    navPayments: 'கட்டணங்கள்',
     navAdmin: 'நிர்வாக அறை',
-    navAgent: 'ஏஜென்ட் தளம்',
     navLogin: 'உள்நுழைக',
     navRegister: 'பதிவு செய்க',
     navLogout: 'வெளியேறு',
@@ -72,8 +69,7 @@ export const TRANSLATIONS = {
     verifiedAgent: 'சரிபார்க்கப்பட்ட பயண முகவர்',
     seatsLeft: 'இருக்கைகள் உள்ளன',
     perPerson: 'ஒரு நபருக்கு (GST உட்பட)',
-    oauthGoogle: 'Google மூலம் உள்நுழைக',
-    oauthGithub: 'GitHub மூலம் உள்நுழைக'
+    oauthGoogle: 'Google மூலம் உள்நுழைக'
   },
   hi: {
     navHome: 'होम',
@@ -82,9 +78,8 @@ export const TRANSLATIONS = {
     navCompare: 'तुलना करें',
     navPlanner: 'AI ट्रिप प्लानर',
     navBookings: 'मेरी बुकिंग',
-    navApi: 'डेवलपर API',
+    navPayments: 'भुगतान',
     navAdmin: 'व्यवस्थापक कंसोल',
-    navAgent: 'एजेंट पोर्टल',
     navLogin: 'साइन इन',
     navRegister: 'पंजीकरण करें',
     navLogout: 'लॉग आउट',
@@ -108,8 +103,7 @@ export const TRANSLATIONS = {
     verifiedAgent: 'सत्यापित ट्रैवल एजेंट',
     seatsLeft: 'सीटें शेष हैं',
     perPerson: 'प्रति व्यक्ति (GST सहित)',
-    oauthGoogle: 'Google से जारी रखें',
-    oauthGithub: 'GitHub से जारी रखें'
+    oauthGoogle: 'Google से जारी रखें'
   },
   es: {
     navHome: 'Inicio',
@@ -118,9 +112,8 @@ export const TRANSLATIONS = {
     navCompare: 'Comparar',
     navPlanner: 'Planificador IA',
     navBookings: 'Mis Reservas',
-    navApi: 'API Desarrollador',
+    navPayments: 'Pagos',
     navAdmin: 'Panel de Admin',
-    navAgent: 'Portal del Agente',
     navLogin: 'Iniciar Sesión',
     navRegister: 'Registrarse',
     navLogout: 'Cerrar Sesión',
@@ -144,8 +137,7 @@ export const TRANSLATIONS = {
     verifiedAgent: 'Agencia de Viajes Verificada',
     seatsLeft: 'asientos disponibles',
     perPerson: 'por persona (GST incluido)',
-    oauthGoogle: 'Continuar con Google',
-    oauthGithub: 'Continuar con GitHub'
+    oauthGoogle: 'Continuar con Google'
   }
 };
 

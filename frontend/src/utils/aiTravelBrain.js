@@ -121,6 +121,38 @@ export class AITravelBrain {
     const foundPax = this.extractPax(t);
     if (foundPax) ctx.passengers = foundPax;
 
+    // Check Website Inquiry
+    const websiteTriggers = [
+      'about website', 'about the website', 'tell me about website', 'tell me about the website',
+      'about this website', 'website features', 'features of website', 'what can this website do',
+      'what does this website do', 'how to use this website', 'how does this website work',
+      'how to book', 'payment methods', 'payment options', 'how to pay',
+      'cancellation policy', 'refund policy', 'refunds', 'cancel policy',
+      'special offers', 'coupons', 'discounts', 'promo code', 'promo codes',
+      'who are you', 'what can you do', 'website details', 'everything about website',
+      'about lyan', 'about lyan travels', 'what is lyan travels'
+    ];
+    if (websiteTriggers.some(w => tLow.includes(w)) || ['website', 'features', 'about', 'help'].includes(tLow)) {
+      return this.handleWebsiteInquiry(tLow, ctx);
+    }
+
+    // Check Destination Deep Dive (e.g. "goa", "tell me about goa", "everything about goa")
+    const isGoaExplicit = tLow.includes('goa');
+    const destDeepTriggers = ['tell me about', 'everything about', 'details', 'info', 'what to do in', 'explore', 'about', 'guide'];
+    const isDeepAsk = destDeepTriggers.some(w => tLow.includes(w));
+    const singleDestTokens = [
+      'goa', 'kerala', 'munnar', 'alleppey', 'ooty', 'coonoor', 'kodaikanal',
+      'andaman', 'manali', 'kashmir', 'jaipur', 'udaipur', 'dubai',
+      'singapore', 'maldives', 'thailand', 'sri lanka', 'bali', 'pondicherry'
+    ];
+
+    if (isGoaExplicit || isDeepAsk || singleDestTokens.includes(tLow) || (ctx.destination && tLow.split(' ').length <= 3)) {
+      if (!['book', 'cancel', 'reservation', 'status', 'confirm', 'pnr'].some(w => tLow.includes(w))) {
+        const targetDest = isGoaExplicit ? 'Goa' : (ctx.destination || (singleDestTokens.includes(tLow) ? tLow : 'Goa'));
+        return this.handleDestinationDeepDive(targetDest, ctx, user, t);
+      }
+    }
+
     // Check Hostels intent
     if (tLow.includes('hostel') || tLow.includes('backpacker') || tLow.includes('dorm') || tLow.includes('zostel')) {
       return this.handleHostelsInquiry(tLow, ctx);
@@ -139,6 +171,11 @@ export class AITravelBrain {
     // Check Cancel Booking
     if (tLow.includes('cancel my') || tLow.includes('cancel booking') || tLow.includes('cancellation')) {
       return this.handleCancellation(tLow, ctx, user);
+    }
+
+    // Check if user is completing payment for pending booking
+    if (ctx.pending_booking && (tLow.includes('pay') || tLow.includes('upi') || tLow.includes('card') || tLow.includes('wallet') || tLow.includes('banking') || tLow.includes('bank') || ['1', '2', '3', '4'].includes(tLow))) {
+      return this.handleExecutePayment(tLow, ctx, user);
     }
 
     // Check Ordinal booking / "Book the second one", "Book package 1"
@@ -212,6 +249,179 @@ export class AITravelBrain {
         'Which one has breakfast?',
         'Talk to human agent'
       ]
+    };
+  }
+
+  handleWebsiteInquiry(topic, ctx) {
+    const reply = (
+      `🌐 **Welcome to Lyan Travels — Travel Agent Management & Booking System**\n\n` +
+      `Lyan Travels is an all-in-one travel intelligence platform built specifically for travelers departing from Tamil Nadu (Chennai, Coimbatore, Madurai, Trichy, Salem, Vellore) and across India.\n\n` +
+      `Here is **everything** you can do on our website:\n\n` +
+      `────────────────────────────────────────\n` +
+      `### 🗺️ 1. Tour Package Explorer & Custom Itinerary Planner\n` +
+      `- **Extensive Catalog:** 100+ curated domestic & international packages departing from major Tamil Nadu transit hubs.\n` +
+      `- **Categories:** Budget, Economy, Standard, Premium, and Ultra-Luxury tiers.\n` +
+      `- **Smart Search:** Filter by departure city, budget cap, duration, and theme (Beach, Hills, Heritage, Honeymoon, Wildlife, Adventure).\n` +
+      `- **Custom Trip Planner:** Input your origin, destination, days, and traveler count to automatically build a custom day-by-day itinerary.\n\n` +
+      `────────────────────────────────────────\n` +
+      `### 🤖 2. Conversational AI Travel Concierge (Voice Enabled)\n` +
+      `- **24/7 Machine Learning Travel Brain:** Multi-turn conversational agent with context tracking, intent classification, and NER.\n` +
+      `- **🎙️ Speech-to-Text (Voice Input):** Tap the microphone button in the chat input bar to speak your destination or questions naturally!\n` +
+      `- **🔊 Text-to-Speech (Voice Output):** Tap the speaker icon on any message to listen aloud, or turn on 'Auto-Voice' in the header for automatic speech readout.\n` +
+      `- **Instant In-Chat Bookings:** Reserve tour packages right inside this chat window and receive official PNR boarding vouchers instantly.\n\n` +
+      `────────────────────────────────────────\n` +
+      `### 🏨 3. Backpacker Hostels & Youth Stays\n` +
+      `- Direct partnerships with **Zostel**, **The Hosteller**, and certified boutique backpacker hostels across Goa, Kerala, Ooty, Kodaikanal, Manali, and Pondicherry.\n` +
+      `- AC dorm beds and private pods starting from **₹499/night** with high-speed WiFi, cafes, and social events.\n\n` +
+      `────────────────────────────────────────\n` +
+      `### 🎫 4. My Bookings & Boarding Pass Dashboard\n` +
+      `- Check live PNR status (\`TRV-2026-XXX\`), view travel dates, traveler rosters, and download digital e-tickets anytime in the **My Bookings** tab.\n\n` +
+      `────────────────────────────────────────\n` +
+      `### 💳 5. 100% Safe Payments\n` +
+      `- **UPI:** Google Pay, PhonePe, Paytm, BHIM (instant zero-fee verification).\n` +
+      `- **Cards:** Visa, MasterCard, RuPay (credit & debit cards).\n` +
+      `- **Net Banking & EMI:** Zero-cost 3-month and 6-month EMI plans available on trips above ₹20,000.\n\n` +
+      `────────────────────────────────────────\n` +
+      `### 🛡️ 6. 48-Hour Free Cancellation & Full Refund\n` +
+      `- Cancel any reservation up to 48 hours prior to departure for a **100% full refund** to your original payment method with zero hidden penalties.\n\n` +
+      `────────────────────────────────────────\n` +
+      `### 🎁 7. Active Promo Codes\n` +
+      `- **\`TAMILNADU10\`** — Flat 10% instant discount for departures from any Tamil Nadu city.\n` +
+      `- **\`LYANFIRST\`** — Flat ₹1,500 off your very first vacation booking.\n` +
+      `- **\`SUMMER25\`** — 25% discount on Luxury and Honeymoon packages.\n\n` +
+      `────────────────────────────────────────\n` +
+      `### 👤 8. 24/7 Human Agent Concierge\n` +
+      `- Need personalized travel consulting? Connect directly with Senior Consultant **Sarah Connor** (+91 98400 11223) with a single tap!\n\n` +
+      `💡 *What would you like to explore next? You can ask me **'Tell me everything about Goa'**, **'Find trips from Chennai under 40k'**, or **'Hostels in Kerala'**!*`
+    );
+    return {
+      reply,
+      intent: 'help',
+      confidence: 0.99,
+      context: ctx,
+      suggestions: [
+        'Everything about Goa',
+        'Find trips from Chennai',
+        'Hostels & Dorms',
+        'Talk to human agent'
+      ]
+    };
+  }
+
+  handleDestinationDeepDive(targetDest, ctx, user, rawText) {
+    const origin = ctx.origin || 'Chennai';
+    const destName = targetDest ? targetDest.charAt(0).toUpperCase() + targetDest.slice(1).toLowerCase() : 'Goa';
+
+    // Filter matching packages
+    let pkgs = [];
+    if (this.cachedPackages.length > 0) {
+      pkgs = this.cachedPackages.filter(p =>
+        p.destination?.toLowerCase().includes(destName.toLowerCase()) ||
+        p.title?.toLowerCase().includes(destName.toLowerCase())
+      );
+    }
+
+    if (pkgs.length === 0) {
+      pkgs = this.generateSmartFallbacks(origin, destName, ctx.budget);
+    }
+
+    ctx.last_packages = pkgs.slice(0, 4);
+
+    const pkgBullets = ctx.last_packages.map((p, idx) => (
+      `**${idx + 1}. ${p.title}**\n` +
+      `   - 📍 **Route:** ${p.source || origin} ➔ ${p.destination} (${p.destination_type || 'Domestic'})\n` +
+      `   - 💰 **Price:** ${formatINR(p.amount)} per person | ⭐ ${p.rating || 4.9}/5\n` +
+      `   - ⏱️ **Duration:** ${p.duration || '5D / 4N'} | 🏷️ **Tier:** ${p.category || 'Standard'}\n` +
+      `   - 🚀 **Transport:** ${p.transport || 'Direct Flight + Cab'} | 🏨 **Stay:** ${p.hotel_category || '4-Star Beach Resort'}\n` +
+      `   - 🍳 **Meals:** ${p.meals || 'Buffet Breakfast & Dinner Cruise'}`
+    )).join('\n\n');
+
+    let reply = '';
+    let suggestions = [];
+
+    if (destName.toLowerCase() === 'goa') {
+      reply = (
+        `🌴 **Complete Travel & Vacation Guide: Goa, India** 🌴\n\n` +
+        `Welcome to Goa — India's premier coastal haven! Where 450 years of Portuguese heritage, sun-drenched Arabian Sea beaches, swaying coconut palms, vibrant beach shacks, and a relaxed 'Susegad' lifestyle meet thrilling water sports and electrifying nightlife.\n\n` +
+        `Here is **everything** you need to know about Goa and our top travel offerings:\n\n` +
+        `────────────────────────────────────────\n` +
+        `### 📦 1. Curated Tour Packages (Departing from Tamil Nadu)\n` +
+        `We offer direct departures from **Chennai, Coimbatore, Madurai, Trichy, and Salem**:\n\n` +
+        `${pkgBullets}\n\n` +
+        `────────────────────────────────────────\n` +
+        `### 🏖️ 2. North Goa vs. South Goa Sightseeing Highlights\n` +
+        `**North Goa (Buzzing Beaches, Water Sports & Nightlife):**\n` +
+        `- **Baga & Calangute Beach:** High-energy water sports (Parasailing, Jet Ski, Banana Boat), famous beach shacks (Britto's, Souza Lobo).\n` +
+        `- **Anjuna & Vagator Beach:** Stunning red laterite cliffs, sunset views, Curlies Beach Shack, and Wednesday Anjuna Flea Market.\n` +
+        `- **Chapora Fort:** Panoramic clifftop fortress made legendary by *Dil Chahta Hai* overlooking Vagator bay.\n` +
+        `- **Fort Aguada & Lighthouse:** 17th-century Portuguese coastal bastion with pristine Arabian Sea views.\n` +
+        `- **Tito's Lane:** World-renowned party promenade featuring Club Tito's and Café Mambo.\n\n` +
+        `**South Goa (Pristine Shores, Heritage & Peaceful Nature):**\n` +
+        `- **Palolem & Butterfly Beach:** Crescent-shaped beach with gentle turquoise waves, kayaking, and dolphin spotting.\n` +
+        `- **Colva & Benaulim Beach:** Miles of powdery white sand, serene sunsets, and luxury beachfront dining.\n` +
+        `- **Dudhsagar Waterfalls:** Majestic 310m 4-tiered waterfall in Bhagwan Mahavir Sanctuary with exhilarating 4x4 Jeep safaris.\n` +
+        `- **Old Goa Basilicas (UNESCO World Heritage):** Basilica of Bom Jesus (sacred relics of St. Francis Xavier) and Se Cathedral.\n` +
+        `- **Sahakari Spice Plantation:** Traditional guided walk with organic spice tastings, elephant bathing, and authentic Goan buffet lunch.\n\n` +
+        `────────────────────────────────────────\n` +
+        `### 🏨 3. Accommodation & Hostel Options\n` +
+        `- **Backpacker & Youth Hostels (from ₹799/night):**\n` +
+        `  • *Zostel Morjim:* Beachfront location, rooftop cafe, surf lessons, vibrant community.\n` +
+        `  • *The Hosteller Anjuna:* Poolside lounge, container pods, game room, organized pub crawls.\n` +
+        `- **Luxury Beachfront Resorts (from ₹9,500/night):**\n` +
+        `  • *Taj Exotica Resort & Spa (Benaulim):* 56 acres of Mediterranean luxury with private beach.\n` +
+        `  • *W Goa (Vagator):* Trendy cliffside luxury, rock pool, and world-class spa.\n` +
+        `  • *Caravela Beach Resort (Varca):* Pristine white-sand direct access with golf putting green.\n\n` +
+        `────────────────────────────────────────\n` +
+        `### ✈️ 4. Travel & Transit Connectivity from Tamil Nadu\n` +
+        `- **Direct Flights:** Daily non-stop flights from Chennai (MAA) & Coimbatore (CJB) to Goa Dabolim (GOI) / Manohar Mopa (GOX) (1h 45m).\n` +
+        `- **Express Trains:** Vasco Da Gama Express departing from Chennai Central & Coimbatore Junction.\n` +
+        `- **Luxury Sleeper Buses:** Daily overnight multi-axle Volvo & Scania AC sleepers from Chennai, Coimbatore, and Bengaluru.\n\n` +
+        `────────────────────────────────────────\n` +
+        `### 🏄 5. Must-Do Activities & Experiences\n` +
+        `- **Scuba Diving & Snorkeling:** Explore coral reefs and shipwrecks at Grande Island with certified PADI divemasters.\n` +
+        `- **Mandovi River Sunset Dinner Cruise:** 2-hour cruise with live Goan folk dance (Dekhni & Fugdi), DJ, and open buffet.\n` +
+        `- **Offshore Floating Casinos:** Deltin Royale & Casino Pride for gaming, entertainment, and gourmet dining.\n\n` +
+        `────────────────────────────────────────\n` +
+        `### 💡 6. Best Season & Local Travel Advice\n` +
+        `- **Peak Season (October to April):** Perfect beach weather (28°C–32°C), all shacks open, water sports operating.\n` +
+        `- **Monsoon Season (June to September):** Emerald-green countryside, Dudhsagar Falls in full power, 40% cheaper luxury resorts.\n` +
+        `- **Scooter Rentals:** Available everywhere for ₹350–₹500/day (helmets & valid license mandatory).\n\n` +
+        `💡 *You can click **'Book This'** on any package below, or say **'Book the first one'**, **'Show hostels in Goa'**, or **'Talk to human agent'**!*`
+      );
+      suggestions = [
+        'Book the first one',
+        'Show hostels in Goa',
+        'Which package has flights?',
+        'Talk to human agent'
+      ];
+    } else {
+      reply = (
+        `🌍 **Complete Travel & Vacation Guide: ${destName}** 🌍\n\n` +
+        `Here is our comprehensive travel guide for **${destName}**, featuring our highest-rated packages departing from Tamil Nadu (${origin}):\n\n` +
+        `────────────────────────────────────────\n` +
+        `### 📦 1. Available Tour Packages\n` +
+        `${pkgBullets}\n\n` +
+        `────────────────────────────────────────\n` +
+        `### ✈️ 2. Transport & Accommodation Details\n` +
+        `- Verified transport from **${origin}** (Direct Flights / AC Sleeper Coach / Vande Bharat Express).\n` +
+        `- Accommodations: Handpicked 3-Star, 4-Star, and Backpacker Hostels with breakfast included.\n` +
+        `- 24/7 on-trip assistance and licensed local tour guides.\n\n` +
+        `💡 *Click **'Book This'** below or ask me to customize this journey for you!*`
+      );
+      suggestions = [
+        'Book the first one',
+        'Which one has breakfast?',
+        'Talk to human agent'
+      ];
+    }
+
+    return {
+      reply,
+      intent: 'search_trips',
+      confidence: 0.99,
+      context: ctx,
+      packages: ctx.last_packages,
+      suggestions
     };
   }
 
@@ -373,7 +583,8 @@ export class AITravelBrain {
 
     const pax = ctx.passengers || 2;
     const base = target.amount * pax;
-    const tot = Math.round(base * 1.05);
+    const gst = Math.round(base * 0.05);
+    const tot = Math.round(base + gst);
 
     if (!user) {
       return {
@@ -381,7 +592,7 @@ export class AITravelBrain {
           `🎟️ **Selected Package:** ${target.title}\n\n` +
           `- **Route:** ${target.source} ➔ ${target.destination}\n` +
           `- **Rate:** ${formatINR(target.amount)} × ${pax} Guests = **${formatINR(tot)}** (incl. 5% GST)\n\n` +
-          `🔒 **Sign In Required**: Please **Sign In** to lock in your reservation and receive your digital e-ticket!`
+          `🔒 **Sign In Required**: Please **Sign In** to lock in your reservation and proceed to payment!`
         ),
         requires_login: true,
         packages: [target],
@@ -392,39 +603,131 @@ export class AITravelBrain {
       };
     }
 
-    const pnr = `TRV-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-    const bookingObj = {
-      id: Math.floor(Math.random() * 100000),
-      booking_code: pnr,
-      pnr,
-      trip_title: target.title,
-      source: target.source,
-      destination: target.destination,
-      travelers_count: pax,
-      total_amount: tot,
-      status: 'confirmed',
+    // Save pending booking in context to ask for payment process
+    ctx.pending_booking = {
+      target,
+      pax,
+      base,
+      gst,
+      tot,
       travel_date: '2026-10-20'
     };
 
     return {
       reply: (
-        `🎉 **Booking Confirmed by Lyan Travels AI Concierge!**\n\n` +
-        `Congratulations **${user.name}**! Your trip for **${target.title}** has been confirmed.\n\n` +
-        `- **Booking ID / PNR:** \`${pnr}\`\n` +
-        `- **Route:** ${target.source} ➔ ${target.destination}\n` +
-        `- **Travelers:** ${pax} Guest(s)\n` +
-        `- **Total Amount:** ${formatINR(tot)} (Inclusive of GST)\n` +
-        `- **Status:** Confirmed ✅\n\n` +
-        `✨ *This booking is now ready in your **Customer Dashboard** and **My Bookings**!*`
+        `📋 **Booking Summary & Payment Process**\n\n` +
+        `Great choice, **${user.name}**! Here is your reservation summary for **${target.title}**:\n\n` +
+        `- 📍 **Route:** ${target.source} ➔ ${target.destination}\n` +
+        `- 👥 **Travelers:** ${pax} Guest(s)\n` +
+        `- 🚀 **Transport:** ${target.transport || 'Direct Flight / AC Sleeper Coach'}\n` +
+        `- 🏨 **Accommodation:** ${target.hotel_category || '3-Star Deluxe'}\n` +
+        `- 💰 **Base Rate:** ${formatINR(base)}\n` +
+        `- 🏷️ **GST (5%):** ${formatINR(gst)}\n` +
+        `- 💳 **Total Amount to Pay:** **${formatINR(tot)}**\n\n` +
+        `────────────────────────────────────────\n` +
+        `### 💳 **Step 2/2: Choose Which Way of Payment:**\n` +
+        `Please select how you would like to pay:\n` +
+        `• 1️⃣ **Pay via UPI** (Google Pay / PhonePe / Paytm / QR)\n` +
+        `• 2️⃣ **Pay via Credit/Debit Card** (Visa / RuPay / Mastercard)\n` +
+        `• 3️⃣ **Pay via Net Banking** (SBI / HDFC / ICICI / Axis)\n` +
+        `• 4️⃣ **Pay via Travel Wallet** (Instant 1-Click)\n\n` +
+        `*Click any payment button below to complete the payment and receive your confirmed voucher!*`
       ),
-      booking: bookingObj,
-      booking_confirmed: true,
-      booking_note: `Confirmed #${pnr} for ${target.title}`,
-      packages: [target],
       intent: 'book_trip',
       confidence: 0.99,
       context: ctx,
-      suggestions: ['View My Bookings', 'What should I pack?', 'Talk to human agent']
+      suggestions: [
+        'Pay via UPI',
+        'Pay via Card',
+        'Pay via Net Banking',
+        'Pay via Wallet'
+      ]
+    };
+  }
+
+  handleExecutePayment(text, ctx, user) {
+    const pending = ctx.pending_booking;
+    if (!pending) {
+      return {
+        reply: 'You do not have any pending booking checkout right now. Would you like to explore tour packages departing from Tamil Nadu?',
+        intent: 'search_trips',
+        confidence: 0.9,
+        context: ctx,
+        suggestions: ['Find trips from Chennai under 40k', 'Show Goa packages']
+      };
+    }
+
+    let method = 'UPI (Instant Google Pay / PhonePe)';
+    if (text.includes('card') || text.includes('debit') || text.includes('credit') || text === '2') {
+      method = 'Credit / Debit Card (Verified RuPay/Visa)';
+    } else if (text.includes('net banking') || text.includes('banking') || text.includes('bank') || text === '3') {
+      method = 'Net Banking (Direct Authorization)';
+    } else if (text.includes('wallet') || text === '4') {
+      method = 'Lyan Travel Wallet (Instant Debit)';
+    }
+
+    const pnr = `TRV-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+    const txnId = `TXN-${Date.now()}-${Math.floor(100 + Math.random() * 900)}`;
+
+    const bookingObj = {
+      id: Date.now(),
+      booking_code: pnr,
+      pnr,
+      transaction_id: txnId,
+      trip_title: pending.target.title,
+      source: pending.target.source,
+      origin: pending.target.source,
+      departure_city: pending.target.source,
+      destination: pending.target.destination,
+      travelers_count: pending.pax,
+      total_amount: pending.tot,
+      status: 'confirmed',
+      payment_status: 'completed',
+      payment_method: method,
+      timeline_step: 2,
+      travel_date: pending.travel_date || '2026-10-20',
+      created_at: new Date().toISOString()
+    };
+
+    // Save to localStorage immediately
+    try {
+      const existing = JSON.parse(localStorage.getItem('user_bookings') || '[]');
+      localStorage.setItem('user_bookings', JSON.stringify([bookingObj, ...existing]));
+    } catch (storageErr) {
+      console.warn('Storage error:', storageErr);
+    }
+
+    // Broadcast confirmed event
+    window.dispatchEvent(
+      new CustomEvent('lyan_booking_confirmed', {
+        detail: { booking: bookingObj, note: `Confirmed via ${method}` },
+      })
+    );
+
+    // Clear pending state
+    delete ctx.pending_booking;
+
+    return {
+      reply: (
+        `🎉 **Payment Successful & Booking Confirmed!**\n\n` +
+        `Congratulations **${user?.name || 'Traveler'}**! Your payment of **${formatINR(pending.tot)}** via **${method}** has been verified and processed.\n\n` +
+        `- 🎫 **Official PNR:** \`${pnr}\`\n` +
+        `- 💳 **Transaction ID:** \`${txnId}\`\n` +
+        `- 📦 **Package:** ${pending.target.title}\n` +
+        `- 📍 **Route:** ${pending.target.source} ➔ ${pending.target.destination}\n` +
+        `- 👥 **Travelers:** ${pending.pax} Guest(s)\n` +
+        `- 📅 **Travel Date:** ${pending.travel_date}\n` +
+        `- ✅ **Status:** CONFIRMED & PAID\n\n` +
+        `✨ *Your official Boarding Voucher is issued below and is saved to your **My Trips & Bookings** dashboard!*`
+      ),
+      booking: bookingObj,
+      booking_confirmed: true,
+      booking_note: `Confirmed #${pnr} for ${pending.target.title}`,
+      packages: [pending.target],
+      intent: 'book_trip',
+      confidence: 0.99,
+      context: ctx,
+      suggestions: ['View My Bookings', 'What should I pack?', 'Plan another vacation']
     };
   }
 

@@ -779,6 +779,68 @@ def verify_payment(payload: VerifyPaymentRequest, user: Dict[str, Any] = Depends
     }
 
 
+@app.post("/api/hostels/book")
+def book_hostel(payload: Dict[str, Any], user: Optional[Dict[str, Any]] = Depends(get_optional_user)):
+    """Creates a confirmed hostel/hotel reservation with payment verification."""
+    uid = user["id"] if user else 2
+    uname = user["name"] if user else "Traveler User"
+    uemail = user["email"] if user else "user@lyantravel.com"
+    hid = payload.get("hostelId") or payload.get("hotelId") or 1
+    nights = int(payload.get("nights", 2))
+    guests = int(payload.get("guests", 1))
+    bed_type = payload.get("bedType", "Standard Room / Bed")
+    check_in = payload.get("checkInDate", time.strftime("%Y-%m-%d"))
+    payment_method = payload.get("paymentMethod", "UPI (Instant)")
+    
+    # Calculate price
+    base_rate = 899
+    hostel_name = "Selected Stay Property"
+    city = "Goa, India"
+    hostels_list = load_json_file(HOSTELS_FILE, [])
+    for h in hostels_list:
+        if h.get("id") == hid:
+            base_rate = h.get("price_per_night", 899)
+            hostel_name = h.get("name", hostel_name)
+            city = h.get("city", city)
+            break
+            
+    total = round(base_rate * guests * nights * 1.05, 2)
+    booking_id = booking_service.next_id
+    booking_service.next_id += 1
+    pnr = f"HST-{time.strftime('%Y')}-{random.randint(1000, 9999)}"
+    txn_id = f"TXN-{int(time.time()*1000)}-{random.randint(100, 999)}"
+    
+    booking = {
+        "id": booking_id,
+        "booking_code": pnr,
+        "pnr": pnr,
+        "user_id": uid,
+        "customer_name": uname,
+        "customer_email": uemail,
+        "trip_id": hid,
+        "trip_title": f"Stay: {hostel_name} ({bed_type})",
+        "source": city,
+        "origin": city,
+        "departure_city": city,
+        "destination": city,
+        "travel_date": check_in,
+        "travelers_count": guests,
+        "traveler_names": [uname],
+        "total_amount": total,
+        "status": "confirmed",
+        "timeline_step": 2,
+        "transaction_id": txn_id,
+        "payment_method": payment_method,
+        "payment_status": "completed",
+        "special_requests": payload.get("specialRequests", ""),
+        "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+    }
+    booking_service.bookings[booking_id] = booking
+    booking_service.save_bookings()
+    return {"success": True, "booking": booking}
+
+
+
 # ==========================================
 # DESTINATIONS API
 # ==========================================
